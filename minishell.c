@@ -6,13 +6,13 @@
 /*   By: hwiemann <hwiemann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 17:22:45 by hwiemann          #+#    #+#             */
-/*   Updated: 2024/04/04 18:41:04 by hwiemann         ###   ########.fr       */
+/*   Updated: 2024/04/04 18:43:24 by hwiemann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 int main()
 {
-	printf("hafdgddfhgfgllo");
+	printf("halo");
 	return (0);
 }
