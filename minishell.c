@@ -6,13 +6,13 @@
 /*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 17:22:45 by hwiemann          #+#    #+#             */
-/*   Updated: 2024/04/04 17:56:56 by pbencze          ###   ########.fr       */
+/*   Updated: 2024/04/04 18:24:17 by pbencze          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 int main()
 {
-	printf("hallo");
+	printf("hafdgddllo");
 	return (0);
 }
