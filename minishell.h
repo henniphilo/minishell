@@ -1,7 +1,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "libft.h"
+# include "libft/libft.h"
 # include "readline/readline.h"
 # include "readline/history.h"
 # include <stdio.h>      // Für printf
@@ -20,9 +20,7 @@
 # include <string.h>     // Für strerror
 # include <unistd.h>     // Für isatty, ttyname, ttyslot
 # include <stdlib.h>     // Für getenv
-# include <stddef.h>	 // fuer Null
-# include "readline/readline.h"
-# include "readline/history.h"
+# include <stddef.h>	 // Für Null
 
 
 # endif
