@@ -6,13 +6,15 @@
 /*   By: hwiemann <hwiemann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 17:22:45 by hwiemann          #+#    #+#             */
-/*   Updated: 2024/04/04 18:43:24 by hwiemann         ###   ########.fr       */
+/*   Updated: 2024/04/05 18:23:21 by hwiemann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell.h"
 
 int main()
 {
-	printf("halo");
+	printf("hallo");
 	return (0);
 }
+
