@@ -6,7 +6,7 @@
 /*   By: hwiemann <hwiemann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 17:22:45 by hwiemann          #+#    #+#             */
-/*   Updated: 2024/04/05 18:23:21 by hwiemann         ###   ########.fr       */
+/*   Updated: 2024/04/05 18:54:04 by hwiemann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,12 @@
 
 int main()
 {
-	printf("hallo");
+	char	*line;
+
+	while (1)
+	{
+		line = readline("our minishell 🌺: ");
+}
 	return (0);
 }
 
