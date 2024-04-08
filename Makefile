@@ -24,6 +24,9 @@ $(NAME): $(OBJ) $(LIBFT)/$(LIBFA)
 $(LIBFT)/$(LIBFA):
 	@$(MAKE) -C $(LIBFT)
 
+$(LIBFT)/%.o: $(LIBFT)/%.c
+	$(CC) $(CFLAGS) -I$(LIBFT) -c $< -o $@
+
 clean:
 	make -C $(LIBFT) clean
 	$(RM) $(OBJ)
