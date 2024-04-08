@@ -9,6 +9,7 @@ CFLAGS = -Wall -Wextra -Werror -g  # -fsanitize=address
 RM = rm -f
 
 SRC = 	srcs/main.c \
+srcs/execution.c \
 
 OBJ = $(SRC:.c=.o)
 
@@ -18,7 +19,7 @@ all: $(NAME)
 	$(CC) $(CFLAGS) -Iinclude -Ilibft -I/usr/include -O3 -c $< -o $@
 
 $(NAME): $(OBJ) $(LIBFT)/$(LIBFA)
-	$(CC) $(CFLAGS) $(OBJ) -L$(LIBFT) $(READLINE) -ldl -lglfw -lm -lpthread -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) -L$(LIBFT) $(READLINE) -ldl -lft -o $(NAME)
 
 $(LIBFT)/$(LIBFA):
 	@$(MAKE) -C $(LIBFT)
