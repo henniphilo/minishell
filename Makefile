@@ -9,6 +9,7 @@ CFLAGS = -Wall -Wextra -Werror -g  # -fsanitize=address
 RM = rm -f
 
 SRC = 	srcs/main.c \
+srcs/execution.c \
 
 OBJ = $(SRC:.c=.o)
 

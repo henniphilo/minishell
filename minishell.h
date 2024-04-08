@@ -22,8 +22,8 @@
 # include <stdlib.h>     // Für getenv
 # include <stddef.h>	 // Für Null
 
-int		split_input(char *line);
-char	read_the_line();
+char	**split_input(const char *line);
+const char	*read_the_line();
 
 
 

@@ -6,7 +6,7 @@
 /*   By: hwiemann <hwiemann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 17:22:45 by hwiemann          #+#    #+#             */
-/*   Updated: 2024/04/08 11:03:33 by hwiemann         ###   ########.fr       */
+/*   Updated: 2024/04/08 11:27:43 by hwiemann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,18 @@
 int main()
 {
 
-	char	*line;
+	const char	*line;
+	char	**arguments;
 	//command loop
 
 	while(1)
 	{
 		line = read_the_line();
-		if(!split_input(line))
-			return (1);
+		arguments = split_input(line);
+
+		//execution
+
+		free(arguments);
 	}
 	return (0);
 }
