@@ -1,4 +1,4 @@
-#include "../minishell.h"
+#include "../incl/minishell.h"
 
 const char	*read_the_line()
 {
