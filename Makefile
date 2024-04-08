@@ -2,37 +2,40 @@ NAME = minishell
 
 LIBFT = libft
 LIBFA = libft.a
-READLINE = -lreadline
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g  # -fsanitize=address
-RM = rm -f
+RFLAG = -lreadline
 
-SRC = 	srcs/main.c \
-srcs/execution.c \
+OBJ_DIR := objs
+SRC =	srcs/main.c\
+		srcs/execution.c\
 
-OBJ = $(SRC:.c=.o)
+OBJ = ${SRC:srcs/%.c=$(OBJ_DIR)/%.o}
 
 all: $(NAME)
 
-%.o: %.c
-	$(CC) $(CFLAGS) -Iinclude -Ilibft -I/usr/include -O3 -c $< -o $@
-
 $(NAME): $(OBJ) $(LIBFT)/$(LIBFA)
-	$(CC) $(CFLAGS) $(OBJ) -L$(LIBFT) $(READLINE) -ldl -lft -o $(NAME)
+	$(CC) $(CFLAGS) -L$(LIBFT) $(RFLAG) -ldl -lft $(OBJ) -o $(NAME)
+
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
+
+$(OBJ_DIR)/%.o: srcs/%.c | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -Iinclude -Ilibft -I/usr/include -O3 -c $< -o $@
 
 $(LIBFT)/$(LIBFA):
 	@$(MAKE) -C $(LIBFT)
 
 clean:
 	make -C $(LIBFT) clean
-	$(RM) $(OBJ)
+	rm -rf $(OBJ_DIR)
 
 
 fclean: clean
 	make -C $(LIBFT) fclean
-	$(RM) $(NAME)
-re: fclean all
+	rm -f $(NAME)
 
+re: fclean all
 
 .PHONY: all clean fclean re
