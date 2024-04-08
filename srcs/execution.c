@@ -24,11 +24,7 @@ char	**split_input(const char *line) //umwandeln in char **arguments zum execute
 	while (1)
 	{
 		split_line = ft_split(line, pipe);
-		// if(!split_line)
-		// 	{
-		// 		perror("split error\n");
-		// 		return (1);
-		// 	}
+		// noch saven
 		i = 0;
 		while (split_line[i])
 		{
