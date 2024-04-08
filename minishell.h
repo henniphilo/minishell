@@ -22,8 +22,8 @@
 # include <stdlib.h>     // Für getenv
 # include <stddef.h>	 // Für Null
 
-char	**split_input(const char *line);
+char		**split_input(const char *line);
 const char	*read_the_line();
-
+void		panic(char *str);
 
 # endif
