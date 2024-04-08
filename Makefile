@@ -4,7 +4,7 @@ LIBFT = libft
 LIBFA = libft.a
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g  # -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g # -fsanitize=address
 RFLAG = -lreadline
 
 OBJ_DIR := objs
