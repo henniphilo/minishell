@@ -22,5 +22,9 @@
 # include <stdlib.h>     // Für getenv
 # include <stddef.h>	 // Für Null
 
+int		split_input(char *line);
+char	read_the_line();
+
+
 
 # endif
