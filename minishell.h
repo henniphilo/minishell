@@ -26,5 +26,4 @@ char	**split_input(const char *line);
 const char	*read_the_line();
 
 
-
 # endif
