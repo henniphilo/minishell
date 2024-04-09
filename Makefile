@@ -16,7 +16,7 @@ OBJ = ${SRC:srcs/%.c=$(OBJ_DIR)/%.o}
 all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBFT)/$(LIBFA)
-	$(CC) $(CFLAGS) -L$(LIBFT) $(RFLAG) -ldl -lft $(OBJ) -o $(NAME)
+	$(CC) $(CFLAGS) -L$(LIBFT) $(RFLAG) $(OBJ) -ldl -lft -o $(NAME) #  order matters put lft after obj now it works
 
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
