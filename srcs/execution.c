@@ -5,16 +5,17 @@ const char	*read_the_line()
 	const char	*line;
 
 	line = readline("our minishell 🌺: ");
-	// if(!line)
-	// {
-	// 	perror("rl_error\n");
-	// 	exit(1);
-	// }
+	if(!line)
+	{
+		perror("rl_error\n");
+		exit(1);
+	}
+	add_history(line);
 	return(line);
 }
 
 
-char	**split_input(const char *line) //umwandeln in char **arguments zum executen
+char	**split_input(const char *line)
 {
 	char	**split_line;
 	char	pipe;
@@ -34,3 +35,4 @@ char	**split_input(const char *line) //umwandeln in char **arguments zum execute
 		//free(line);
 	return (split_line);
 }
+
