@@ -26,6 +26,6 @@
 
 char		**split_input(const char *line);
 const char	*read_the_line();
-void		panic(char *str);
+void		panic(char *str, void *ptr);
 
 #endif
