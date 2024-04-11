@@ -38,19 +38,18 @@ static void	space_args(t_data *shell, char **args)
 	shell->arguments = (char **)malloc(sizeof(args) * i);
 }
 
-void	init_args(char **split)
+void	init_args(t_data *shell, char **split)
 {
 	int		i;
-	t_data	shell;
 
 	i = 0;
 
-	space_args(&shell, split);
+	space_args(shell, split);
 
 	while (split[i])
 	{
-		shell.arguments[i] = split[i];
-		printf("%s\n", shell.arguments[i]);
+		shell->arguments[i] = split[i];
+		printf("%s\n", shell->arguments[i]);
 		free (split[i]);
 		i++;
 	}
@@ -60,14 +59,21 @@ int	launch_shell(t_data *shell)
 {
 	pid_t	pid;
 
+	// if (pipe(fd) < 0)
+	// 	perror("Error\n");
 	pid = fork();
 	if (pid < 0)
 	{
 		perror("fork problem");
 	}
 	if (pid == 0)
-		execute ();
-		//to be continued
+		execute (shell, shell->env);
+	//waitpid(pid, NULL, 0);
+	// else
+	// {
+	// 	//parent
+	// }
+	return (1);
 }
 
 

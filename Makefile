@@ -10,6 +10,8 @@ RFLAG = -lreadline
 OBJ_DIR := objs
 SRC =	srcs/main.c\
 		srcs/execution.c\
+		srcs/exec_2.c\
+
 
 OBJ = ${SRC:srcs/%.c=$(OBJ_DIR)/%.o}
 
