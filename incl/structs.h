@@ -1,6 +1,8 @@
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
+# include <stdbool.h> //for booleans
+
 //token types for lexing and parsing
 typedef enum s_type {
 	WORD,		// commands, words, flags?
@@ -17,6 +19,7 @@ typedef enum s_type {
 typedef struct s_lexer {
 	t_type	type;
 	char	*str;
+	bool	single_quote; //to store if '' was removed for $ expansion
 	t_lexer	*previous;
 	t_lexer	*next;
 }	t_lexer;
