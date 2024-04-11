@@ -3,6 +3,7 @@
 
 # include "../libft/libft.h"
 # include "structs.h"
+# include "messages.h"
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdio.h>      // printf
@@ -23,9 +24,14 @@
 # include <stdlib.h>     // getenv
 # include <stddef.h>	 // Null
 
+extern char	**environ; //better than envp?
+
 char		**split_input(const char *line);
 const char	*read_the_line();
-void		panic(char *str);
+const char	*get_the_line(t_data *data);
+void		panic(char *str, void *ptr);
+void		*init_data(t_data *data);
+void		*free_data(t_data *data);
 void	init_args(t_data *shell, char **split);
 int		launch_shell(t_data *shell);
 char	*path_finder(char *cmd, char **envp);

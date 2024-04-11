@@ -8,6 +8,11 @@
 		"pushswap.h": "c",
 		"cstring": "c",
 		"typeinfo": "c",
-		"so_long.h": "c"
+		"so_long.h": "c",
+		"minishell.h": "c",
+		"readline.h": "c",
+		"messages.h": "c",
+		"curses.h": "c",
+		"string.h": "c"
 	}
 }

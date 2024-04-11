@@ -12,8 +12,13 @@ SRC =	srcs/main.c\
 		srcs/execution.c\
 		srcs/exec_2.c\
 
+		srcs/utils/error.c\
+		srcs/utils/init_data.c\
+		srcs/utils/free_data.c\
 
-OBJ = ${SRC:srcs/%.c=$(OBJ_DIR)/%.o}
+
+OBJ = $(addprefix objs/,$(notdir $(SRCS:.c=.o)))
+#OBJ = ${SRC:srcs/%.c=$(OBJ_DIR)/%.o}
 
 all: $(NAME)
 
