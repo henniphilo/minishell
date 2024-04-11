@@ -2,27 +2,29 @@
 # define STRUCTS_H
 
 //token types for lexing and parsing
-typedef enum s_token {
+typedef enum s_type {
 	WORD,		// commands, words, flags?
 	INPUT,		// <
 	OUTPUT,		// >
 	HEREDOC,	// <<
 	APPEND,		// >>
 	PIPE,		// |
-	WSPACE,		// white space
 	ESTATUS,	// $?
 	//BUILTIN //
 	//ENV, // environment vars, but they will be handled probably differently
-}	t_token;
+}	t_type;
 
 typedef struct s_lexer {
-
+	t_type	type;
+	char	*str;
+	t_lexer	*previous;
+	t_lexer	*next;
 }	t_lexer;
 
 //to store command nodes
 //??? maybe better to split into pipes, redirs and simple commands?
 typedef struct s_command {
-	t_token	type;
+	t_type	type;
 	char	*simple_cmd; //builtins and executables e.g. ls
 	char	**args; //everything that comes after the command e.g. flags, strings
 
@@ -31,7 +33,7 @@ typedef struct s_command {
 //for redirections
 //???maybe store it inside commands
 typedef struct s_redir {
-	t_token	type;
+	t_type	type;
 	char	*filename; //builtins and executables e.g. ls
 }	t_redir;
 
