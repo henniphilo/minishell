@@ -4,7 +4,7 @@
 # include <stdbool.h> //for booleans
 
 //token types for lexing and parsing
-typedef enum s_type {
+typedef enum e_type {
 	WORD,		// commands, words, flags?
 	INPUT,		// <
 	OUTPUT,		// >
