@@ -24,8 +24,13 @@
 # include <stdlib.h>     // getenv
 # include <stddef.h>	 // Null
 
+extern char	**environ; //better than envp?
+
 char		**split_input(const char *line);
 const char	*read_the_line();
+const char	*get_the_line(t_data *data);
 void		panic(char *str, void *ptr);
+void		*init_data(t_data *data);
+void		*free_data(t_data *data);
 
 #endif
