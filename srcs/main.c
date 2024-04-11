@@ -6,20 +6,21 @@
 /*   By: hwiemann <hwiemann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 17:22:45 by hwiemann          #+#    #+#             */
-/*   Updated: 2024/04/11 11:14:07 by hwiemann         ###   ########.fr       */
+/*   Updated: 2024/04/11 16:27:30 by hwiemann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../incl/minishell.h"
 
-int main()
+int main(char **envp)
 {
 
 	const char	*line;
 	char		**arguments;
 	//t_data		shell;
 	//command loop
+
 
 	while(1)
 	{

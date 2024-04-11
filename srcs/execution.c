@@ -19,7 +19,6 @@ char	**split_input(const char *line)
 {
 	char	**split_line;
 	char	pipe;
-	//int		i;
 
 	pipe = '|';
 	split_line = ft_split(line, pipe);
@@ -49,7 +48,6 @@ void	init_args(char **split)
 
 	while (split[i])
 	{
-	//	printf("%s\n", split[i]);
 		shell.arguments[i] = split[i];
 		printf("%s\n", shell.arguments[i]);
 		free (split[i]);
@@ -57,27 +55,19 @@ void	init_args(char **split)
 	}
 }
 
-// int	launch_shell(t_data *shell)
-// {
-// 	pid_t	pid;
+int	launch_shell(t_data *shell)
+{
+	pid_t	pid;
 
-// 	pid = fork();
-// 	if (pid < 0)
-// 	{
-// 		perror("fork problem");
-// 	}
-// 	if (pid == 0)
-// 		child_process ();
+	pid = fork();
+	if (pid < 0)
+	{
+		perror("fork problem");
+	}
+	if (pid == 0)
+		execute ();
+		//to be continued
+}
 
 
-// }
-// void	child_process(t_data *shell)
-// {
-// 	//kann nicht execvp verwenden muss execve sein -> also pfad anlegen
-// 	if(execvp(shell->arguments->args[0], shell->arguments->args) < 0)
-// 	{
-// 		perror("in child fail\n");
-// 		exit(1);
-// 	}
-// }
 
