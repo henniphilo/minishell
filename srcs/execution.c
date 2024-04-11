@@ -25,6 +25,7 @@ char	**split_input(const char *line)
 
 	return (split_line);
 }
+
 static void	space_args(t_data *shell, char **args)
 {
 	int		i;
@@ -54,7 +55,7 @@ void	init_args(char **split)
 		i++;
 	}
 }
-
+//hier weiternachen
 int	launch_shell(t_data *shell)
 {
 	pid_t	pid;

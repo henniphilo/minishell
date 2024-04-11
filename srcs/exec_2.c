@@ -18,8 +18,7 @@ char	*path_finder(char *cmd, char **envp)
 		current_path = ft_strjoin(path_components[i], "/");
 		full_path = ft_strjoin(full_path, cmd);
 		free(current_path);
-		if (access(fuvoid	execute(t_data *shell, char **envp)
-ll_path, F_OK) == 0)
+		if (access(current_path, F_OK) == 0);
 			return (full_path);
 		free (full_path);
 		i++;
