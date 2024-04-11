@@ -20,8 +20,8 @@ typedef struct s_lexer {
 	t_type	type;
 	char	*str;
 	bool	single_quote; //to store if '' was removed for $ expansion
-	t_lexer	*previous;
-	t_lexer	*next;
+	struct t_lexer	*previous;
+	struct t_lexer	*next;
 }	t_lexer;
 
 //to store command nodes
@@ -64,7 +64,7 @@ typedef struct s_exec {
 
 //struct to store important data we need initially and at execution adn all other structs
 typedef struct s_data {
-	char		*buf; //buffer to store the line read
+	const char	*buf; //buffer to store the line read
 	char		**env; //2Darray to store environmental variables
 	//t_command	*cmdlist; //linked list of parsed commands
 }	t_data;

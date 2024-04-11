@@ -15,7 +15,7 @@ int	main(int ac, char **av)
 {
 	t_data	*data;
 
-	if (ac != 1)
+	if (ac != 1 || !av)
 		panic(ARG_ERR, NULL);
 	data = ft_calloc(1, sizeof(t_data));
 	if (!data)
@@ -29,7 +29,7 @@ int	main(int ac, char **av)
 		int i = -1;
 		while (data->env[++i])
 			printf("%s", data->env[i]); //test
-		lex();
+		//lex();
 		//parse();
 		//arguments = split_input(line);
 		//execution
