@@ -62,6 +62,7 @@ typedef struct s_data {
 	char		*buf; //buffer to store the line read
 	char		**env; //2Darray to store environmental variables
 	t_command	*cmdlist; //linked list of parsed commands
+	char		**arguments; // hen: to store all the input
 }	t_data;
 
 #endif

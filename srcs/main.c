@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: hwiemann <hwiemann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 17:22:45 by hwiemann          #+#    #+#             */
-/*   Updated: 2024/04/08 19:49:58 by pbencze          ###   ########.fr       */
+/*   Updated: 2024/04/11 11:14:07 by hwiemann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,16 @@ int main()
 {
 
 	const char	*line;
-	char	**arguments;
+	char		**arguments;
+	//t_data		shell;
 	//command loop
 
 	while(1)
 	{
 		line = read_the_line();
 		arguments = split_input(line);
+		init_args(arguments);
+
 
 		//execution
 
