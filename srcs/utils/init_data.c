@@ -1,16 +1,16 @@
 #include "../../incl/minishell.h"
 
-void	*init_data(t_data *data)
+void	*init_data(t_data *data, char **envp)
 {
 	int	i;
 
-	data->env = ft_calloc((ft_strlen(environ) + 1), sizeof(char *));
+	data->env = ft_calloc((ft_strlen(envp) + 1), sizeof(char *));
 	if (!data->env)
 		panic(ALLOC_ERR, data);
 	i = -1;
-	while (environ[++i])
+	while (envp[++i])
 	{
-		data->env[i] = ft_strdup(environ[i]);
+		data->env[i] = ft_strdup(envp[i]);
 		if (!data->env[i])
 			panic(ALLOC_ERR, data);
 	}

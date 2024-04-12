@@ -11,17 +11,16 @@ const char	*get_the_line(t_data *data)
 	return (line);
 }
 
-int	main(int ac, char **av)
+int	main(int ac, char **av, char **envp)
 {
 	t_data	*data;
 
-	if (ac != 1 || !av)
+	if (ac != 1 || !av[0])
 		panic(ARG_ERR, NULL);
 	data = ft_calloc(1, sizeof(t_data));
 	if (!data)
 		panic(ALLOC_ERR, NULL);
-	init_data(data); //make init function
-	data->env = environ;
+	init_data(data, envp); //make init function
 	while (1)
 	{
 		data->buf = get_the_line(data);
