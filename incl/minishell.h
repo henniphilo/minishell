@@ -24,6 +24,7 @@
 # include <stdlib.h>     // getenv
 # include <stddef.h>	 // Null
 
+/*Henni*/
 char		**split_input(const char *line);
 const char	*read_the_line();
 void	init_args(t_data *shell, char **split);
@@ -31,6 +32,7 @@ int		launch_shell(t_data *shell);
 char	*path_finder(char *cmd, char **envp);
 void	execute(t_data *shell, char **envp);
 
+/*Petra*/
 const char	*get_the_line(t_data *data);
 void		panic(char *str, void *ptr);
 void		*init_data(t_data *data, char **envp);
