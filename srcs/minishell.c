@@ -29,6 +29,7 @@ int	main(int ac, char **av, char **envp)
 		while (data->env[++i]) //test
 			printf("%s\n", data->env[i]); //test
 		panic("exited", data); //test */
+		//check_input()
 		//lex();
 		//parse();
 		//arguments = split_input(line);
