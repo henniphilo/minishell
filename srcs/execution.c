@@ -35,7 +35,7 @@ static void	space_args(t_data *shell, char **args)
 	{
 		i++;
 	}
-	shell->arguments = (char **)malloc(sizeof(args) * i);
+	shell->arguments = (char **)ft_calloc(sizeof(args) * i, sizeof(char));
 }
 
 void	init_args(t_data *shell, char **split)
@@ -49,10 +49,12 @@ void	init_args(t_data *shell, char **split)
 	while (split[i])
 	{
 		shell->arguments[i] = split[i];
+		//strdup
 		printf("%s\n", shell->arguments[i]);
-		free (split[i]);
+		//free (split[i]);
 		i++;
 	}
+	shell->arguments[i] = NULL;
 }
 //hier weiternachen
 int	launch_shell(t_data *shell)

@@ -37,7 +37,6 @@ void	execute(t_data *shell, char **envp)
 	char	*path;
 	int		i;
 
-	//shell->env = envp;
 	i = 0;
 	path = path_finder(shell->arguments[i], envp);
 	if(!path)
@@ -48,6 +47,7 @@ void	execute(t_data *shell, char **envp)
 		perror("Error in Path\n");
 		exit(1);
 	}
+	printf("will executen: %s\n", shell->arguments[i]);
 	if(execve(path, shell->arguments, envp) < 0)
 	{
 		perror("command couldnt be executed\n");

@@ -16,6 +16,12 @@
                     "description": "Enable pretty-printing for gdb",
                     "text": "-enable-pretty-printing",
                     "ignoreFailures": true
+                },
+                {
+                    "text": "-gdb-set detach-on-fork off"
+                },
+                {
+                    "text": "set follow-fork-mode child"
                 }
             ],
             "preLaunchTask": "make"
