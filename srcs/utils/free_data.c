@@ -19,4 +19,5 @@ void	*free_data(t_data *data)
 		}
 		free(data);
 	}
+	return (NULL);
 }
