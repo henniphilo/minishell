@@ -23,11 +23,11 @@ int	main(int ac, char **av, char **envp)
 	init_data(data, envp); //make init function
 	while (1)
 	{
-		data->buf = get_the_line(data);
-		printf("%s", data->buf); //test
+		data->buf = (char *)get_the_line(data);
+		printf("%s\n", data->buf); //test
 		int i = -1;
 		while (data->env[++i])
-			printf("%s", data->env[i]); //test
+			printf("%s\n", data->env[i]); //test
 		//lex();
 		//parse();
 		//arguments = split_input(line);

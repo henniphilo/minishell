@@ -64,7 +64,7 @@ typedef struct s_exec {
 
 //struct to store important data we need initially and at execution adn all other structs
 typedef struct s_data {
-	const char	*buf; //buffer to store the line read
+	char	*buf; //buffer to store the line read
 	char		**env; //2Darray to store environmental variables
 	//t_command	*cmdlist; //linked list of parsed commands
 	char		**arguments; // hen: to store all the input
