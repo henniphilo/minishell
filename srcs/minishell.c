@@ -24,10 +24,11 @@ int	main(int ac, char **av, char **envp)
 	while (1)
 	{
 		data->buf = (char *)get_the_line(data);
-		printf("%s\n", data->buf); //test
-		int i = -1;
-		while (data->env[++i])
+		/* printf("%s\n", data->buf); //test
+		int i = -1; //test
+		while (data->env[++i]) //test
 			printf("%s\n", data->env[i]); //test
+		panic("exited", data); //test */
 		//lex();
 		//parse();
 		//arguments = split_input(line);
