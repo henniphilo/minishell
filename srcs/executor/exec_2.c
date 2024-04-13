@@ -50,7 +50,7 @@ void	execute(t_data *shell, char **envp)
 			exit(1);
 		}
 		printf("will executen: %s\n", shell->arguments[i]);
-		if(execve(path, shell->arguments, envp) < 0)
+		if(execve(path, shell->arguments, envp) < 0) //der konvention nach enthaelt args den filename der file die executed wird -> also braucht es jetzt linked list?
 		{
 			perror("command couldnt be executed\n");
 			while (shell->arguments[i++])
@@ -58,6 +58,7 @@ void	execute(t_data *shell, char **envp)
 			free(shell->arguments);
 			exit(1);
 		}
+		printf("hat beendet: %s\n", shell->arguments[i]);
 		i++;
 	}
 	free(shell->arguments);

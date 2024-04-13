@@ -25,7 +25,7 @@
 # include <stddef.h>	 // Null
 
 /*Henni*/
-const char	*read_the_line();
+//const char	*read_the_line();
 char		**split_input(const char *line);
 char		**no_pipe(const char *line);
 char		*path_finder(char *cmd, char **envp);
