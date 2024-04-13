@@ -42,11 +42,15 @@ int	main(int ac, char **av, char **envp)
 		init_args(data, data->arguments);
 		envp_care(data, envp);
 		launch_shell(data);
-		/* printf("%s\n", data->buf); //test
+
+		/*
 		int i = -1; //test
 		while (data->env[++i]) //test
 			printf("%s\n", data->env[i]); //test
 		panic("exited", data); //test */
+
+		/* printf("%s\n", data->buf); //test */
+
 		//check_input()
 		//lex();
 		//parse();

@@ -25,12 +25,14 @@
 # include <stddef.h>	 // Null
 
 /*Henni*/
-char		**split_input(const char *line);
 const char	*read_the_line();
-void		init_args(t_data *shell, char **split);
-int			launch_shell(t_data *shell);
+char		**split_input(const char *line);
+char		**no_pipe(const char *line);
 char		*path_finder(char *cmd, char **envp);
 void		execute(t_data *shell, char **envp);
+void		init_args(t_data *shell, char **split);
+int			launch_shell(t_data *shell);
+
 
 /*Petra*/
 const char	*get_the_line(t_data *data);

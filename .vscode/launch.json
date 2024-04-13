@@ -21,7 +21,7 @@
                     "text": "-gdb-set detach-on-fork off"
                 },
                 {
-                    "text": "set follow-fork-mode child"
+                    "text": "set follow-fork-mode parent"
                 }
             ],
             "preLaunchTask": "make"

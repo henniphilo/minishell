@@ -1,5 +1,5 @@
 #include "../../incl/minishell.h"
-
+/*
 const char	*read_the_line()
 {
 	const char	*line;
@@ -12,18 +12,48 @@ const char	*read_the_line()
 	}
 	add_history(line);
 	return(line);
-}
+} */
 
 
 char	**split_input(const char *line)
 {
 	char	**split_line;
 	char	pipe;
+	int		i;
 
 	pipe = '|';
-	split_line = ft_split(line, pipe);
-
+	i = 0;
+	split_line = NULL;
+	if(line == NULL)
+	{
+		perror("line error\n");
+		exit (0);
+	}
+	while(line[i] != '\0')
+	{
+		if(line[i] == '|')
+		{
+			split_line = ft_split(line, pipe);
+			break;
+		}
+		i++;
+	}
+	if(split_line == NULL)
+	{
+		split_line = no_pipe(line);
+	}
 	return (split_line);
+}
+
+char	**no_pipe(const char *line)
+{
+	char	**wo_split;
+	int		i;
+
+	i = 0;
+	wo_split = malloc(sizeof(char *));
+	wo_split[i] = ft_strdup((char *)line);
+	return(wo_split);
 }
 
 static void	space_args(t_data *shell, char **args)
@@ -48,7 +78,7 @@ void	init_args(t_data *shell, char **split)
 
 	while (split[i])
 	{
-		shell->arguments[i] = split[i];
+		shell->arguments[i] = ft_strdup(split[i]);
 		//strdup
 		printf("%s\n", shell->arguments[i]);
 		//free (split[i]);
