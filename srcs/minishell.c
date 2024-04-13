@@ -11,9 +11,23 @@ const char	*get_the_line(t_data *data)
 	return (line);
 }
 
+static void	envp_care(t_data *shell, char **envp)
+{
+	int		i;
+
+	i = 0;
+	while(envp[i] != NULL)
+	{
+		i++;
+	}
+	shell->env = (char **)malloc(sizeof(envp) * i);
+	shell->env = envp;
+}
+
 int	main(int ac, char **av, char **envp)
 {
-	t_data	*data;
+	t_data		*data;
+	//char		**arguments;
 
 	if (ac != 1 || !av[0])
 		panic(ARG_ERR, NULL);
@@ -24,6 +38,10 @@ int	main(int ac, char **av, char **envp)
 	while (1)
 	{
 		data->buf = (char *)get_the_line(data);
+		data->arguments = split_input(data->buf);
+		init_args(data, data->arguments);
+		envp_care(data, envp);
+		launch_shell(data);
 		/* printf("%s\n", data->buf); //test
 		int i = -1; //test
 		while (data->env[++i]) //test

@@ -9,9 +9,11 @@ RFLAG = -lreadline
 
 MAIN = minishell
 UTILS = error init_data free_data
+EXEC = exec_2 execution
 
 SRC = $(addsuffix .c, $(addprefix srcs/, $(MAIN))) \
 	  $(addsuffix .c, $(addprefix srcs/utils/, $(UTILS))) \
+	  $(addsuffix .c, $(addprefix srcs/executor/, $(EXEC))) \
 
 OBJ = $(SRC:c=o)
 
