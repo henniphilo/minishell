@@ -75,20 +75,12 @@ void	init_args(t_data *shell, char **split)
 	i = 0;
 
 	space_args(shell, split);
-	if(split[1] == NULL)
+	while (split[i] != NULL)
 	{
-		shell->arguments[0] = ft_strdup(split[0]);
-		printf("wenn keine pipes: %s\n", shell->arguments[i]);
-	}
-	else
-	{
-		while (split[i] != NULL)
-		{
-			shell->arguments[i] = ft_strdup(split[i]);
-			printf("in  init_args geprintet: %s\n", shell->arguments[i]);
-			//free (split[i]);
-			i++;
-		}
+		shell->arguments[i] = ft_strdup(split[i]);
+		printf("in  init_args geprintet: %s\n", shell->arguments[i]);
+		free (split[i]);
+		i++;
 	}
 	shell->arguments[i] = NULL;
 }
@@ -106,7 +98,7 @@ int	launch_shell(t_data *shell)
 	}
 	if (pid == 0)
 		execute (shell, shell->env);
-	//waitpid(pid, NULL, 0);
+	waitpid(pid, NULL, 0);
 	// else
 	// {
 	// 	//parent
