@@ -17,12 +17,12 @@
                     "text": "-enable-pretty-printing",
                     "ignoreFailures": true
                 },
-                {
-                    "text": "-gdb-set detach-on-fork off"
-                },
-                {
-                    "text": "set follow-fork-mode parent"
-                }
+                // {
+                //     "text": "-gdb-set detach-on-fork off"
+                // },
+                // {
+                //     "text": "set follow-fork-mode parent"
+                // }
             ],
             "preLaunchTask": "make"
         }

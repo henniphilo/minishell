@@ -38,27 +38,30 @@ void	execute(t_data *shell, char **envp)
 	int		i;
 
 	i = 0;
-	path = path_finder(shell->arguments[i], envp);
-	if(!path)
+	while(shell->arguments[i] != NULL)
 	{
-		while (shell->arguments[i++])
-			free(shell->arguments[i]);
-		free(shell->arguments);
-		perror("Error in Path\n");
-		exit(1);
-	}
-	printf("will executen: %s\n", shell->arguments[i]);
-	if(execve(path, shell->arguments, envp) < 0)
-	{
-		perror("command couldnt be executed\n");
-		while (shell->arguments[i++])
-			free(shell->arguments[i]);
-		free(shell->arguments);
-		exit(1);
+		path = path_finder(shell->arguments[i], envp);
+		if(!path)
+		{
+			while (shell->arguments[i++])
+				free(shell->arguments[i]);
+			free(shell->arguments);
+			perror("Error in Path\n");
+			exit(1);
+		}
+		printf("will executen: %s\n", shell->arguments[i]);
+		if(execve(path, shell->arguments, envp) < 0)
+		{
+			perror("command couldnt be executed\n");
+			while (shell->arguments[i++])
+				free(shell->arguments[i]);
+			free(shell->arguments);
+			exit(1);
+		}
+		i++;
 	}
 	free(shell->arguments);
 	free(path);
 }
-
 
 
