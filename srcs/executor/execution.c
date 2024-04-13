@@ -34,25 +34,25 @@ char	**split_input(const char *line)
 		if(line[i] == '|')
 		{
 			split_line = ft_split(line, pipe);
-			break;
+			return (split_line);
 		}
 		i++;
 	}
-	if(split_line == NULL)
-	{
-		split_line = no_pipe(line);
-	}
+	split_line = no_pipe(line);
 	return (split_line);
 }
 
 char	**no_pipe(const char *line)
 {
 	char	**wo_split;
-	int		i;
+	int		len;
 
-	i = 0;
-	wo_split = malloc(sizeof(char *));
-	wo_split[i] = ft_strdup((char *)line);
+	if(line == NULL)
+		exit(0);
+	len = ft_strlen(line);
+	wo_split = (char**)malloc(sizeof(wo_split) * len);
+	wo_split[0] = ft_strdup((char *)line);
+	wo_split[1] = NULL;
 	return(wo_split);
 }
 
@@ -75,14 +75,20 @@ void	init_args(t_data *shell, char **split)
 	i = 0;
 
 	space_args(shell, split);
-
-	while (split[i])
+	if(split[1] == NULL)
 	{
-		shell->arguments[i] = ft_strdup(split[i]);
-		//strdup
-		printf("%s\n", shell->arguments[i]);
-		//free (split[i]);
-		i++;
+		shell->arguments[0] = ft_strdup(split[0]);
+		printf("wenn keine pipes: %s\n", shell->arguments[i]);
+	}
+	else
+	{
+		while (split[i] != NULL)
+		{
+			shell->arguments[i] = ft_strdup(split[i]);
+			printf("in  init_args geprintet: %s\n", shell->arguments[i]);
+			//free (split[i]);
+			i++;
+		}
 	}
 	shell->arguments[i] = NULL;
 }
