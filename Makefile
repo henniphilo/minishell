@@ -7,28 +7,20 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -g # -fsanitize=address
 RFLAG = -lreadline
 
-OBJ_DIR := objs
-SRC =	srcs/main.c\
-		srcs/execution.c\
-		srcs/exec_2.c\
+MAIN = minishell
+UTILS = error init_data free_data
 
-		srcs/utils/error.c\
-		srcs/utils/init_data.c\
-		srcs/utils/free_data.c\
+SRC = $(addsuffix .c, $(addprefix srcs/, $(MAIN))) \
+	  $(addsuffix .c, $(addprefix srcs/utils/, $(UTILS))) \
 
-
-OBJ = $(addprefix objs/,$(notdir $(SRCS:.c=.o)))
-#OBJ = ${SRC:srcs/%.c=$(OBJ_DIR)/%.o}
+OBJ = $(SRC:c=o)
 
 all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBFT)/$(LIBFA)
-	$(CC) $(CFLAGS) -L$(LIBFT) $(RFLAG) $(OBJ) -ldl -lft -o $(NAME) #  order matters put lft after obj now it works
+	$(CC) $(CFLAGS) -L$(LIBFT) $(RFLAG) $(OBJ) -ldl -lft -o $(NAME)
 
-$(OBJ_DIR):
-	mkdir -p $(OBJ_DIR)
-
-$(OBJ_DIR)/%.o: srcs/%.c | $(OBJ_DIR)
+%.o: %.c
 	$(CC) $(CFLAGS) -Iinclude -Ilibft -I/usr/include -O3 -c $< -o $@
 
 $(LIBFT)/$(LIBFA):
@@ -36,8 +28,7 @@ $(LIBFT)/$(LIBFA):
 
 clean:
 	make -C $(LIBFT) clean
-	rm -rf $(OBJ_DIR)
-
+	rm -f $(OBJ)
 
 fclean: clean
 	make -C $(LIBFT) fclean

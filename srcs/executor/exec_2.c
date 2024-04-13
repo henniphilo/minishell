@@ -1,5 +1,5 @@
 
-#include "../incl/minishell.h"
+#include "../../incl/minishell.h"
 
 char	*path_finder(char *cmd, char **envp)
 {
