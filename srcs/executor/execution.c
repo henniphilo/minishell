@@ -1,18 +1,4 @@
 #include "../../incl/minishell.h"
-/*
-const char	*read_the_line()
-{
-	const char	*line;
-
-	line = readline("our minishell 🌺: ");
-	if(!line)
-	{
-		perror("rl_error\n");
-		exit(1);
-	}
-	add_history(line);
-	return(line);
-} */
 
 
 char	**split_input(const char *line)
@@ -42,6 +28,7 @@ char	**split_input(const char *line)
 	return (split_line);
 }
 
+
 char	**no_pipe(const char *line)
 {
 	char	**wo_split;
@@ -68,6 +55,18 @@ static void	space_args(t_data *shell, char **args)
 	shell->arguments = (char **)ft_calloc(sizeof(args) * i, sizeof(char));
 }
 
+static char	*line_trim(const char *line)
+{
+	const char	*set;
+	char	*trim;
+
+	set = " ";
+	trim = ft_strtrim(line, set);
+
+	return(trim);
+}
+
+
 void	init_args(t_data *shell, char **split)
 {
 	int		i;
@@ -75,40 +74,19 @@ void	init_args(t_data *shell, char **split)
 	i = 0;
 
 	space_args(shell, split);
-	while (split[i] != NULL)
+	if (split[i] != NULL)
+		split[i] = line_trim(split[i]);
+	while(split[i] != NULL)
 	{
 		shell->arguments[i] = ft_strdup(split[i]);
 		printf("in  init_args geprintet: %s\n", shell->arguments[i]);
 		free (split[i]);
 		i++;
 	}
+	free(split[i]);
 	shell->arguments[i] = NULL;
 }
-//hier weiternachen
-int	launch_shell(t_data *shell)
-{
-	pid_t	pid;
 
-	// if (pipe(fd) < 0)
-	// 	perror("Error\n");
-
-	pid = fork();
-
-	if (pid < 0)
-	{
-		perror("fork problem");
-	}
-	if (pid == 0) //ist in child
-		execute (shell, shell->env);
-	else
-	{
-		//parent process
-		printf("Elternprozess: PID = %d, Kindprozess-PID = %d\n", getpid(), pid);
-	}
-	waitpid(pid, NULL, 0);
-
-	return (1);
-}
 
 
 
