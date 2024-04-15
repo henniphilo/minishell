@@ -34,7 +34,7 @@ int	check_line(char *buf)
 
 	if (check_unclosed(buf))
 	{
-		printf("wrong input: unclosed quotes\n");
+		ft_putendl_fd("wrong input: unclosed quotes\n", 2);
 		return (1);
 	}
 	i = 0;
@@ -47,6 +47,7 @@ int	check_line(char *buf)
 
 /*c0c7c1% echo hi >>> hello
 zsh: parse error near `>'
+bash: syntax error near unexpected token `>'
 
 c0c7c1% echo hi >>< hello
 zsh: parse error near `<'
@@ -62,8 +63,10 @@ zsh: parse error near `>'
 
 c0c7c1% echo hi >>. hello
 zsh: is a directory: .
+bash: .: Is a directory
 
 c0c7c1% echo hi >>* hello
-zsh: is a directory: incl ///not relevcant for us though
+zsh: is a directory: incl ///not relevant for us though
 
+command||command
 */

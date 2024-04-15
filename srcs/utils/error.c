@@ -6,7 +6,7 @@
 /*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:47:45 by pbencze           #+#    #+#             */
-/*   Updated: 2024/04/11 16:46:22 by pbencze          ###   ########.fr       */
+/*   Updated: 2024/04/15 15:48:42 by pbencze          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,3 +21,12 @@ void	panic(char *str, void *ptr)
 		free_data((t_data *)ptr);
 	exit(1);
 }
+
+int	error_int(char *str)
+{
+	if (str)
+		ft_putendl_fd(str, 2);
+	return (1);
+}
+
+
