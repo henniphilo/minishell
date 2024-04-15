@@ -8,7 +8,7 @@ CFLAGS = -Wall -Wextra -Werror -g # -fsanitize=address
 RFLAG = -lreadline
 
 MAIN = minishell
-UTILS = error init_data free_data
+UTILS = error init_data free_data check_line
 EXEC = exec_2 execution
 
 SRC = $(addsuffix .c, $(addprefix srcs/, $(MAIN))) \
