@@ -11,7 +11,7 @@ typedef enum e_type {
 	HEREDOC,	// <<
 	APPEND,		// >>
 	PIPE,		// |
-	ESTATUS,	// $?
+	//ESTATUS,	// $?
 	//BUILTIN //
 	//ENV, // environment vars, but they will be handled probably differently
 }	t_type;
