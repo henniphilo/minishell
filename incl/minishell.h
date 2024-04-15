@@ -29,9 +29,11 @@
 char		**split_input(const char *line);
 char		**no_pipe(const char *line);
 char		*path_finder(char *cmd, char **envp);
-void		execute(t_data *shell, char **envp);
+void		env_execute(t_data *shell, char **envp);
 void		init_args(t_data *shell, char **split);
-int			launch_shell(t_data *shell);
+int			execute_shell(t_data *shell);
+int			count_commands(t_data *shell);
+
 
 
 /*Petra*/

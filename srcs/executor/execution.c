@@ -1,6 +1,5 @@
 #include "../../incl/minishell.h"
 
-
 char	**split_input(const char *line)
 {
 	char	**split_line;
@@ -27,7 +26,6 @@ char	**split_input(const char *line)
 	split_line = no_pipe(line);
 	return (split_line);
 }
-
 
 char	**no_pipe(const char *line)
 {
@@ -65,7 +63,6 @@ static char	*line_trim(const char *line)
 
 	return(trim);
 }
-
 
 void	init_args(t_data *shell, char **split)
 {

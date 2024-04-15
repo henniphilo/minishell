@@ -32,7 +32,7 @@ char	*path_finder(char *cmd, char **envp)
 
 //to execute while iterating cmd
 
-void	execute(t_data *shell, char **envp)
+void	env_execute(t_data *shell, char **envp)
 {
 	char	*path;
 	int		i;
@@ -58,7 +58,6 @@ void	execute(t_data *shell, char **envp)
 			free(shell->arguments);
 			exit(1);
 		}
-		printf("hat beendet: %s\n", shell->arguments[i]);
 		i++;
 	}
 	free(shell->arguments);
