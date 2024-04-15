@@ -38,7 +38,7 @@ int	check_line(char *buf)
 		return (1);
 	}
 	i = 0;
-	while (buf[i] == 32)
+	while (buf[i] == 32) //check spaces
 		i++;
 	if (buf[i] == '\0')
 		return (1);
