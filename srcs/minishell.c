@@ -40,7 +40,7 @@ int	main(int ac, char **av, char **envp)
 		data->arguments = split_input(data->buf);
 		init_args(data, data->arguments);
 	//	envp_care(data, envp);
-		launch_shell(data);
+		execute_shell(data);
 
 		/*
 		int i = -1; //test
