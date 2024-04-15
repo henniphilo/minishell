@@ -44,3 +44,26 @@ int	check_line(char *buf)
 		return (1);
 	return (0);
 }
+
+/*c0c7c1% echo hi >>> hello
+zsh: parse error near `>'
+
+c0c7c1% echo hi >>< hello
+zsh: parse error near `<'
+
+echo hi <<<< hello
+zsh: parse error near `<'
+
+Kein error: c0c7c1% echo hi <<< hello // ?????
+hi
+
+c0c7c1% echo hi >>> hello
+zsh: parse error near `>'
+
+c0c7c1% echo hi >>. hello
+zsh: is a directory: .
+
+c0c7c1% echo hi >>* hello
+zsh: is a directory: incl ///not relevcant for us though
+
+*/
