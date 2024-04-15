@@ -39,6 +39,7 @@ const char	*get_the_line(t_data *data);
 void		panic(char *str, void *ptr);
 void		*init_data(t_data *data, char **envp);
 void		*free_data(t_data *data);
+int			check_line(char *buf);
 
 
 
