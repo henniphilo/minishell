@@ -30,10 +30,17 @@ static int	check_unclosed(char *buf)
 
 int	check_line(char *buf)
 {
+	int	i;
+
 	if (check_unclosed(buf))
 	{
 		printf("wrong input: unclosed quotes\n");
 		return (1);
 	}
+	i = 0;
+	while (buf[i] == 32)
+		i++;
+	if (buf[i] == '\0')
+		return (1);
 	return (0);
 }
