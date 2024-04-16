@@ -71,10 +71,10 @@ void	init_args(t_data *shell, char **split)
 	i = 0;
 
 	space_args(shell, split);
-	if (split[i] != NULL)
-		split[i] = line_trim(split[i]);
+
 	while(split[i] != NULL)
 	{
+		split[i] = line_trim(split[i]);
 		shell->arguments[i] = ft_strdup(split[i]);
 		printf("in  init_args geprintet: %s\n", shell->arguments[i]);
 		free (split[i]);
