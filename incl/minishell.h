@@ -29,10 +29,12 @@
 char		**split_input(const char *line);
 char		**no_pipe(const char *line);
 char		*path_finder(char *cmd, char **envp);
-void		env_execute(t_data *shell, char **envp);
+void		child_process_env(char *arg, t_data *shell);
 void		init_args(t_data *shell, char **split);
 int			execute_shell(t_data *shell);
 int			count_commands(t_data *shell);
+void		env_execute(t_data *shell, char *arg);
+
 
 
 

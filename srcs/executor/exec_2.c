@@ -32,35 +32,35 @@ char	*path_finder(char *cmd, char **envp)
 
 //to execute while iterating cmd
 
-void	env_execute(t_data *shell, char **envp)
+void	env_execute(t_data *shell, char *arg)
 {
 	char	*path;
-	int		i;
+	// int		i;
 
-	i = 0;
-	while(shell->arguments[i] != NULL)
+	// i = 0;
+	while(arg != NULL)
 	{
-		path = path_finder(shell->arguments[i], envp);
+		path = path_finder(arg, shell->env);
 		if(!path)
 		{
-			while (shell->arguments[i++])
-				free(shell->arguments[i]);
-			free(shell->arguments);
+			// while (shell->arguments[i++])
+			// 	free(shell->arguments[i]);
+			free(arg);
 			perror("Error in Path\n");
 			exit(1);
 		}
-		printf("will executen: %s\n", shell->arguments[i]);
-		if(execve(path, shell->arguments, envp) < 0) //der konvention nach enthaelt args den filename der file die executed wird -> also braucht es jetzt linked list?
+		printf("will executen: %s\n", arg);
+		if(execve(path, shell->arguments, shell->env) < 0)
 		{
 			perror("command couldnt be executed\n");
-			while (shell->arguments[i++])
-				free(shell->arguments[i]);
-			free(shell->arguments);
+			// while (shell->arguments[i++])
+			// 	free(shell->arguments[i]);
+			free(arg);
 			exit(1);
 		}
-		i++;
+		//i++;
 	}
-	free(shell->arguments);
+	free(arg);
 	free(path);
 }
 

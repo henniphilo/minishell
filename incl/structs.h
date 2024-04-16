@@ -63,6 +63,7 @@ typedef struct s_data {
 	t_lexer		*tokens; //linked list of lexed tokens
 	t_command	**cmdlist; //linked list of commandlines between pipes that point to a struct of commands
 	char		**arguments; // hen: to store all the input
+	int			*fd; // hen: zum directen der fd muss noch richtig init werden
 }	t_data;
 
 #endif
