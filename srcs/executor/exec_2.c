@@ -16,7 +16,7 @@ char	*path_finder(char *cmd, char **envp)
 	while (path_components[i])
 	{
 		current_path = ft_strjoin(path_components[i], "/");
-		full_path = ft_strjoin(full_path, cmd);
+		full_path = ft_strjoin(path_components[i], cmd);
 		free(current_path);
 		if (access(current_path, F_OK) == 0)
 			return (full_path);
