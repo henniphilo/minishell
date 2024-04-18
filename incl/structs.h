@@ -51,6 +51,18 @@ typedef struct s_environ {
 	char	*value;
 }	t_environ;
 
+typedef struct s_builtin {
+	const char	*cd;
+	const char	*echo;
+	const char	*alias;
+	const char	*export;
+	const char	*unset;
+	const char	*source;
+	const char	*exit;
+	const char	*env;
+}	t_builtin;
+
+
 //struct for execution, for Henni if she needs it
 typedef struct s_exec {
 	//variable for return value of processes
@@ -64,6 +76,7 @@ typedef struct s_data {
 	t_command	**cmdlist; //linked list of commandlines between pipes that point to a struct of commands
 	char		**arguments; // hen: to store all the input
 	int			*fd; // hen: zum directen der fd muss noch richtig init werden
+	t_builtin	*bi; // hen : zum tracken der builtins
 }	t_data;
 
 #endif

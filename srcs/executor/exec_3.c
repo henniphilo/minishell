@@ -25,9 +25,8 @@ int	execute_shell(t_data *shell)
 	// 	perror("Error\n");
 	i = 0;
 	cmd_count = count_commands(shell);
+	builtin_check(shell);
 	init_fd(shell);
-	// if(cmd_count == 1)
-	// {
 	while(cmd_count > 0)
 	{
 		pid = fork();
@@ -38,7 +37,6 @@ int	execute_shell(t_data *shell)
 		if (pid == 0) //ist in child
 		{
 			child_process_env(shell->arguments[i], shell);
-		//	env_execute (shell, shell->env);
 		}
 		else
 		{
@@ -72,7 +70,6 @@ void	child_process_env(char *arg, t_data *shell)
 	printf("sind im child process\n");
 	dup2(file_out, STDOUT_FILENO);
 	dup2(file_in, STDIN_FILENO); // siehe pipex notes and beispiel von flo in new
-	//close(shell->fd[0]); //die fd vom parent richtig schliessen
 	close(file_in);
 	close(file_out);
 	env_execute(shell, arg);

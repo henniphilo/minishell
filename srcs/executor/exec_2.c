@@ -50,7 +50,7 @@ void	env_execute(t_data *shell, char *arg)
 			exit(1);
 		}
 		printf("will executen: %s\n", arg);
-		if(execve(path, shell->arguments, shell->env) < 0)
+		if(execve(path, shell->arguments, shell->env) < 0)  //warum nur moedlich mir shell->arguments und nicht args?
 		{
 			perror("command couldnt be executed\n");
 			// while (shell->arguments[i++])
