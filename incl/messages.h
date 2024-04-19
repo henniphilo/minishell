@@ -7,4 +7,8 @@
 # define ARG_ERR "amount of arguments incorrect"
 # define RL_ERR "error on reading the line"
 
+/*macros to define builtins*/
+# define ECHO "echo"
+
+
 #endif

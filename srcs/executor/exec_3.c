@@ -25,27 +25,30 @@ int	execute_shell(t_data *shell)
 	// 	perror("Error\n");
 	i = 0;
 	cmd_count = count_commands(shell);
-	builtin_check(shell);
 	init_fd(shell);
 	while(cmd_count > 0)
 	{
-		pid = fork();
-		if (pid < 0)
 		{
-			perror("fork problem");
+			pid = fork();
+			if (pid < 0)
+			{
+				perror("fork problem");
+			}
+			if (pid == 0) //ist in child
+			{
+				if(builtin_check(shell, shell->arguments[i]) != 1) //checken an welcher stelle sinnvoll und muss noch differenzieren mit build in flag?
+					child_process_env(shell->arguments[i], shell);
+			}
+			else
+			{
+				when_builtin(shell);
+				//parent process
+				printf("Elternprozess: PID = %d, Kindprozess-PID = %d\n", getpid(), pid);
+			}
+			waitpid(pid, NULL, 0);
+			i ++;
+			cmd_count--;
 		}
-		if (pid == 0) //ist in child
-		{
-			child_process_env(shell->arguments[i], shell);
-		}
-		else
-		{
-			//parent process
-			printf("Elternprozess: PID = %d, Kindprozess-PID = %d\n", getpid(), pid);
-		}
-		waitpid(pid, NULL, 0);
-		i ++;
-		cmd_count--;
 	}
 	// }
 	// else

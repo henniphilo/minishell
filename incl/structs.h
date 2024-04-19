@@ -60,7 +60,7 @@ typedef struct s_builtin {
 	const char	*source;
 	const char	*exit;
 	const char	*env;
-}	t_builtin;
+}	t_builtin; //struct ueberdenken bringt nicht so viel besser als macro?
 
 
 //struct for execution, for Henni if she needs it
