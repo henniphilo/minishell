@@ -1,12 +1,12 @@
 
 #include "../../incl/minishell.h"
 
-static void	print_path(char *path)
-{
-//	printf("hi in print_path\n");
-	if(path != NULL)
-		printf("print path: %s\n", path);
-}
+// static void	print_path(char *path)
+// {
+// //	printf("hi in print_path\n");
+// 	if(path != NULL)
+// 		printf("path: %s\n", path);
+// }
 
 char	*path_finder(char *cmd, char **envp)
 {
@@ -27,8 +27,8 @@ char	*path_finder(char *cmd, char **envp)
 	//	printf("current path:");
 	//	print_path(current_path);
 		full_path = ft_strjoin(current_path, cmd);
-	//	printf("full path:");
-	//	print_path(full_path);
+		// printf("full path:");
+		// print_path(full_path);
 		free(current_path);
 		if (access(full_path, F_OK) == 0)
 		{
@@ -65,9 +65,9 @@ void	env_execute(t_data *shell, char *arg)
 			exit(1);
 		}
 		printf("will executen: %s\n", arg);
-		printf("path in execute:");
-		print_path(path);
-		if(execve(path, shell->arguments, shell->env) < 0)  //warum nur moedlich mir shell->arguments und nicht args?
+		// printf("path in execute:");
+		// print_path(path);
+		if(execve(path, shell->arguments, shell->env) < 0)  //warum nur moeglich mir shell->arguments und nicht args?
 		{
 			perror("command couldnt be executed\n");
 			// while (shell->arguments[i++])
@@ -80,6 +80,3 @@ void	env_execute(t_data *shell, char *arg)
 	free(arg);
 	free(path);
 }
-
-
-	

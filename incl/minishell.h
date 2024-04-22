@@ -29,12 +29,12 @@
 char		**split_input(const char *line);
 char		**no_pipe(const char *line);
 char		*path_finder(char *cmd, char **envp);
-void		child_process_env(char *arg, t_data *shell);
+void		child_process_env(char *arg, t_data *shell, int i);
 void		init_args(t_data *shell, char **split);
 void		env_execute(t_data *shell, char *arg);
 int			execute_shell(t_data *shell);
 int			count_commands(t_data *shell);
-int			builtin_check(t_data *shell, char *arg);
+int			builtin_check(char *arg);
 void		when_builtin(t_data *shell);
 
 
