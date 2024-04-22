@@ -46,6 +46,7 @@ void		*init_data(t_data *data, char **envp);
 void		*free_data(t_data *data);
 int			check_line(char *buf);
 int			error_int(char *str);
+int			lexer(t_data *data);
 
 
 

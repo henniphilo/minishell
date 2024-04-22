@@ -34,7 +34,7 @@ int	check_line(char *buf)
 
 	if (check_unclosed(buf))
 	{
-		ft_putendl_fd("wrong input: unclosed quotes\n", 2);
+		ft_putendl_fd("wrong input: unclosed quotes", 2);
 		return (1);
 	}
 	i = 0;

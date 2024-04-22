@@ -39,21 +39,10 @@ int	main(int ac, char **av, char **envp)
 		data->buf = (char *)get_the_line(data);
 		data->arguments = split_input(data->buf);
 		init_args(data, data->arguments);
+		if (check_line(data->buf) || lexer(data))
+			continue ;
 		execute_shell(data);
 
-		/*
-		int i = -1; //test
-		while (data->env[++i]) //test
-			printf("%s\n", data->env[i]); //test
-		panic("exited", data); //test */
-
-		/* printf("%s\n", data->buf); //test */
-
-		//check_input()
-		//lex();
-		//parse();
-		//arguments = split_input(line);
-		//execution
 		//free(arguments);
 	}
 	return (0);

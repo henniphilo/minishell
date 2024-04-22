@@ -10,6 +10,8 @@ void	*free_data(t_data *data)
 	{
 		if (data->buf)
 			free(data->buf);
+		if (data->tokens)
+			free(data->tokens);
 		if (data->env)
 		{
 			i = -1;
