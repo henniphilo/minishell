@@ -39,6 +39,7 @@ int	main(int ac, char **av, char **envp)
 		data->buf = (char *)get_the_line(data);
 		data->arguments = split_input(data->buf);
 		init_args(data, data->arguments);
+		lexer(data);
 		execute_shell(data);
 
 		/*
