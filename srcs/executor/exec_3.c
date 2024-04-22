@@ -36,17 +36,18 @@ int	execute_shell(t_data *shell)
 			}
 			if (pid == 0) //ist in child
 			{
-				if(builtin_check(shell, shell->arguments[i]) != 1) //checken an welcher stelle sinnvoll und muss noch differenzieren mit build in flag?
+				if(builtin_check(shell->arguments[i]) != 1) //checken an welcher stelle sinnvoll und muss noch differenzieren mit build in flag?
 					child_process_env(shell->arguments[i], shell);
 			}
 			else
 			{
-				when_builtin(shell);
+				printf("im parent\n");
+				when_builtin(shell); // wird gerade immer mit ausgeführt
 				//parent process
-				printf("Elternprozess: PID = %d, Kindprozess-PID = %d\n", getpid(), pid);
+			//	printf("Elternprozess: PID = %d, Kindprozess-PID = %d\n", getpid(), pid);
 			}
 			waitpid(pid, NULL, 0);
-			i ++;
+			i++;
 			cmd_count--;
 		}
 	}

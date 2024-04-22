@@ -1,5 +1,5 @@
 #include "../../incl/minishell.h"
-
+/*
 static void	builtin_init(t_data *shell)
 {
 	shell->bi = malloc(sizeof(t_builtin));
@@ -16,24 +16,25 @@ static void	builtin_init(t_data *shell)
 	shell->bi->source = "source";
 	shell->bi->exit = "exit";
 	shell->bi->env = "env";
-}
+} */
 
 
-int	builtin_check(t_data *shell, char *arg)
+int	builtin_check(char *arg)
 {
 
 	int	n;
 
 	n = 7;
-	builtin_init(shell);
-	if((ft_strncmp((const char *)arg, shell->bi->cd, n) == 0)
-		|| (ft_strncmp((const char *)arg, shell->bi->echo, n) == 0)
-		|| (ft_strncmp((const char *)arg, shell->bi->alias, n) == 0)
-		|| (ft_strncmp((const char *)arg, shell->bi->export, n) == 0)
-		|| (ft_strncmp((const char *)arg, shell->bi->unset, n) == 0)
-		|| (ft_strncmp((const char *)arg, shell->bi->source, n) == 0)
-		|| (ft_strncmp((const char *)arg, shell->bi->exit, n) == 0)
-		|| (ft_strncmp((const char *)arg, shell->bi->env, n) == 0))
+	//builtin_init(shell);
+
+	if((ft_strncmp((const char *)arg, "cd", n) == 0)
+		|| (ft_strncmp((const char *)arg, "echo", n) == 0)
+		|| (ft_strncmp((const char *)arg, "alias", n) == 0)
+		|| (ft_strncmp((const char *)arg, "export", n) == 0)
+		|| (ft_strncmp((const char *)arg, "unset", n) == 0)
+		|| (ft_strncmp((const char *)arg, "source", n) == 0)
+		|| (ft_strncmp((const char *)arg, "exit", n) == 0)
+		|| (ft_strncmp((const char *)arg, "env", n) == 0))
 	{
 		printf("is a built in \n");
 		return(1);
@@ -43,6 +44,8 @@ int	builtin_check(t_data *shell, char *arg)
 
 void	when_builtin(t_data *shell)
 {
+	printf("arg0 %s\n", shell->arguments[0]);  
+	// wird gerade auch noch ausgeführt wenn einfach nur im parent
 	// hier ausbauen und builtin action zusammen fuehren
-	printf("approved builtin is: %s\n", shell->bi);
+	printf("approved builtin is: \n");
 }

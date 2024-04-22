@@ -55,6 +55,7 @@ static void	space_args(t_data *shell, char **args)
 
 static char	*line_trim(const char *line)
 {
+	//ausdehnen auf alle white spaces
 	const char	*set;
 	char	*trim;
 
@@ -76,7 +77,7 @@ void	init_args(t_data *shell, char **split)
 	{
 		split[i] = line_trim(split[i]);
 		shell->arguments[i] = ft_strdup(split[i]);
-		printf("in  init_args geprintet: %s\n", shell->arguments[i]);
+		printf("args: %s\n", shell->arguments[i]);
 		free (split[i]);
 		i++;
 	}

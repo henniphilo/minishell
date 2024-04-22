@@ -34,7 +34,7 @@ void		init_args(t_data *shell, char **split);
 void		env_execute(t_data *shell, char *arg);
 int			execute_shell(t_data *shell);
 int			count_commands(t_data *shell);
-int			builtin_check(t_data *shell, char *arg);
+int			builtin_check(char *arg);
 void		when_builtin(t_data *shell);
 
 
