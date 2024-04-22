@@ -56,24 +56,13 @@ static char	*handle_quotes(char *tmp_buf, t_lexer **tokens)
 	s = ft_substr((const char *)(tmp_buf), 1, i - 1);
 	if (!s)
 		return (NULL);
-	printf("substring result: %s\n", s); //test
 	node = new_list(WORD, s, (*tmp_buf == '\''));
 	if (!node)
 	{
 		free (s);
 		return (NULL);
 	}
-	printf("new_list() result:\n"); //test
-	printf("%s\n", node->str); //test
-	printf("%d\n", node->single_quote); //test
-	printf("%i\n", node->type); //test
-
 	list_add_back(tokens, node);
-
-	printf("listaddback() result:\n"); //test
- 	printf("%s\n", (*tokens)->str); //test
-	printf("%d\n", (*tokens)->single_quote); //test
-	printf("%i\n", (*tokens)->type); //test
 	return (tmp_buf + i + 1);
 }
 
@@ -82,10 +71,6 @@ int	lexer(t_data *data)
 	char	*tmp_buf;
 
 	tmp_buf = data->buf;
-	//buf = ft_strtrim(data->buf, " ");
-	//data->tokens = new_list(0, 0, 0);
-	//if (!data->tokens)
-	//	return (error_int(ALLOC_ERR));
 	while (*tmp_buf)
 	{
 		if (*tmp_buf == 32)
@@ -101,7 +86,7 @@ int	lexer(t_data *data)
 		if (!tmp_buf)
 			return (error_int(ALLOC_ERR));
 	}
-	printf("string: %s\ntype: %i\nsinglequote: %d\n", data->tokens->str, data->tokens->type, data->tokens->single_quote);
+	//printf("string: %s\ntype: %i\nsinglequote: %d\n", data->tokens->str, data->tokens->type, data->tokens->single_quote);
 	return (0);
 }
 
