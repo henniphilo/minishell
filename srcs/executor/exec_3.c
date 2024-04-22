@@ -8,7 +8,7 @@ int		count_commands(t_data *shell)
 	cmd_count = 0;
 	while (shell->arguments[cmd_count] != NULL)
 		cmd_count++;
-	printf("command count is: %d\n", cmd_count);
+	//printf("command count is: %d\n", cmd_count);
 	return(cmd_count);
 }
 static void	init_fd(t_data *shell)
@@ -25,7 +25,7 @@ int	execute_shell(t_data *shell)
 	// 	perror("Error\n");
 	i = 0;
 	cmd_count = count_commands(shell);
-	init_fd(shell);
+	init_fd(shell); //wahrscheinlich hier fehler
 	while(cmd_count > 0)
 	{
 		{
@@ -34,21 +34,22 @@ int	execute_shell(t_data *shell)
 			{
 				perror("fork problem");
 			}
-			if (pid == 0) //ist in child
+			if (pid == 0)
 			{
+				printf("count: %d & i: %d\n", cmd_count, i);
 				if(builtin_check(shell->arguments[i]) != 1) //checken an welcher stelle sinnvoll und muss noch differenzieren mit build in flag?
-					child_process_env(shell->arguments[i], shell);
+					child_process_env(shell->arguments[i], shell, i);
 			}
 			else
 			{
 				printf("im parent\n");
-				when_builtin(shell); // wird gerade immer mit ausgeführt
+		//		when_builtin(shell); // wird gerade immer mit ausgeführt
 				//parent process
 			//	printf("Elternprozess: PID = %d, Kindprozess-PID = %d\n", getpid(), pid);
 			}
-			waitpid(pid, NULL, 0);
 			i++;
 			cmd_count--;
+			waitpid(pid, NULL, 0);
 		}
 	}
 	// }
@@ -58,20 +59,21 @@ int	execute_shell(t_data *shell)
 }
 
 
-void	child_process_env(char *arg, t_data *shell)
+void	child_process_env(char *arg, t_data *shell, int i)
 {
 	int		file_in;
 	int		file_out;
 
 	//file_in = open(arg , O_RDONLY, 0777);
-	file_in  = dup(STDIN_FILENO);
-	file_out = dup(STDOUT_FILENO);
+	file_in  = (dup(STDIN_FILENO) + i);
+	file_out = (dup(STDOUT_FILENO) + i);
 	if (file_in == -1)
 	{
 		perror("error im child\n");
 		exit(1);
 	}
 	printf("sind im child process\n");
+	printf("file in: %d & file out %d \n", file_in, file_out);
 	dup2(file_out, STDOUT_FILENO);
 	dup2(file_in, STDIN_FILENO); // siehe pipex notes and beispiel von flo in new
 	close(file_in);

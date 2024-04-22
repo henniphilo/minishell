@@ -8,7 +8,7 @@
 # define RL_ERR "error on reading the line"
 
 /*macros to define builtins*/
-# define ECHO "echo"
+# define ECHO "echo" // braucht es das?
 
 
 #endif

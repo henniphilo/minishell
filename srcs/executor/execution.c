@@ -6,7 +6,7 @@ char	**split_input(const char *line)
 	char	pipe;
 	int		i;
 
-	pipe = '|';
+	pipe = ' ';
 	i = 0;
 	split_line = NULL;
 	if(line == NULL)
@@ -16,7 +16,7 @@ char	**split_input(const char *line)
 	}
 	while(line[i] != '\0')
 	{
-		if(line[i] == '|')
+		if(line[i] == ' ')
 		{
 			split_line = ft_split(line, pipe);
 			return (split_line);
@@ -77,12 +77,14 @@ void	init_args(t_data *shell, char **split)
 	{
 		split[i] = line_trim(split[i]);
 		shell->arguments[i] = ft_strdup(split[i]);
-		printf("args: %s\n", shell->arguments[i]);
+		printf("args[%d]: %s\n",i, shell->arguments[i]);
 		free (split[i]);
 		i++;
 	}
 	free(split[i]);
 	shell->arguments[i] = NULL;
+	printf("args[%d]: %s\n",i, shell->arguments[i]);
+
 }
 
 
