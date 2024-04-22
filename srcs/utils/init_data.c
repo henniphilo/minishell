@@ -24,8 +24,5 @@ void	*init_data(t_data *data, char **envp)
 		if (!data->env[i])
 			panic(ALLOC_ERR, data);
 	}
-	data->tokens = ft_calloc(1, sizeof(t_lexer));
-	if (!data->tokens)
-		panic(ALLOC_ERR, data);
 	return (NULL);
 }

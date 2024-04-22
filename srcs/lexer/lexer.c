@@ -10,7 +10,7 @@ static t_lexer	*new_list(t_type t, char *s, bool q)
 	t_lexer	*new_node;
 
 	new_node = malloc(sizeof(t_lexer));
-	if (new_node == NULL)
+	if (!new_node)
 		return (NULL);
 	new_node->single_quote = q;
 	new_node->type = t;
@@ -29,13 +29,13 @@ static t_lexer	*list_last(t_lexer *lst)
 	return (lst);
 }
 
-static void	list_add_back(t_lexer *lst, t_lexer *new)
+static void	list_add_back(t_lexer **lst, t_lexer *new)
 {
 	t_lexer	*pos;
 
-	pos = list_last(lst);
+	pos = list_last(*lst);
 	if (!pos)
-		lst = new;
+		*lst = new;
 	else
 	{
 		pos->next = new;
@@ -44,26 +44,36 @@ static void	list_add_back(t_lexer *lst, t_lexer *new)
 }
 
 
-static char	*handle_quotes(char *tmp_buf, t_lexer *tokens)
+static char	*handle_quotes(char *tmp_buf, t_lexer **tokens)
 {
 	t_lexer	*node;
 	char	*s;
 	int		i;
 
-	i = 0;
+	i = 1;
 	while (tmp_buf[0] != tmp_buf[i])
 		i++;
-	s = ft_substr((const char *)(tmp_buf), 1, i);
+	s = ft_substr((const char *)(tmp_buf), 1, i - 1);
 	if (!s)
 		return (NULL);
-	printf("%s", s); //test
+	printf("substring result: %s\n", s); //test
 	node = new_list(WORD, s, (*tmp_buf == '\''));
 	if (!node)
 	{
 		free (s);
 		return (NULL);
 	}
+	printf("new_list() result:\n"); //test
+	printf("%s\n", node->str); //test
+	printf("%d\n", node->single_quote); //test
+	printf("%i\n", node->type); //test
+
 	list_add_back(tokens, node);
+
+	printf("listaddback() result:\n"); //test
+ 	printf("%s\n", (*tokens)->str); //test
+	printf("%d\n", (*tokens)->single_quote); //test
+	printf("%i\n", (*tokens)->type); //test
 	return (tmp_buf + i + 1);
 }
 
@@ -78,21 +88,20 @@ int	lexer(t_data *data)
 	//	return (error_int(ALLOC_ERR));
 	while (*tmp_buf)
 	{
-		while (*tmp_buf && *tmp_buf == 32)
+		if (*tmp_buf == 32)
 			tmp_buf++;
-		if (*tmp_buf == '\"' || *tmp_buf == '\'')
-			tmp_buf = handle_quotes(tmp_buf, data->tokens);
-/* 		else if (ft_strchr("<>|", *tmp_buf))
+		else if (*tmp_buf == '\"' || *tmp_buf == '\'')
+			tmp_buf = handle_quotes(tmp_buf, &data->tokens);
+		//else if (ft_strchr("<>|", *tmp_buf))
 			//tmp_buf = handle_meta(tmp_buf, );
 		else if (*tmp_buf)
-			//tmp_buf = handle_words(tmp_buf, data->tokens); */
-		if (*tmp_buf)
 			tmp_buf++; //test
+			//tmp_buf = handle_words(tmp_buf, data->tokens);
 
 		if (!tmp_buf)
 			return (error_int(ALLOC_ERR));
 	}
-	printf("%s\n%i", data->tokens->str, data->tokens->type);
+	printf("string: %s\ntype: %i\nsinglequote: %d\n", data->tokens->str, data->tokens->type, data->tokens->single_quote);
 	return (0);
 }
 
