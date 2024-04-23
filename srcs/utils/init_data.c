@@ -1,5 +1,6 @@
 #include "../../incl/minishell.h"
 
+/*calculates the size of a 2D-array*/
 static int	count_ptrs(char **ptr)
 {
 	int	i;
@@ -10,7 +11,8 @@ static int	count_ptrs(char **ptr)
 	return (i);
 }
 
-void	*init_data(t_data *data, char **envp)
+/*stores the variables form envp in data->env*/
+void	*init_env(t_data *data, char **envp)
 {
 	int	i;
 

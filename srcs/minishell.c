@@ -24,6 +24,18 @@ const char	*get_the_line(t_data *data)
 // 	shell->env = envp;
 // }
 
+/*function to free buffer and parsing + lexing structures before reentering the loop*/
+void	clear_data(t_data *data)
+{
+	if (data->buf)
+	{
+		free(data->buf);
+		data->buf = NULL;
+	}
+	free_tokens(&(data->tokens));
+	data->tokens = NULL;
+}
+
 int	main(int ac, char **av, char **envp)
 {
 	t_data		*data;
@@ -33,17 +45,17 @@ int	main(int ac, char **av, char **envp)
 	data = ft_calloc(1, sizeof(t_data));
 	if (!data)
 		panic(ALLOC_ERR, NULL);
-	init_data(data, envp); //make init function
+	init_env(data, envp);
 	while (1)
 	{
 		data->buf = (char *)get_the_line(data);
 		data->arguments = split_input(data->buf);
 		init_args(data, data->arguments);
 		if (check_line(data->buf) || lexer(data))
-			continue ;
+			continue ; //if lexing, parsing or line are wrong returns the prompt
 		execute_shell(data);
-
-		//free(arguments);
+		clear_data(data);
 	}
+	free_data(data); //just temporarily in this part of the code
 	return (0);
 }

@@ -6,12 +6,13 @@
 /*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:47:45 by pbencze           #+#    #+#             */
-/*   Updated: 2024/04/15 15:48:42 by pbencze          ###   ########.fr       */
+/*   Updated: 2024/04/23 12:12:45 by pbencze          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
+/*puts an error message, frees data and exits the program*/
 void	panic(char *str, void *ptr)
 {
 	if (str)
@@ -22,6 +23,7 @@ void	panic(char *str, void *ptr)
 	exit(1);
 }
 
+/*puts an error message and returns an int*/
 int	error_int(char *str)
 {
 	if (str)

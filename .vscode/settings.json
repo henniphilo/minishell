@@ -13,6 +13,7 @@
 		"readline.h": "c",
 		"messages.h": "c",
 		"curses.h": "c",
-		"string.h": "c"
+		"string.h": "c",
+		"libft.h": "c"
 	}
 }
