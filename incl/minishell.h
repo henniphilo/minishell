@@ -37,7 +37,7 @@ int			count_commands(t_data *shell);
 int			builtin_check(char *arg);
 void		when_builtin(t_data *shell);
 void		which_builtin_parent(t_data *shell, char *arg);
-void		which_builtin_child(t_data *shell, char *arg);
+int		which_builtin_child(t_data *shell, char *arg);
 
 
 /*Petra*/

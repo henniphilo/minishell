@@ -37,24 +37,32 @@ int	builtin_check(char *arg)
 	return (0);
 }
 
-void	which_builtin_child(t_data *shell, char *arg)
+int	which_builtin_child(t_data *shell, char *arg)
 {
 	int	n;
 
 	n = 7;
+	shell->bi_check = 1;
 	if(ft_strncmp((const char *)arg, "alias", n) == 0)
 	{
 		printf("its alias\n");
-
+		return(0);
 	}
 	if(ft_strncmp((const char *)arg, "source", n) == 0)
 	{
 		printf("its source\n");
+		return(0);
 
 	}
 	if(ft_strncmp((const char *)arg, "env", n) == 0)
 	{
 		printf("its env\n");
+		return(0);
+	}
+	if(ft_strncmp((const char *)arg, "echo", n) == 0)
+	{
+		printf("its echo\n");
+		return(0);
 	}
 }
 
@@ -63,6 +71,7 @@ void	which_builtin_parent(t_data *shell, char *arg)
 	int	n;
 
 	n = 7;
+	shell->bi_check = 1;
 	if(ft_strncmp((const char *)arg, "cd", n) == 0)
 	{
 		printf("its cd\n");

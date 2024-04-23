@@ -77,6 +77,7 @@ typedef struct s_data {
 	char		**arguments; // hen: to store all the input
 	int			*fd; // hen: zum directen der fd muss noch richtig init werden
 	t_builtin	*bi; // hen : zum tracken der builtins
+	bool		bi_check;
 }	t_data;
 
 #endif

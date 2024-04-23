@@ -21,8 +21,7 @@ int	execute_shell(t_data *shell)
 	pid_t	pid;
 	int		cmd_count;
 	int		i;
-	// if (pipe(fd) < 0)
-	// 	perror("Error\n");
+
 	i = 0;
 	cmd_count = count_commands(shell); // -1 then you hve numbers of pipes. wenn ein command andere funktion
 	init_fd(shell); //wahrscheinlich hier fehler
@@ -40,14 +39,14 @@ int	execute_shell(t_data *shell)
 				if (pid == 0)
 				{
 					printf("count: %d & i: %d\n", cmd_count, i);
-					which_builtin_child(shell, shell->arguments[i]);
-					child_process_env(shell->arguments[i], shell, i);
+					if(!(which_builtin_child(shell, shell->arguments[i]))
+						child_process_env(shell->arguments[i], shell, i);
 				}
 			}
 			else
 			{
 				printf("im parent\n");
-				if(builtin_check(shell, shell->arguments[i]) == 0)
+				if(builtin_check(shell->arguments[i]) == 0)
 					which_builtin_parent(shell, shell->arguments[i]);
 				//parent process
 				printf("Elternprozess: PID = %d, Kindprozess-PID = %d\n", getpid(), pid);
