@@ -72,7 +72,7 @@ static char	*handle_quotes(char *tmp_buf, t_lexer **tokens)
 		free (s);
 		return (NULL);
 	}
-	if (tmp_buf + i + 1 == 32)
+	if (tmp_buf[i + 1] == 32)
 		node->space_after = 1;
 	list_add_back(tokens, node);
 	return (tmp_buf + i + 1);
