@@ -49,11 +49,11 @@ int	main(int ac, char **av, char **envp)
 	while (1)
 	{
 		data->buf = (char *)get_the_line(data);
-		//data->arguments = split_input(data->buf);
-		//init_args(data, data->arguments);
+		data->arguments = split_input(data->buf);
+		init_args(data, data->arguments);
 		if (check_line(data->buf) || lexer(data))
 			continue ; //if lexing, parsing or line are wrong returns the prompt
-		//execute_shell(data);
+		execute_shell(data);
 		clear_data(data);
 	}
 	free_data(data); //just temporarily in this part of the code

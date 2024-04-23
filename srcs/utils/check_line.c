@@ -28,6 +28,7 @@ static int	check_unclosed(char *buf)
 	return (0);
 }
 
+/*checks if quotes are unclosed or if line consists only of spaces*/
 int	check_line(char *buf)
 {
 	int	i;
