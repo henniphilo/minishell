@@ -70,10 +70,10 @@ typedef struct s_exec {
 
 //struct to store important data we need initially and at execution adn all other structs
 typedef struct s_data {
-	char		*buf; //buffer to store the litmp_buf = data->buf;ne read
+	char		*buf; //buffer to store the line read
 	char		**env; //2Darray to store environmental variables
 	t_lexer		*tokens; //linked list of lexed tokens
-	t_command	**cmdlist; //linked list of commandlines between pipes that point to a struct of commands
+	//t_command	**cmdlist; //linked list of commandlines between pipes that point to a struct of commands
 	char		**arguments; // hen: to store all the input
 	int			*fd; // hen: zum directen der fd muss noch richtig init werden
 	t_builtin	*bi; // hen : zum tracken der builtins

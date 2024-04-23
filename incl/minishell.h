@@ -41,11 +41,15 @@ void		when_builtin(t_data *shell);
 
 /*Petra*/
 const char	*get_the_line(t_data *data);
+int			check_line(char *buf);
 void		panic(char *str, void *ptr);
+int			error_int(char *str);
 void		*init_data(t_data *data, char **envp);
 void		*free_data(t_data *data);
-int			check_line(char *buf);
-int			error_int(char *str);
+void		clear_data(t_data *data);
+void		delone_tokens(t_lexer *token);
+void		free_tokens(t_lexer **tokens);
+void		free_env(char **env);
 int			lexer(t_data *data);
 
 
