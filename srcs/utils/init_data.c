@@ -11,6 +11,26 @@ static int	count_ptrs(char **ptr)
 	return (i);
 }
 
+/* t_environ	*init_env_list(char **envp)
+{
+	t_environ	*list;
+	int			i;
+	char		*value;
+	char		*name;
+
+	if (envp)
+	{
+		i = -1;
+		while (envp[++i])
+		{
+			name = ft_substr(envp[i], 0, ft_strchr(envp[i], "=") - envp[i]);
+			value = ft_substr(envp[i], (ft_strchr(envp[i], "=") - envp[i]) + 1, ft_strlen((const char *)envp[i]));
+			new_env_node();
+			add_env_back();
+		}
+	}
+} */
+
 /*stores the variables form envp in data->env*/
 void	*init_env(t_data *data, char **envp)
 {

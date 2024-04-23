@@ -69,5 +69,8 @@ bash: .: Is a directory
 c0c7c1% echo hi >>* hello
 zsh: is a directory: incl ///not relevant for us though
 
+pbencze@c3a4c2:~/Documents/42cursus/Minishell/Minishell_Github$ 'l''s'
+incl  libft  Makefile  srcs
+
 command||command
 */

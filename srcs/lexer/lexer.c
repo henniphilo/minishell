@@ -8,7 +8,7 @@ static t_lexer	*new_list(t_type t, char *s, bool q)
 	new_node = malloc(sizeof(t_lexer));
 	if (!new_node)
 		return (NULL);
-	new_node->single_quote = q;
+	new_node->double_quote = q;
 	new_node->type = t;
 	new_node->str = s;
 	new_node->next = NULL;
@@ -41,6 +41,16 @@ static void	list_add_back(t_lexer **lst, t_lexer *new)
 	}
 }
 
+/* static char	*handle_meta(char *tmp_buf, t_lexer **tokens)
+{
+	if (*tmp_buf = "|")
+		edges_pipe(); //handle edge cases
+	else if (*tmp_buf = "<")
+		edges_less()
+	else if (*tmp_buf = ">")
+		edges_more();
+} */
+
 /*stores the everything between quotes as string
 and the type of the quote as boolean
 in a node of a tokens linked list as type WORD*/
@@ -56,12 +66,14 @@ static char	*handle_quotes(char *tmp_buf, t_lexer **tokens)
 	s = ft_substr((const char *)(tmp_buf), 1, i - 1);
 	if (!s)
 		return (NULL);
-	node = new_list(WORD, s, (*tmp_buf == '\''));
+	node = new_list(WORD, s, (*tmp_buf == '\"'));
 	if (!node)
 	{
 		free (s);
 		return (NULL);
 	}
+	if (tmp_buf + i + 1 == 32)
+		node->space_after = 1;
 	list_add_back(tokens, node);
 	return (tmp_buf + i + 1);
 }
@@ -81,7 +93,7 @@ int	lexer(t_data *data)
 		else if (*tmp_buf == '\"' || *tmp_buf == '\'')
 			tmp_buf = handle_quotes(tmp_buf, &data->tokens);
 		//else if (ft_strchr("<>|", *tmp_buf))
-			//tmp_buf = handle_meta(tmp_buf, );
+		//	tmp_buf = handle_meta(tmp_buf, &data->tokens);
 		else if (*tmp_buf)
 			tmp_buf++; //test
 			//tmp_buf = handle_words(tmp_buf, data->tokens);
@@ -95,3 +107,4 @@ int	lexer(t_data *data)
 
 //if quote -> find end of quote -> create a substring -> append -> return start of bufferrest
 //if not quote -> go until space or quote or special character or end of string -> create substring -> append -> return start of bufferrest
+//next: expand environmental vars and join chains of WORDs
