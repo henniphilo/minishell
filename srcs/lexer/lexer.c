@@ -1,10 +1,6 @@
 #include "../../incl/minishell.h"
 
-/* static int	is_space(char c) //shall I check all white spaces or only spaces
-{
-	return (c == 32);
-} */
-
+/*creates a new node*/
 static t_lexer	*new_list(t_type t, char *s, bool q)
 {
 	t_lexer	*new_node;
@@ -20,6 +16,7 @@ static t_lexer	*new_list(t_type t, char *s, bool q)
 	return (new_node);
 }
 
+/*returns the last element of the token list*/
 static t_lexer	*list_last(t_lexer *lst)
 {
 	if (lst == NULL)
@@ -29,6 +26,7 @@ static t_lexer	*list_last(t_lexer *lst)
 	return (lst);
 }
 
+/*adds a node to the end of the token list*/
 static void	list_add_back(t_lexer **lst, t_lexer *new)
 {
 	t_lexer	*pos;
@@ -43,7 +41,9 @@ static void	list_add_back(t_lexer **lst, t_lexer *new)
 	}
 }
 
-
+/*stores the everything between quotes as string
+and the type of the quote as boolean
+in a node of a tokens linked list as type WORD*/
 static char	*handle_quotes(char *tmp_buf, t_lexer **tokens)
 {
 	t_lexer	*node;
@@ -66,6 +66,9 @@ static char	*handle_quotes(char *tmp_buf, t_lexer **tokens)
 	return (tmp_buf + i + 1);
 }
 
+/*where the lexing happens, returns 1 on error,
+processes quotes first, then the special characters
+like pipes or redirections and then the rest*/
 int	lexer(t_data *data)
 {
 	char	*tmp_buf;

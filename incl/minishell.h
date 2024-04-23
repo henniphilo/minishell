@@ -44,7 +44,7 @@ const char	*get_the_line(t_data *data);
 int			check_line(char *buf);
 void		panic(char *str, void *ptr);
 int			error_int(char *str);
-void		*init_data(t_data *data, char **envp);
+void		*init_env(t_data *data, char **envp);
 void		*free_data(t_data *data);
 void		clear_data(t_data *data);
 void		delone_tokens(t_lexer *token);

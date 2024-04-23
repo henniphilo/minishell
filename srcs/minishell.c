@@ -33,30 +33,28 @@ void	clear_data(t_data *data)
 		data->buf = NULL;
 	}
 	free_tokens(&(data->tokens));
+	data->tokens = NULL;
 }
 
 int	main(int ac, char **av, char **envp)
 {
 	t_data		*data;
-	int	i; //test
 
 	if (ac != 1 || !av[0])
 		panic(ARG_ERR, NULL);
 	data = ft_calloc(1, sizeof(t_data));
 	if (!data)
 		panic(ALLOC_ERR, NULL);
-	init_data(data, envp); //make init function
-	i = 0; //test
-	while (i < 2)
+	init_env(data, envp);
+	while (1)
 	{
 		data->buf = (char *)get_the_line(data);
 		//data->arguments = split_input(data->buf);
 		//init_args(data, data->arguments);
 		if (check_line(data->buf) || lexer(data))
-			continue ;
+			continue ; //if lexing, parsing or line are wrong returns the prompt
 		//execute_shell(data);
 		clear_data(data);
-		i++; //test
 	}
 	free_data(data); //just temporarily in this part of the code
 	return (0);
