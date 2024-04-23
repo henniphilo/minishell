@@ -41,13 +41,15 @@ static void	list_add_back(t_lexer **lst, t_lexer *new)
 	}
 }
 
-static char	*handle_meta(char *tmp_buf, t_lexer **tokens)
+/* static char	*handle_meta(char *tmp_buf, t_lexer **tokens)
 {
 	if (*tmp_buf = "|")
+		edges_pipe(); //handle edge cases
 	else if (*tmp_buf = "<")
+		edges_less()
 	else if (*tmp_buf = ">")
-
-}
+		edges_more();
+} */
 
 /*stores the everything between quotes as string
 and the type of the quote as boolean
@@ -90,8 +92,8 @@ int	lexer(t_data *data)
 			tmp_buf++;
 		else if (*tmp_buf == '\"' || *tmp_buf == '\'')
 			tmp_buf = handle_quotes(tmp_buf, &data->tokens);
-		else if (ft_strchr("<>|", *tmp_buf))
-			tmp_buf = handle_meta(tmp_buf, &data->tokens);
+		//else if (ft_strchr("<>|", *tmp_buf))
+		//	tmp_buf = handle_meta(tmp_buf, &data->tokens);
 		else if (*tmp_buf)
 			tmp_buf++; //test
 			//tmp_buf = handle_words(tmp_buf, data->tokens);
