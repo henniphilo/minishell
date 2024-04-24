@@ -18,43 +18,35 @@ static void	init_fd(t_data *shell)
 
 int	execute_shell(t_data *shell)
 {
-	pid_t	pid;
-	int		cmd_count;
 	int		i;
+	pid_t	pid;
 
 	i = 0;
-	cmd_count = count_commands(shell); // -1 then you hve numbers of pipes. wenn ein command andere funktion
-	init_fd(shell); //wahrscheinlich hier fehler
-	while(cmd_count > 0)
+	pid = 0;
+	shell->cmd_count = count_commands(shell); // -1 then you hve numbers of pipes. wenn ein command andere funktion
+	if(shell->cmd_count > 0)
 	{
+		if(builtin_check(shell->arguments[i]) != 1)
 		{
-			if(builtin_check(shell->arguments[i]) != 1) //checken an welcher stelle sinnvoll und muss noch differenzieren mit build in flag?
-					//export cd unset need to be in parent the rest in child so differnciate
-			{
-				pid = fork();
-				if (pid < 0)
-				{
-					perror("fork problem");
-				}
-				if (pid == 0)
-				{
-					printf("count: %d & i: %d\n", cmd_count, i);
-					if(!(which_builtin_child(shell, shell->arguments[i]))
-						child_process_env(shell->arguments[i], shell, i);
-				}
-			}
+			if(shell->cmd_count == 1)
+				execute_one_envcmd(shell, pid);
 			else
 			{
-				printf("im parent\n");
-				if(builtin_check(shell->arguments[i]) == 0)
-					which_builtin_parent(shell, shell->arguments[i]);
-				//parent process
-				printf("Elternprozess: PID = %d, Kindprozess-PID = %d\n", getpid(), pid);
+			//	while(shell->cmd_count > 1)
+				execute_more_envcmd(shell, pid, i);
 			}
-			i++;
-			cmd_count--;
-			waitpid(pid, NULL, 0);
 		}
+		else
+		{
+			printf("im parent\n");
+			if(builtin_check(shell->arguments[i]) == 0)
+				which_builtin_parent(shell, shell->arguments[i]);
+			//parent process
+			printf("Elternprozess: PID = %d, Kindprozess-PID = %d\n", getpid(), pid);
+		}
+		i++;
+		shell->cmd_count--;
+		waitpid(pid, NULL, 0);
 	}
 	return (1);
 }
@@ -65,7 +57,7 @@ void	child_process_env(char *arg, t_data *shell, int i)
 	int		file_in;
 	int		file_out;
 
-	//file_in = open(arg , O_RDONLY, 0777);
+	init_fd(shell); //wahrscheinlich hier fehler ->  nutze ich noch gar nicht
 	file_in  = (dup(STDIN_FILENO) + i);
 	file_out = (dup(STDOUT_FILENO) + i);
 	if (file_in == -1)

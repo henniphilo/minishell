@@ -43,12 +43,12 @@ int	which_builtin_child(t_data *shell, char *arg)
 
 	n = 7;
 	shell->bi_check = 1;
-	if(ft_strncmp((const char *)arg, "alias", n) == 0)
+	if(ft_strncmp((const char *)arg, "alias", n) == 0) //wahrscheinlich nicht laut jan
 	{
 		printf("its alias\n");
 		return(0);
 	}
-	if(ft_strncmp((const char *)arg, "source", n) == 0)
+	if(ft_strncmp((const char *)arg, "source", n) == 0) //wahrscheinlich nicht laut jan
 	{
 		printf("its source\n");
 		return(0);
@@ -64,6 +64,7 @@ int	which_builtin_child(t_data *shell, char *arg)
 		printf("its echo\n");
 		return(0);
 	}
+	return(1);
 }
 
 void	which_builtin_parent(t_data *shell, char *arg)

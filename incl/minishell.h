@@ -26,7 +26,8 @@
 
 /*Henni*/
 //const char	*read_the_line();
-char		**split_input(const char *line);
+char		**split_input_at_pipe(const char *line);
+char		**split_pipe_in_cmd(const char *split_line);
 char		**no_pipe(const char *line);
 char		*path_finder(char *cmd, char **envp);
 void		child_process_env(char *arg, t_data *shell, int i);
@@ -37,7 +38,11 @@ int			count_commands(t_data *shell);
 int			builtin_check(char *arg);
 void		when_builtin(t_data *shell);
 void		which_builtin_parent(t_data *shell, char *arg);
-int		which_builtin_child(t_data *shell, char *arg);
+int			which_builtin_child(t_data *shell, char *arg);
+void		execute_one_envcmd(t_data *shell, pid_t pid);
+void		execute_more_envcmd(t_data *shell, pid_t pid, int i);
+
+
 
 
 /*Petra*/

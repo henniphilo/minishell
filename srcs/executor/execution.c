@@ -1,12 +1,12 @@
 #include "../../incl/minishell.h"
 
-char	**split_input(const char *line)
+char	**split_input_at_pipe(const char *line)
 {
 	char	**split_line;
 	char	pipe;
 	int		i;
 
-	pipe = ' ';
+	pipe = '|';
 	i = 0;
 	split_line = NULL;
 	if(line == NULL)
@@ -16,7 +16,7 @@ char	**split_input(const char *line)
 	}
 	while(line[i] != '\0')
 	{
-		if(line[i] == ' ')
+		if(line[i] == '|')
 		{
 			split_line = ft_split(line, pipe);
 			return (split_line);
@@ -25,6 +25,34 @@ char	**split_input(const char *line)
 	}
 	split_line = no_pipe(line);
 	return (split_line);
+}
+
+
+char	**split_pipe_in_cmd(const char *split_line)
+{
+	char	**command;
+	char	space;
+	int		i;
+
+	space = ' ';
+	i = 0;
+	command = NULL;
+	if(split_line == NULL)
+	{
+		perror("command split error\n");
+		exit (0);
+	}
+	while(split_line[i] != '\0')
+	{
+		if(split_line[i] == ' ')
+		{
+			command = ft_split(split_line, space);
+			return (command);
+		}
+		i++;
+	}
+	command = no_pipe(split_line);
+	return (command);
 }
 
 char	**no_pipe(const char *line)
@@ -87,6 +115,7 @@ void	init_args(t_data *shell, char **split)
 
 }
 
-
+//zeites array mit meinen commands, dann dreifach array was auf die anderen arrays pointet mit arguments and executables
+// zweimal splitten erster command erst mnach pipes schauen dann nach commands
 
 

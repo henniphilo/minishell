@@ -76,8 +76,10 @@ typedef struct s_data {
 	t_command	**cmdlist; //linked list of commandlines between pipes that point to a struct of commands
 	char		**arguments; // hen: to store all the input
 	int			*fd; // hen: zum directen der fd muss noch richtig init werden
-	t_builtin	*bi; // hen : zum tracken der builtins
+//	t_builtin	*bi; // hen : zum tracken der builtins
 	bool		bi_check;
+//	pid_t		*pid; //process id, evt als array fuer individuelle prozess? - doch nicht
+	int			cmd_count;
 }	t_data;
 
 #endif
