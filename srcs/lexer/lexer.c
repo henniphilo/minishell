@@ -1,48 +1,59 @@
 #include "../../incl/minishell.h"
 
+int	check_pipe(char *buf)
+{
+	if (buf[1] == '|')
+		return (error_int("minishell does not implement '||'"));
+	return (0);
+}
+
+int	check_less(t_type **type, char **buf)
+{
+	if (*buf[1] == '<')
+	{
+		*type = HEREDOC;
+		*buf++;
+	}
+	return (0);
+}
+
+int	check_more(t_type *type, char *buf)
+{
+	return (0);
+}
+
 static char	*handle_meta(char *tmp_buf, t_lexer **tokens)
 {
 	t_lexer	*node;
+	t_type	type;
 
 	if (*tmp_buf == '|')
 	{
-		//if (check_pipe()) //handle edge cases
-		//	return (NULL);
-		node = new_lex_list(PIPE, NULL, NULL);
-		if (!node)
+		type = PIPE;
+		if (check_pipe(tmp_buf))
 			return (NULL);
-		lex_list_add_back(tokens, node);
 	}
 	else if (*tmp_buf == '<')
 	{
-		//if (check_less())
-		//	return (NULL);
-		if (tmp_buf[1] == '<')
-		{
-			node = new_lex_list(HEREDOC, NULL, NULL);
-			tmp_buf++;
-		}
-		else
-		node = new_lex_list(INPUT, NULL, NULL);
-		if (!node)
+		type = INPUT;
+		if (check_less(&type, &tmp_buf))
 			return (NULL);
-		lex_list_add_back(tokens, node);
 	}
 	else if (*tmp_buf == '>')
 	{
-		//if (check_more())
-		//	return (NULL);
+		type = OUTPUT;
 		if (tmp_buf[1] == '>')
 		{
-			node = new_lex_list(APPEND, NULL, NULL);
+			type = APPEND;
 			tmp_buf++;
 		}
-		else
-			node = new_lex_list(OUTPUT, NULL, NULL);
-		if (!node)
-			return (NULL);
-		lex_list_add_back(tokens, node);
+		//if (check_more())
+		//	return (NULL);
 	}
+	node = new_lex_list(type, NULL, NULL);
+	if (!node)
+		return (NULL);
+	lex_list_add_back(tokens, node);
 	return (tmp_buf + 1);
 }
 
