@@ -13,8 +13,8 @@ void	execute_one_envcmd(t_data *shell, pid_t pid)
 	if (pid == 0)
 	{
 	//	printf("count: %d & i: %d\n", cmd_count, i);
-		if((which_builtin_child(shell, shell->arguments[0]))== 1)
-			child_process_env(shell->arguments[0], shell, 0);
+		if((which_builtin_child(shell, shell->cmds[0]))== 1)
+			child_process_env(shell->cmds[0], shell, 0);
 	}
 }
 void	execute_more_envcmd(t_data *shell, pid_t pid, int i)

@@ -39,7 +39,7 @@ int	main(int ac, char **av, char **envp)
 		data->buf = (char *)get_the_line(data);
 		data->arguments = split_input_at_pipe(data->buf);
 		init_args(data, data->arguments);
-		init_cmds(data, data->cmds);
+		init_cmds(data, data->arguments);
 		execute_shell(data);
 
 		/*

@@ -30,6 +30,7 @@ char	**split_input_at_pipe(const char *line)
 
 char	**split_pipe_in_cmd(const char *split_line)
 {
+	printf("wir versuchen in cmds zu splitten\n");
 	char	**command;
 	char	space;
 	int		i;
@@ -105,13 +106,13 @@ void	init_args(t_data *shell, char **split)
 	{
 		split[i] = line_trim(split[i]);
 		shell->arguments[i] = ft_strdup(split[i]);
-		printf("args[%d]: %s\n",i, shell->arguments[i]);
+		printf("xasdadargs[%d]: %s\n",i, shell->arguments[i]);
 		free (split[i]);
 		i++;
 	}
 	free(split[i]);
 	shell->arguments[i] = NULL;
-	printf("args[%d]: %s\n",i, shell->arguments[i]);
+	// printf("args[%d]: %s\n",i, shell->arguments[i]);
 	count_commands(shell);
 }
 
@@ -148,5 +149,5 @@ void	init_cmds(t_data *shell, char **pipeline)
 	}
 	free(pipeline[i]);
 	shell->cmds[i] = NULL;
-	printf("args[%d]: %s\n",i, shell->cmds[i]);
+	printf("cmds[%d]: %s\n",i, shell->cmds[i]);
 }
