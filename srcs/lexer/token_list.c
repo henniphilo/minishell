@@ -8,7 +8,7 @@ t_lexer	*new_lex_list(t_type t, char *s, bool q)
 	new_node = malloc(sizeof(t_lexer));
 	if (!new_node)
 		return (NULL);
-	new_node->double_quote = q;
+	new_node->single_quote = q;
 	new_node->type = t;
 	new_node->str = s;
 	new_node->next = NULL;

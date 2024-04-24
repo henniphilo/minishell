@@ -35,7 +35,7 @@ void	*free_data(t_data *data)
 			free(data->arguments);
 		}
 		free_tokens(&(data->tokens));
-		free(&(data->env_list));
+		free_env_list(&(data->env_list));
 		free_env(data->env);
 		free(data);
 	}
