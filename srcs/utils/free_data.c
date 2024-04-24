@@ -1,27 +1,5 @@
 #include "../../incl/minishell.h"
 
-/*frees one element of the token list used for lexing*/
-void	delone_tokens(t_lexer *token)
-{
-	if (token)
-	{
-		if (token->str)
-			free(token->str);
-		free(token);
-	}
-}
-
-/*frees the token list used for lexing*/
-void	free_tokens(t_lexer **tokens)
-{
-	if (tokens && *tokens)
-	{
-		free_tokens(&(*tokens)->next);
-		delone_tokens(*tokens);
-		tokens = NULL;
-	}
-}
-
 /*frees the stored environmental variables*/
 void	free_env(char **env)
 {
@@ -57,6 +35,7 @@ void	*free_data(t_data *data)
 			free(data->arguments);
 		}
 		free_tokens(&(data->tokens));
+		free(&(data->env_list));
 		free_env(data->env);
 		free(data);
 	}

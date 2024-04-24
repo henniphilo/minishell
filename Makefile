@@ -9,8 +9,8 @@ RFLAG = -lreadline
 
 MAIN = minishell
 EXEC = exec_3 exec_2 execution built_in
-UTILS = error init_data free_data check_line
-LEXER = lexer
+UTILS = error init_env free_data check_line delete_lists utils
+LEXER = lexer token_list
 
 SRC = $(addsuffix .c, $(addprefix srcs/, $(MAIN))) \
 	  $(addsuffix .c, $(addprefix srcs/utils/, $(UTILS))) \

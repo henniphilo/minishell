@@ -45,32 +45,3 @@ int	check_line(char *buf)
 		return (1);
 	return (0);
 }
-
-/*c0c7c1% echo hi >>> hello
-zsh: parse error near `>'
-bash: syntax error near unexpected token `>'
-
-c0c7c1% echo hi >>< hello
-zsh: parse error near `<'
-
-echo hi <<<< hello
-zsh: parse error near `<'
-
-Kein error: c0c7c1% echo hi <<< hello // ?????
-hi
-
-c0c7c1% echo hi >>> hello
-zsh: parse error near `>'
-
-c0c7c1% echo hi >>. hello
-zsh: is a directory: .
-bash: .: Is a directory
-
-c0c7c1% echo hi >>* hello
-zsh: is a directory: incl ///not relevant for us though
-
-pbencze@c3a4c2:~/Documents/42cursus/Minishell/Minishell_Github$ 'l''s'
-incl  libft  Makefile  srcs
-
-command||command
-*/
