@@ -1,16 +1,23 @@
 #include "../../incl/minishell.h"
 
 
-int		count_commands(t_data *shell)
+void		count_commands(t_data *shell)
 {
 	int		cmd_count;
+	int		i;
 
+	i = 0;
 	cmd_count = 0;
-	while (shell->arguments[cmd_count] != NULL)
+	while (shell->arguments[cmd_count] != NULL) //eigentlich gerade ein pipe count
 		cmd_count++;
-	//printf("command count is: %d\n", cmd_count);
-	return(cmd_count);
+	if(cmd_count > 1)
+	{
+		while(i <= cmd_count)
+			shell->cmds = split_pipe_in_cmd(shell->arguments[i]);
+	}
+	shell->cmd_count = cmd_count; // -1 then you hve numbers of pipes
 }
+
 static void	init_fd(t_data *shell)
 {
 	shell->fd = NULL;
@@ -23,7 +30,6 @@ int	execute_shell(t_data *shell)
 
 	i = 0;
 	pid = 0;
-	shell->cmd_count = count_commands(shell); // -1 then you hve numbers of pipes. wenn ein command andere funktion
 	if(shell->cmd_count > 0)
 	{
 		if(builtin_check(shell->arguments[i]) != 1)
@@ -31,18 +37,14 @@ int	execute_shell(t_data *shell)
 			if(shell->cmd_count == 1)
 				execute_one_envcmd(shell, pid);
 			else
-			{
-			//	while(shell->cmd_count > 1)
 				execute_more_envcmd(shell, pid, i);
-			}
 		}
 		else
 		{
 			printf("im parent\n");
 			if(builtin_check(shell->arguments[i]) == 0)
 				which_builtin_parent(shell, shell->arguments[i]);
-			//parent process
-			printf("Elternprozess: PID = %d, Kindprozess-PID = %d\n", getpid(), pid);
+		//	printf("Elternprozess: PID = %d, Kindprozess-PID = %d\n", getpid(), pid);
 		}
 		i++;
 		shell->cmd_count--;
@@ -77,9 +79,14 @@ void	child_process_env(char *arg, t_data *shell, int i)
 // checken ob builtin oder env
 // keeping track of closing pipe
 
-// int	execute_pipes(t_data *shell)
-// {
+void	print_cmds(t_data *shell)
+{
+	int	i;
 
-
-// }
-
+	i = 0;
+	while(shell->cmds != NULL)
+	{
+		printf("cmds[%d]: %s\n",i, shell->cmds[i]);
+		i++;
+	}
+}

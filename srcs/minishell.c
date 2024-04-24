@@ -37,8 +37,9 @@ int	main(int ac, char **av, char **envp)
 	while (1)
 	{
 		data->buf = (char *)get_the_line(data);
-		data->arguments = split_input(data->buf);
+		data->arguments = split_input_at_pipe(data->buf);
 		init_args(data, data->arguments);
+		init_cmds(data, data->cmds);
 		execute_shell(data);
 
 		/*

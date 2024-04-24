@@ -32,15 +32,17 @@ char		**no_pipe(const char *line);
 char		*path_finder(char *cmd, char **envp);
 void		child_process_env(char *arg, t_data *shell, int i);
 void		init_args(t_data *shell, char **split);
+void		init_cmds(t_data *shell, char **pipeline);
 void		env_execute(t_data *shell, char *arg);
-int			execute_shell(t_data *shell);
-int			count_commands(t_data *shell);
-int			builtin_check(char *arg);
+void		count_commands(t_data *shell);
+void		print_cmds(t_data *shell);
 void		when_builtin(t_data *shell);
 void		which_builtin_parent(t_data *shell, char *arg);
-int			which_builtin_child(t_data *shell, char *arg);
 void		execute_one_envcmd(t_data *shell, pid_t pid);
 void		execute_more_envcmd(t_data *shell, pid_t pid, int i);
+int			builtin_check(char *arg);
+int			execute_shell(t_data *shell);
+int			which_builtin_child(t_data *shell, char *arg);
 
 
 

@@ -112,10 +112,41 @@ void	init_args(t_data *shell, char **split)
 	free(split[i]);
 	shell->arguments[i] = NULL;
 	printf("args[%d]: %s\n",i, shell->arguments[i]);
-
+	count_commands(shell);
 }
 
 //zeites array mit meinen commands, dann dreifach array was auf die anderen arrays pointet mit arguments and executables
 // zweimal splitten erster command erst mnach pipes schauen dann nach commands
 
+static void	space_cmds(t_data *shell, char **cmds)
+{
+	int		i;
 
+	i = 0;
+	while(cmds[i] != NULL)
+	{
+		i++;
+	}
+	shell->cmds = (char **)ft_calloc(sizeof(cmds) * i, sizeof(char));
+}
+
+void	init_cmds(t_data *shell, char **pipeline)
+{
+	int		i;
+
+	i = 0;
+
+	space_cmds(shell, pipeline);
+
+	while(pipeline[i] != NULL)
+	{
+		pipeline[i] = line_trim(pipeline[i]);
+		shell->cmds[i] = ft_strdup(pipeline[i]);
+		printf("cmds[%d]: %s\n",i, shell->cmds[i]);
+		free (pipeline[i]);
+		i++;
+	}
+	free(pipeline[i]);
+	shell->cmds[i] = NULL;
+	printf("args[%d]: %s\n",i, shell->cmds[i]);
+}

@@ -80,6 +80,7 @@ typedef struct s_data {
 	bool		bi_check;
 //	pid_t		*pid; //process id, evt als array fuer individuelle prozess? - doch nicht
 	int			cmd_count;
+	char		**cmds;
 }	t_data;
 
 #endif
