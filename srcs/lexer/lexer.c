@@ -1,48 +1,44 @@
 #include "../../incl/minishell.h"
 
+/*stores redirections and pipes
+in a node of a tokens linked list
+as type PIPE, INPUT, OUTPUT, APPEND or HEREDOC*/
 static char	*handle_meta(char *tmp_buf, t_lexer **tokens)
 {
 	t_lexer	*node;
+	t_type	type;
 
+	type = 0;
 	if (*tmp_buf == '|')
 	{
-		//if (check_pipe()) //handle edge cases
-		//	return (NULL);
-		node = new_lex_list(PIPE, NULL, NULL);
-		if (!node)
+		type = PIPE;
+		if (check_pipe(tmp_buf))
 			return (NULL);
-		lex_list_add_back(tokens, node);
 	}
 	else if (*tmp_buf == '<')
 	{
-		//if (check_less())
-		//	return (NULL);
-		if (tmp_buf[1] == '<')
-		{
-			node = new_lex_list(HEREDOC, NULL, NULL);
-			tmp_buf++;
-		}
-		else
-		node = new_lex_list(INPUT, NULL, NULL);
-		if (!node)
+		type = INPUT;
+		if (check_less(&type, tmp_buf))
 			return (NULL);
-		lex_list_add_back(tokens, node);
 	}
 	else if (*tmp_buf == '>')
+	{	//test
+	t_lexer	*tokens = data->tokens;
+	while (tokens)
 	{
-		//if (check_more())
-		//	return (NULL);
-		if (tmp_buf[1] == '>')
-		{
-			node = new_lex_list(APPEND, NULL, NULL);
-			tmp_buf++;
-		}
-		else
-			node = new_lex_list(OUTPUT, NULL, NULL);
-		if (!node)
-			return (NULL);
-		lex_list_add_back(tokens, node);
+		printf("string: %s\ntype: %i\ndoublequote: %d\n", tokens->str, tokens->type, tokens->single_quote);
+		tokens = tokens->next;
 	}
+		type = OUTPUT;
+		if (check_more(&type, tmp_buf))
+			return (NULL);
+	}
+	node = new_lex_list(type, NULL, NULL);
+	if (!node)
+		return (NULL);
+	lex_list_add_back(tokens, node);
+	if (tmp_buf[0] == tmp_buf[1])
+		tmp_buf++;
 	return (tmp_buf + 1);
 }
 
@@ -75,6 +71,33 @@ static char	*handle_quotes(char *tmp_buf, t_lexer **tokens)
 	return (tmp_buf + i + 1);
 }
 
+/*stores the everything delimited by spaces
+ or special character or quotes as string
+in a node of a tokens linked list as type WORD*/
+static char	*handle_words(char *tmp_buf, t_lexer **tokens)
+{
+	int		i;
+	char	*s;
+	t_lexer	*node;
+
+	i = 0;
+	while (tmp_buf[i] && tmp_buf[i] != 32 && !(ft_strchr("|<>", tmp_buf[i])))
+		i++;
+	s = ft_substr((const char *)(tmp_buf), 0, i);
+	if (!s)
+		return (NULL);
+	node = new_lex_list(WORD, s, NULL);
+	if (!node)
+	{
+		free (s);
+		return (NULL);
+	}
+	if (tmp_buf[i + 1] == 32)
+		node->space_after = 1;
+	lex_list_add_back(tokens, node);
+	return (tmp_buf + i);
+}
+
 /*where the lexing happens, returns 1 on error,
 processes quotes first, then the special characters
 like pipes or redirections and then the rest*/
@@ -92,19 +115,18 @@ int	lexer(t_data *data)
 		else if (ft_strchr("<>|", *tmp_buf))
 			tmp_buf = handle_meta(tmp_buf, &data->tokens);
 		else if (*tmp_buf)
-			tmp_buf++; //test
-			//tmp_buf = handle_words(tmp_buf, data->tokens);
+			tmp_buf = handle_words(tmp_buf, &data->tokens);
 
 		if (!tmp_buf)
-			return (error_int(ALLOC_ERR));
+			return (error_int(LEX_ERR));
 	}
-/* 	t_lexer	*tokens = data->tokens; //test
+/* 	//test
+	t_lexer	*tokens = data->tokens;
 	while (tokens)
 	{
 		printf("string: %s\ntype: %i\ndoublequote: %d\n", tokens->str, tokens->type, tokens->single_quote);
 		tokens = tokens->next;
-	}
-*/
+	} */
 	return (0);
 }
 
