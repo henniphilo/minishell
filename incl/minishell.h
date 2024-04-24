@@ -61,6 +61,9 @@ t_environ	*init_env_list(char **envp);
 void		lex_list_add_back(t_lexer **lst, t_lexer *new);
 t_lexer		*lex_list_last(t_lexer *lst);
 t_lexer		*new_lex_list(t_type t, char *s, bool q);
+int			check_more(t_type *type, char *buf);
+int			check_less(t_type *type, char *buf);
+int			check_pipe(char *buf);
 
 
 
