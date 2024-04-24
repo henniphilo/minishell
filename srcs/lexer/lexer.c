@@ -1,14 +1,50 @@
 #include "../../incl/minishell.h"
 
-/* static char	*handle_meta(char *tmp_buf, t_lexer **tokens)
+static char	*handle_meta(char *tmp_buf, t_lexer **tokens)
 {
-	if (*tmp_buf = "|")
-		edges_pipe(); //handle edge cases
-	else if (*tmp_buf = "<")
-		edges_less()
-	else if (*tmp_buf = ">")
-		edges_more();
-} */
+	t_lexer	*node;
+
+	if (*tmp_buf == '|')
+	{
+		//if (check_pipe()) //handle edge cases
+		//	return (NULL);
+		node = new_lex_list(PIPE, NULL, NULL);
+		if (!node)
+			return (NULL);
+		lex_list_add_back(tokens, node);
+	}
+	else if (*tmp_buf == '<')
+	{
+		//if (check_less())
+		//	return (NULL);
+		if (tmp_buf[1] == '<')
+		{
+			node = new_lex_list(HEREDOC, NULL, NULL);
+			tmp_buf++;
+		}
+		else
+		node = new_lex_list(INPUT, NULL, NULL);
+		if (!node)
+			return (NULL);
+		lex_list_add_back(tokens, node);
+	}
+	else if (*tmp_buf == '>')
+	{
+		//if (check_more())
+		//	return (NULL);
+		if (tmp_buf[1] == '>')
+		{
+			node = new_lex_list(APPEND, NULL, NULL);
+			tmp_buf++;
+		}
+		else
+			node = new_lex_list(OUTPUT, NULL, NULL);
+		if (!node)
+			return (NULL);
+		lex_list_add_back(tokens, node);
+	}
+	return (tmp_buf + 1);
+}
 
 /*stores the everything between quotes as string
 and the type of the quote as boolean
@@ -22,10 +58,12 @@ static char	*handle_quotes(char *tmp_buf, t_lexer **tokens)
 	i = 1;
 	while (tmp_buf[0] != tmp_buf[i])
 		i++;
+	if (i == 1)
+		return (tmp_buf + i + 1);
 	s = ft_substr((const char *)(tmp_buf), 1, i - 1);
 	if (!s)
 		return (NULL);
-	node = new_lex_list(WORD, s, (*tmp_buf == '\"'));
+	node = new_lex_list(WORD, s, (*tmp_buf == '\''));
 	if (!node)
 	{
 		free (s);
@@ -51,8 +89,8 @@ int	lexer(t_data *data)
 			tmp_buf++;
 		else if (*tmp_buf == '\"' || *tmp_buf == '\'')
 			tmp_buf = handle_quotes(tmp_buf, &data->tokens);
-		//else if (ft_strchr("<>|", *tmp_buf))
-		//	tmp_buf = handle_meta(tmp_buf, &data->tokens);
+		else if (ft_strchr("<>|", *tmp_buf))
+			tmp_buf = handle_meta(tmp_buf, &data->tokens);
 		else if (*tmp_buf)
 			tmp_buf++; //test
 			//tmp_buf = handle_words(tmp_buf, data->tokens);
@@ -60,7 +98,13 @@ int	lexer(t_data *data)
 		if (!tmp_buf)
 			return (error_int(ALLOC_ERR));
 	}
-	//printf("string: %s\ntype: %i\nsinglequote: %d\n", data->tokens->str, data->tokens->type, data->tokens->single_quote);
+/* 	t_lexer	*tokens = data->tokens; //test
+	while (tokens)
+	{
+		printf("string: %s\ntype: %i\ndoublequote: %d\n", tokens->str, tokens->type, tokens->single_quote);
+		tokens = tokens->next;
+	}
+*/
 	return (0);
 }
 

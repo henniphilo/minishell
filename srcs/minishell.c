@@ -33,15 +33,18 @@ int	main(int ac, char **av, char **envp)
 	if (!data)
 		panic(ALLOC_ERR, NULL);
 	init_env(data, envp);
-	int i = 0; //test
-	while (++i < 3) //test
+	//int i = 0; //test
+	while (1) //while (++i < 2) //test
 	{
 		data->buf = (char *)get_the_line(data);
-		//data->arguments = split_input(data->buf);
-		//init_args(data, data->arguments);
+		data->arguments = split_input(data->buf);
+		init_args(data, data->arguments);
 		if (check_line(data->buf) || lexer(data))
+		{
+			clear_data(data);
 			continue ; //if lexing, parsing or line are wrong returns the prompt
-		//execute_shell(data);
+		}
+		execute_shell(data);
 		clear_data(data);
 	}
 	free_data(data); //just temporarily in this part of the code

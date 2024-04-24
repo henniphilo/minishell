@@ -19,7 +19,7 @@ typedef enum e_type {
 typedef struct s_lexer {
 	t_type			type;
 	char			*str;
-	bool			double_quote; //to store if '' was removed for $ expansion
+	bool			single_quote; //to store if '' was removed for $ expansion
 	bool			space_after; //to check if a space follows the quoted word e.g. 'l's vs. 'l' s
 	struct s_lexer	*previous;
 	struct s_lexer	*next;
