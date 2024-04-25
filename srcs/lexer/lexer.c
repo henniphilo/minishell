@@ -22,13 +22,7 @@ static char	*handle_meta(char *tmp_buf, t_lexer **tokens)
 			return (NULL);
 	}
 	else if (*tmp_buf == '>')
-	{	//test
-	t_lexer	*tokens = data->tokens;
-	while (tokens)
 	{
-		printf("string: %s\ntype: %i\ndoublequote: %d\n", tokens->str, tokens->type, tokens->single_quote);
-		tokens = tokens->next;
-	}
 		type = OUTPUT;
 		if (check_more(&type, tmp_buf))
 			return (NULL);
@@ -81,7 +75,7 @@ static char	*handle_words(char *tmp_buf, t_lexer **tokens)
 	t_lexer	*node;
 
 	i = 0;
-	while (tmp_buf[i] && tmp_buf[i] != 32 && !(ft_strchr("|<>", tmp_buf[i])))
+	while (tmp_buf[i] && tmp_buf[i] != 32 && tmp_buf[i] != 9 && !(ft_strchr("|<>", tmp_buf[i])))
 		i++;
 	s = ft_substr((const char *)(tmp_buf), 0, i);
 	if (!s)
@@ -92,7 +86,7 @@ static char	*handle_words(char *tmp_buf, t_lexer **tokens)
 		free (s);
 		return (NULL);
 	}
-	if (tmp_buf[i + 1] == 32)
+	if (tmp_buf[i + 1] == 32 || tmp_buf[i + 1] == 9)
 		node->space_after = 1;
 	lex_list_add_back(tokens, node);
 	return (tmp_buf + i);
@@ -108,7 +102,7 @@ int	lexer(t_data *data)
 	tmp_buf = data->buf;
 	while (*tmp_buf)
 	{
-		if (*tmp_buf == 32)
+		if (*tmp_buf == 32 || *tmp_buf == 9)
 			tmp_buf++;
 		else if (*tmp_buf == '\"' || *tmp_buf == '\'')
 			tmp_buf = handle_quotes(tmp_buf, &data->tokens);
@@ -116,17 +110,19 @@ int	lexer(t_data *data)
 			tmp_buf = handle_meta(tmp_buf, &data->tokens);
 		else if (*tmp_buf)
 			tmp_buf = handle_words(tmp_buf, &data->tokens);
-
 		if (!tmp_buf)
 			return (error_int(LEX_ERR));
 	}
-/* 	//test
+	//expand_env()
+	//join_words()
+	//check_syntax_error(data->tokens);
+	//test
 	t_lexer	*tokens = data->tokens;
 	while (tokens)
 	{
-		printf("string: %s\ntype: %i\ndoublequote: %d\n", tokens->str, tokens->type, tokens->single_quote);
+		printf("string: %s\ntype: %i\nsinglequote: %d\n", tokens->str, tokens->type, tokens->single_quote);
 		tokens = tokens->next;
-	} */
+	}
 	return (0);
 }
 
