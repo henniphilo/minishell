@@ -118,12 +118,13 @@ int	lexer(t_data *data)
 	join_words(data);
 	//check_syntax_error(data->tokens);
 	//test
-	t_lexer	*tokens = data->tokens;
+	/* t_lexer	*tokens = data->tokens;
 	while (tokens)
 	{
 		printf("string: %s\ntype: %i\nsinglequote: %d\n", tokens->str, tokens->type, tokens->single_quote);
 		tokens = tokens->next;
 	}
+	*/
 	return (0);
 }
 
