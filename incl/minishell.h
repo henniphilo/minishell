@@ -40,6 +40,8 @@ void		when_builtin(t_data *shell);
 void		which_builtin_parent(t_data *shell, char *arg);
 void		execute_one_envcmd(t_data *shell, pid_t pid);
 void		execute_more_envcmd(t_data *shell, pid_t pid, int i);
+void		space_args(t_data *shell, char **args);
+void		space_cmds(t_data *shell, char **cmds);
 int			builtin_check(char *arg);
 int			execute_shell(t_data *shell);
 int			which_builtin_child(t_data *shell, char *arg);

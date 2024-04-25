@@ -28,9 +28,9 @@ typedef struct s_lexer {
 typedef struct s_command {
 	t_type	type;
 	char	*cmd; //e.g. "ls", "echo", "cat", "pwd"
-	char	**flags; //eg. -f -g
+	char	**flags; //eg. -f -g ----> flags and args same
 	char	**args; //things that come after the command e.g. pathname or string
-	char	*filename; //for redirections
+	char	*filename; //for redirections --> needs to be 2Darray
 
 }	t_command;
 
@@ -50,18 +50,6 @@ typedef struct s_environ {
 	char	*name;
 	char	*value;
 }	t_environ;
-
-typedef struct s_builtin {
-	const char	*cd;
-	const char	*echo;
-	const char	*alias;
-	const char	*export;
-	const char	*unset;
-	const char	*source;
-	const char	*exit;
-	const char	*env;
-}	t_builtin; //struct ueberdenken bringt nicht so viel besser als macro?
-
 
 //struct for execution, for Henni if she needs it
 typedef struct s_exec {

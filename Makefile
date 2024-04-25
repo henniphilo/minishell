@@ -22,6 +22,9 @@ all: $(NAME)
 $(NAME): $(OBJ) $(LIBFT)/$(LIBFA)
 	$(CC) $(CFLAGS) -L$(LIBFT) $(RFLAG) $(OBJ) -ldl -lft -o $(NAME)
 
+debug: $(OBJ) $(LIBFT)/$(LIBFA)
+	$(CC) $(CFLAGS) -L$(LIBFT) $(RFLAG) $(OBJ) -ldl -lft -g3 -fsanitize=address -o $(NAME)
+
 %.o: %.c
 	$(CC) $(CFLAGS) -Iinclude -Ilibft -I/usr/include -O3 -c $< -o $@
 

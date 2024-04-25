@@ -70,7 +70,7 @@ char	**no_pipe(const char *line)
 	return(wo_split);
 }
 
-static void	space_args(t_data *shell, char **args)
+void	space_args(t_data *shell, char **args)
 {
 	int		i;
 
@@ -119,7 +119,7 @@ void	init_args(t_data *shell, char **split)
 //zeites array mit meinen commands, dann dreifach array was auf die anderen arrays pointet mit arguments and executables
 // zweimal splitten erster command erst mnach pipes schauen dann nach commands
 
-static void	space_cmds(t_data *shell, char **cmds)
+void	space_cmds(t_data *shell, char **cmds)
 {
 	int		i;
 

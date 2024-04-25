@@ -75,7 +75,6 @@ void	env_execute(t_data *shell, char *arg)
 			free(arg);
 			exit(1);
 		}
-		//i++;
 	}
 	free(arg);
 	free(path);
