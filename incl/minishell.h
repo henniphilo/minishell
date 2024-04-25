@@ -50,7 +50,7 @@ int			array_len(char **ptr);
 /*error*/
 void		panic(char *str, void *ptr);
 int			error_int(char *str);
-void		*error_ptr(char *str)
+void		*error_ptr(char *str);
 
 /*init*/
 void		*init_env(t_data *data, char **envp);
@@ -76,5 +76,6 @@ t_lexer		*new_lex_list(t_type t, char *s, bool q);
 int			check_more(t_type *type, char *buf);
 int			check_less(t_type *type, char *buf);
 int			check_pipe(char *buf);
+int			join_words(t_data *data);
 
 #endif

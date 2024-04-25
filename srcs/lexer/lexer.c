@@ -75,7 +75,7 @@ static char	*handle_words(char *tmp_buf, t_lexer **tokens)
 	t_lexer	*node;
 
 	i = 0;
-	while (tmp_buf[i] && tmp_buf[i] != 32 && tmp_buf[i] != 9 && !(ft_strchr("|<>", tmp_buf[i])))
+	while (tmp_buf[i] && !(ft_strchr("|<>\'\"\t ", tmp_buf[i])))
 		i++;
 	s = ft_substr((const char *)(tmp_buf), 0, i);
 	if (!s)
@@ -86,7 +86,7 @@ static char	*handle_words(char *tmp_buf, t_lexer **tokens)
 		free (s);
 		return (NULL);
 	}
-	if (tmp_buf[i + 1] == 32 || tmp_buf[i + 1] == 9)
+	if (tmp_buf[i] == 32 || tmp_buf[i + 1] == 9)
 		node->space_after = 1;
 	lex_list_add_back(tokens, node);
 	return (tmp_buf + i);
@@ -113,9 +113,9 @@ int	lexer(t_data *data)
 		if (!tmp_buf)
 			return (error_int(LEX_ERR));
 	}
-	if (!expand_env())
-		return (1);
-	//join_words()
+	//if (!expand_env())
+	//	return (1);
+	join_words(data);
 	//check_syntax_error(data->tokens);
 	//test
 	t_lexer	*tokens = data->tokens;

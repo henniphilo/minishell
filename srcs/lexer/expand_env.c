@@ -28,7 +28,9 @@ int	find_and_replace(char **str)
 		return (-1);
 	tmp = split_expand_join(str, dollar, limit);
 	free(*str);
+	str = tmp;
 	return(ft_strlen((const char *)value));
+	return (0);
 }
 
 void	expand_env(t_lexer *tokens)
@@ -40,7 +42,7 @@ void	expand_env(t_lexer *tokens)
 	{
 		if (tokens->type == WORD && !(tokens->single_quote))
 		{
-			if (i = -1 && !tokens->str)
+			if (i = -1 || !tokens->str)
 				return (NULL);
 			while (ft_strchr(&(tokens->str[i]), '$'))
 				i = find_and_replace(&(tokens->str));
