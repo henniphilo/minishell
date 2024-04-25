@@ -50,6 +50,7 @@ int			array_len(char **ptr);
 /*error*/
 void		panic(char *str, void *ptr);
 int			error_int(char *str);
+void		*error_ptr(char *str)
 
 /*init*/
 void		*init_env(t_data *data, char **envp);
