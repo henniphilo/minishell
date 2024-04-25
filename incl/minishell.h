@@ -38,14 +38,27 @@ int			builtin_check(char *arg);
 void		when_builtin(t_data *shell);
 
 
-
 /*Petra*/
+
+/*read line*/
 const char	*get_the_line(t_data *data);
 int			check_line(char *buf);
+
+/*utils*/
 int			array_len(char **ptr);
+
+/*error*/
 void		panic(char *str, void *ptr);
 int			error_int(char *str);
+
+/*init*/
 void		*init_env(t_data *data, char **envp);
+t_environ	*init_env_list(char **envp);
+t_environ	*new_env_node(char *name, char *value);
+t_environ	*env_list_last(t_environ *list);
+void		add_env_back(t_environ **list, t_environ *node);
+
+/*free*/
 void		*free_data(t_data *data);
 void		clear_data(t_data *data);
 void		delone_tokens(t_lexer *token);
@@ -53,21 +66,14 @@ void		free_tokens(t_lexer **tokens);
 void		delone_env_list(t_environ *env);
 void		free_env_list(t_environ **env);
 void		free_env(char **env);
+
+/*lexer*/
 int			lexer(t_data *data);
-t_environ	*new_env_node(char *name, char *value);
-t_environ	*env_list_last(t_environ *list);
-void		add_env_back(t_environ **list, t_environ *node);
-t_environ	*init_env_list(char **envp);
 void		lex_list_add_back(t_lexer **lst, t_lexer *new);
 t_lexer		*lex_list_last(t_lexer *lst);
 t_lexer		*new_lex_list(t_type t, char *s, bool q);
 int			check_more(t_type *type, char *buf);
 int			check_less(t_type *type, char *buf);
 int			check_pipe(char *buf);
-
-
-
-
-
 
 #endif
