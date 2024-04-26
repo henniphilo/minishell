@@ -69,6 +69,7 @@ typedef struct s_data {
 //	pid_t		*pid; //process id, evt als array fuer individuelle prozess? - doch nicht
 	int			cmd_count;
 	char		**cmds;
+	char		**toex; //hen: to execute as replacement for cmds arg confusion, toex is the input seperated by a pipe
 }	t_data;
 
 #endif

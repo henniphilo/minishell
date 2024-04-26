@@ -67,17 +67,6 @@ int	main(int ac, char **av, char **envp)
 		//		j++;
 		//	}
 		//	i++;
-		//}
-		count_commands(data);
-		//init_argands(data);
-		//init_args(data, data->arguments);
-		//init_cmds(data, data->arguments);
-		execute_shell(data);
-		//free(data->buf);
-		// free(data->arguments);
-		// free(data->cmds);
-		/*
-		int i = -1; //test
 		while (data->env[++i]) //test
 			printf("%s\n", data->env[i]); //test
 		panic("exited", data); //test */

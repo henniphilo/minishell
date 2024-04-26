@@ -70,16 +70,16 @@ char	**no_pipe(const char *line)
 	return(wo_split);
 }
 
-void	space_args(t_data *shell, char **args)
+void	space_toex(t_data *shell, char **toex)
 {
 	int		i;
 
 	i = 0;
-	while(args[i] != NULL)
+	while(toex[i] != NULL)
 	{
 		i++;
 	}
-	shell->arguments = (char **)ft_calloc(sizeof(args) * i, sizeof(char));
+	shell->toex = (char **)ft_calloc(sizeof(toex) * i, sizeof(char));
 }
 
 static char	*line_trim(const char *line)
@@ -93,7 +93,7 @@ static char	*line_trim(const char *line)
 
 	return(trim);
 }
-
+/*
 void	init_args(t_data *shell, char **split)
 {
 	int		i;
@@ -115,6 +115,7 @@ void	init_args(t_data *shell, char **split)
 	// printf("args[%d]: %s\n",i, shell->arguments[i]);
 	count_commands(shell);
 }
+*/
 
 //zeites array mit meinen commands, dann dreifach array was auf die anderen arrays pointet mit arguments and executables
 // zweimal splitten erster command erst mnach pipes schauen dann nach commands

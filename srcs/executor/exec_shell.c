@@ -9,7 +9,7 @@ void		count_commands(t_data *shell)
 
 	i = 0;
 	cmd_count = 0;
-	while (shell->cmds[cmd_count] != NULL) //eigentlich gerade ein pipe count
+	while (shell->toex[cmd_count] != NULL) //eigentlich gerade ein pipe count
 		cmd_count++;
 	// if(cmd_count >= 1)
 	// {
@@ -25,10 +25,7 @@ void		count_commands(t_data *shell)
 	printf("count is: %d\n", shell->cmd_count);
 }
 
-static void	init_fd(t_data *shell)
-{
-	shell->fd = NULL;
-}
+
 
 int	execute_shell(t_data *shell)
 {
@@ -39,8 +36,12 @@ int	execute_shell(t_data *shell)
 	pid = 0;
 	if(shell->cmd_count > 0)
 	{
-		if(builtin_check(shell->cmds[i]) != 1)
+		if(builtin_check(shell->toex[i]) != 1)
 		{
+			printf("toex zwischen check:\n");
+			print_toex(shell);
+			printf("-toex zwischen check ende -\n");
+
 			if(shell->cmd_count == 1)
 				execute_one_envcmd(shell, pid); //soll nicht unbedingt in child wenn nur ein cmd
 			else
@@ -49,8 +50,8 @@ int	execute_shell(t_data *shell)
 		else
 		{
 			printf("im parent\n");
-			if(builtin_check(shell->cmds[i]) == 0)
-				which_builtin_parent(shell, shell->cmds[i]);
+			if(builtin_check(shell->toex[i]) == 0)
+				which_builtin_parent(shell, shell->toex[i]);
 		//	printf("parent: PID = %d, child-PID = %d\n", getpid(), pid);
 		}
 		i++;
@@ -58,29 +59,6 @@ int	execute_shell(t_data *shell)
 		waitpid(pid, NULL, 0);
 	}
 	return (1);
-}
-
-
-void	child_process_env(char *arg, t_data *shell, int i)
-{
-	int		file_in;
-	int		file_out;
-
-	init_fd(shell); //wahrscheinlich hier fehler ->  nutze ich noch gar nicht
-	file_in  = (dup(STDIN_FILENO) + i);
-	file_out = (dup(STDOUT_FILENO) + i);
-	if (file_in == -1)
-	{
-		perror("error im child\n");
-		exit(1);
-	}
-	printf("sind im child process\n");
-	printf("file in: %d & file out %d \n", file_in, file_out);
-	dup2(file_out, STDOUT_FILENO);
-	dup2(file_in, STDIN_FILENO); // siehe pipex notes and beispiel von flo in new
-	close(file_in);
-	close(file_out);
-	env_execute(shell, arg);
 }
 
 // checken ob builtin oder env

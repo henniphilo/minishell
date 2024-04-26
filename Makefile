@@ -7,8 +7,8 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -g # -fsanitize=address
 RFLAG = -lreadline
 
-MAIN = minishell
-EXEC = exec_env exec_3 exec_2 execution built_in
+MAIN = hard_shell
+EXEC = exec_env exec_shell exec_env2 execution built_in
 UTILS = error init_data free_data check_line
 
 SRC = $(addsuffix .c, $(addprefix srcs/, $(MAIN))) \
