@@ -26,6 +26,9 @@ void	clear_data(t_data *data)
 int	main(int ac, char **av, char **envp)
 {
 	t_data		*data;
+	int			i;
+	int			j;
+	int			k;
 
 	if (ac != 1 || !av[0])
 		panic(ARG_ERR, NULL);
@@ -36,6 +39,10 @@ int	main(int ac, char **av, char **envp)
 	//int i = 0; //test
 	while (1) //while (++i < 2) //test
 	{
+		i = 0;
+		j = 0;
+		k = 0;
+		// data = smth() ->
 		data->buf = (char *)get_the_line(data);
 		data->arguments = split_input(data->buf);
 		init_args(data, data->arguments);

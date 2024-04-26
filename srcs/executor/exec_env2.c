@@ -22,7 +22,6 @@ char	*path_finder(char *cmd, char **envp)
 	i = 0;
 	while (path_components[i] != NULL)
 	{
-		//printf("hi we are in the loop\n");
 		current_path = ft_strjoin(path_components[i], "/");
 	//	printf("current path:");
 	//	print_path(current_path);
@@ -47,36 +46,31 @@ char	*path_finder(char *cmd, char **envp)
 
 //to execute while iterating cmd
 
-void	env_execute(t_data *shell, char *arg)
+void	env_execute(t_data *shell, char *toex)
 {
 	char	*path;
-	// int		i;
 
-	// i = 0;
-	while(arg != NULL)
+	while(toex != NULL)
 	{
-		path = path_finder(arg, shell->env);
+		path = path_finder(toex, shell->env);
 		if(!path)
 		{
-			// while (shell->arguments[i++])
-			// 	free(shell->arguments[i]);
-			free(arg);
+			free(toex);
 			perror("Error in Path\n");
 			exit(1);
 		}
-		printf("will executen: %s\n", arg);
+		printf("will executen: %s\n", toex);
 		// printf("path in execute:");
 		// print_path(path);
-		if(execve(path, shell->arguments, shell->env) < 0)  //warum nur moeglich mir shell->arguments und nicht args?
+		if(execve(path, shell->toex, shell->env) < 0)  //warum nur moeglich mir shell->arguments und nicht args?
 		{
 			perror("command couldnt be executed\n");
 			// while (shell->arguments[i++])
 			// 	free(shell->arguments[i]);
-			free(arg);
+			free(toex);
 			exit(1);
 		}
-		//i++;
 	}
-	free(arg);
+	free(toex);
 	free(path);
 }
