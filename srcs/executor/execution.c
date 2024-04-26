@@ -81,7 +81,7 @@ void	space_toex(t_data *shell, char **toex)
 	}
 	shell->toex = (char **)ft_calloc(sizeof(toex) * i, sizeof(char));
 }
-
+/*
 static char	*line_trim(const char *line)
 {
 	//ausdehnen auf alle white spaces
@@ -93,6 +93,7 @@ static char	*line_trim(const char *line)
 
 	return(trim);
 }
+*/
 /*
 void	init_args(t_data *shell, char **split)
 {
@@ -120,6 +121,7 @@ void	init_args(t_data *shell, char **split)
 //zeites array mit meinen commands, dann dreifach array was auf die anderen arrays pointet mit arguments and executables
 // zweimal splitten erster command erst mnach pipes schauen dann nach commands
 
+/*
 void	space_cmds(t_data *shell, char **cmds)
 {
 	int		i;
@@ -151,4 +153,4 @@ void	init_cmds(t_data *shell, char **pipeline)
 	free(pipeline[i]);
 	shell->cmds[i] = NULL;
 	printf("cmds[%d]: %s\n",i, shell->cmds[i]);
-}
+} */

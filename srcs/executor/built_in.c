@@ -96,7 +96,7 @@ void	which_builtin_parent(t_data *shell, char *arg)
 
 void	when_builtin(t_data *shell)
 {
-	printf("arg0 %s\n", shell->arguments[0]);
+	printf("arg0 %s\n", shell->toex[0]);
 	// wird gerade auch noch ausgeführt wenn einfach nur im parent
 	// hier ausbauen und builtin action zusammen fuehren
 	printf("approved builtin is: \n");

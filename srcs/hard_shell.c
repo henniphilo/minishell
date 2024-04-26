@@ -12,17 +12,6 @@ const char	*get_the_line(t_data *data)
 	return (line);
 }
 
-void	print_toex(t_data *shell)
-{
-	int		i;
-
-	i = 0;
-	while(shell->toex[i] != NULL)
-	{
-		printf("toex[%d] is: %s\n", i, shell->toex[i]);
-		i++;
-	}
-}
 
 int	main(int ac, char **av, char **envp)
 {
@@ -37,6 +26,7 @@ int	main(int ac, char **av, char **envp)
 	while(1)
 	{
 		shell->buf = (char *)get_the_line(shell);
+//		hard_pipeline(shell);
 		hard_toex(shell);
 		print_toex(shell);
 		count_commands(shell);
@@ -47,6 +37,17 @@ int	main(int ac, char **av, char **envp)
 
 }
 
+void	hard_pipeline(t_data *shell)
+{
+	space_pipeline(shell, (char***)shell->buf);
+	shell->pipeline = (char***)(ft_split(shell->buf, '|'));
+	if(!shell->pipeline)
+		shell->pipeline = (char***)shell->buf;
+	//print_pipeline(shell);
+}
+
+
+
 void	hard_toex(t_data *shell)
 {
 	space_toex(shell, &shell->buf);
@@ -54,3 +55,18 @@ void	hard_toex(t_data *shell)
 	if(!shell->toex)
 		shell->toex = &shell->buf;
 }
+/*
+void	hard_toex2(t_data *shell) //wenn ***pipeline funktioniert
+{
+	int		i;
+
+	i = 0;
+	while(shell->pipeline[i] != NULL)
+	{
+		space_toex(shell, shell->pipeline[i]);
+		shell->toex = ft_split(*(shell->pipeline[i]), ' ');
+		i++;
+	}
+	if(!shell->toex)
+		shell->toex = &shell->buf;
+} */

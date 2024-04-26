@@ -63,7 +63,7 @@ int	execute_shell(t_data *shell)
 
 // checken ob builtin oder env
 // keeping track of closing pipe
-
+/*
 void	print_cmds(t_data *shell)
 {
 	int	i;
@@ -74,4 +74,4 @@ void	print_cmds(t_data *shell)
 		printf("cmds[%d]: %s\n",i, shell->cmds[i]);
 		i++;
 	}
-}
+} */
