@@ -26,8 +26,9 @@ int	main(int ac, char **av, char **envp)
 	while(1)
 	{
 		shell->buf = (char *)get_the_line(shell);
-//		hard_pipeline(shell);
 		hard_toex(shell);
+	//	space_pipeline(shell);
+	//	hard_pipeline(shell);
 		print_toex(shell);
 		count_commands(shell);
 		execute_shell(shell);
@@ -36,16 +37,16 @@ int	main(int ac, char **av, char **envp)
 	}
 
 }
-
+/*
 void	hard_pipeline(t_data *shell)
 {
-	space_pipeline(shell, (char***)shell->buf);
-	shell->pipeline = (char***)(ft_split(shell->buf, '|'));
+//	space_pipeline(shell, (char***)shell->buf);
+	shell->pipeline = (char***)(ft_split(shell->toex, '|'));
 	if(!shell->pipeline)
 		shell->pipeline = (char***)shell->buf;
-	//print_pipeline(shell);
+//	print_pipeline(shell);
 }
-
+*/
 
 
 void	hard_toex(t_data *shell)
@@ -56,7 +57,7 @@ void	hard_toex(t_data *shell)
 		shell->toex = &shell->buf;
 }
 /*
-void	hard_toex2(t_data *shell) //wenn ***pipeline funktioniert
+void	hard_toex(t_data *shell) //wenn ***pipeline funktioniert
 {
 	int		i;
 
@@ -69,4 +70,4 @@ void	hard_toex2(t_data *shell) //wenn ***pipeline funktioniert
 	}
 	if(!shell->toex)
 		shell->toex = &shell->buf;
-} */
+}*/
