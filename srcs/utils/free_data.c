@@ -25,8 +25,6 @@ void	*free_data(t_data *data)
 			free(data->buf);
 		if (data->fd)
 			free(data->fd);
-		if (data->bi)
-			free(data->bi);
 		if (data->arguments)
 		{
 			i = -1;

@@ -29,6 +29,7 @@ int	join_words(t_data *data)
 	char	*s;
 
 	node = data->tokens;
+	next = NULL;
 	//if (!node)
 	//	return (1);
 	while (node)
@@ -43,7 +44,7 @@ int	join_words(t_data *data)
 			}
 			free(node->str);
 			node->str = s;
-			if (node->next->space_after)
+			if (node->next->space_after == 1)
 				node->space_after = 1;
 			next = node->next->next;
 			delone_tokens(node->next);

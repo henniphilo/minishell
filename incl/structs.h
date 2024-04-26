@@ -39,7 +39,6 @@ typedef struct s_command {
 	//char	**flags; //eg. -f -g
 	char	*filename; //for redirections
 	int		estatus; //for exit status of last pipe to store later in data
-	struct s_command	*prev;
 	struct s_command	*next;
 }	t_command;
 
@@ -62,7 +61,7 @@ typedef struct s_data {
 	char		**env; //2Darray to store environmental variables
 	t_environ	*env_list;
 	t_lexer		*tokens; //linked list of lexed tokens
-	//t_command	*cmdlist; //linked list of commandlines between pipes that point to a struct of commands
+	t_command	*commands; //linked list of commandlines between pipes that point to a struct of commands
 	char		**arguments; // hen: to store all the input
 	int			*fd; // hen: zum directen der fd muss noch richtig init werden
 	int			*estatus; //to store the exit status of the last prompt, NULL if last prompt
