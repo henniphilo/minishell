@@ -86,7 +86,7 @@ static char	*handle_words(char *tmp_buf, t_lexer **tokens)
 		free (s);
 		return (NULL);
 	}
-	if (tmp_buf[i] == 32 || tmp_buf[i + 1] == 9)
+	if (tmp_buf[i] == 32 || tmp_buf[i] == 9)
 		node->space_after = 1;
 	lex_list_add_back(tokens, node);
 	return (tmp_buf + i);
@@ -118,13 +118,13 @@ int	lexer(t_data *data)
 	join_words(data);
 	//check_syntax_error(data->tokens);
 	//test
-	/* t_lexer	*tokens = data->tokens;
+/* 	t_lexer	*tokens = data->tokens;
 	while (tokens)
 	{
 		printf("string: %s\ntype: %i\nsinglequote: %d\n", tokens->str, tokens->type, tokens->single_quote);
 		tokens = tokens->next;
-	}
-	*/
+	} */
+
 	return (0);
 }
 

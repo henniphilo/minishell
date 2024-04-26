@@ -11,6 +11,7 @@ t_lexer	*new_lex_list(t_type t, char *s, bool q)
 	new_node->single_quote = q;
 	new_node->type = t;
 	new_node->str = s;
+	new_node->space_after = 0;
 	new_node->next = NULL;
 	new_node->previous = NULL;
 	return (new_node);
