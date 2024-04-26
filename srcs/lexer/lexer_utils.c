@@ -29,6 +29,8 @@ int	join_words(t_data *data)
 	char	*s;
 
 	node = data->tokens;
+	//if (!node)
+	//	return (1);
 	while (node)
 	{
 		while (node->next && node->type == WORD && node->next->type == WORD && node->space_after == 0)
