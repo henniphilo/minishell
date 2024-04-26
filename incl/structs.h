@@ -33,12 +33,14 @@ typedef struct s_redir {
 
 //to store command nodes
 typedef struct s_command {
-	t_type	type;
+	t_type	type; //IN, OUT, HERE, WORD, APPEND
 	char	*cmd; //e.g. "ls", "echo", "cat", "pwd"
-	char	**flags; //eg. -f -g
 	char	**args; //things that come after the command e.g. pathname or string
+	//char	**flags; //eg. -f -g
 	char	*filename; //for redirections
-
+	int		estatus; //for exit status of last pipe to store later in data
+	struct s_command	*prev;
+	struct s_command	*next;
 }	t_command;
 
 //from chatgpt, not sure about keeping it
@@ -54,27 +56,16 @@ typedef struct s_environ {
 	struct s_environ	*next;
 }	t_environ;
 
-typedef struct s_builtin {
-	const char	*cd;
-	const char	*echo;
-	const char	*alias;
-	const char	*export;
-	const char	*unset;
-	const char	*source;
-	const char	*exit;
-	const char	*env;
-}	t_builtin; //struct ueberdenken bringt nicht so viel besser als macro?
-
 //struct to store important data we need initially and at execution adn all other structs
 typedef struct s_data {
 	char		*buf; //buffer to store the line read
 	char		**env; //2Darray to store environmental variables
 	t_environ	*env_list;
 	t_lexer		*tokens; //linked list of lexed tokens
-	//t_command	**cmdlist; //linked list of commandlines between pipes that point to a struct of commands
+	//t_command	*cmdlist; //linked list of commandlines between pipes that point to a struct of commands
 	char		**arguments; // hen: to store all the input
 	int			*fd; // hen: zum directen der fd muss noch richtig init werden
-	t_builtin	*bi; // hen : zum tracken der builtins
+	int			*estatus; //to store the exit status of the last prompt, NULL if last prompt
 }	t_data;
 
 #endif

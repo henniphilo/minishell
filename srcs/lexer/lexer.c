@@ -113,7 +113,7 @@ int	lexer(t_data *data)
 		if (!tmp_buf)
 			return (error_int(LEX_ERR));
 	}
-	//if (!expand_env())
+	//if (join_words(data) || expand_env() || check_syntax_error(data->tokens))
 	//	return (1);
 	join_words(data);
 	//check_syntax_error(data->tokens);

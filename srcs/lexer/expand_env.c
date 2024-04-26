@@ -33,7 +33,7 @@ int	find_and_replace(char **str)
 	return (0);
 }
 
-void	expand_env(t_lexer *tokens)
+int	expand_env(t_lexer *tokens)
 {
 	int	i;
 
