@@ -29,7 +29,7 @@
 char		**split_input_at_pipe(const char *line);
 char		**split_pipe_in_cmd(const char *split_line);
 char		**no_pipe(const char *line);
-char		*path_finder(char *cmd, char **envp);
+char		*path_finder(char *cmd, t_data *shell);
 void		child_process_env(char *toex, t_data *shell, int i);
 // void		init_args(t_data *shell, char **split);
 // void		init_cmds(t_data *shell, char **pipeline);
@@ -39,8 +39,6 @@ void		print_pipeline(t_data *shell);
 void		print_path(char *path);
 
 //void		print_cmds(t_data *shell);
-void		when_builtin(t_data *shell);
-void		which_builtin_parent(t_data *shell, char *arg);
 void		execute_one_envcmd(t_data *shell, pid_t pid);
 void		execute_more_envcmd(t_data *shell, pid_t pid, int i);
 void		space_toex(t_data *shell, char **toex);
@@ -49,8 +47,12 @@ void		space_pipeline(t_data *shell, char ***pipeline);
 void		print_toex(t_data *shell);
 void		hard_toex(t_data *shell);
 void		hard_pipeline(t_data *shell);
-int			builtin_check(char *arg);
 int			execute_shell(t_data *shell);
+
+/*built-ins*/
+void		when_builtin(t_data *shell);
+void		which_builtin_parent(t_data *shell, char *arg);
+int			builtin_check(char *arg);
 int			which_builtin_child(t_data *shell, char *arg);
 int			change_directory(t_data *shell);
 

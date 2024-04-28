@@ -3,7 +3,7 @@
 
 void		count_commands(t_data *shell)
 {
-	printf("hi we are in count cmd\n");
+	//printf("hi we are in count cmd\n");
 	int		cmd_count;
 	int		i;
 
@@ -38,7 +38,7 @@ int	execute_shell(t_data *shell)
 	{
 		if(builtin_check(shell->toex[i]) != 1)
 		{
-			printf("toex zwischen check:\n");
+			printf("-toex zwischen check -\n");
 			print_toex(shell);
 			printf("-toex zwischen check ende -\n");
 

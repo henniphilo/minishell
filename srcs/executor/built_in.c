@@ -63,19 +63,34 @@ void	which_builtin_parent(t_data *shell, char *arg)
 		printf("its exit\n");
 	}
 }
-
+//here toex[1] als placeholder und currentpath ueberdenken
+//also erstmal momentanes pwd bekommen, damit dieses dann oldpwd werden kann
+//in env nach HOME= suchen
 int	change_directory(t_data *shell)
 {
 	char	*new_path;
+	char	*current_path;
 
+	current_path = "/start_minishell/minishell"; //funktioniert noch nicht
+	printf("start ");
+	print_path(current_path);
 	new_path = path_finder(shell->toex[1], shell->env);
-	if(chdir(new_path) == 0)
+	if(new_path != NULL)
 	{
-		printf("changes directory\n");
-		return(0);
+		printf("geht zu neuem ");
+		print_path(new_path);
+		if(chdir(new_path) == 0)
+		{
+			printf("changes directory\n");
+			return(0);
+		}
 	}
+	else
+		chdir(current_path);
 	return(1);
 }
+
+char	*new_path()
 
 
 
