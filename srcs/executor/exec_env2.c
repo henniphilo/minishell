@@ -1,12 +1,12 @@
 
 #include "../../incl/minishell.h"
 
-// static void	print_path(char *path)
-// {
-// //	printf("hi in print_path\n");
-// 	if(path != NULL)
-// 		printf("path: %s\n", path);
-// }
+void	print_path(char *path)
+{
+//	printf("hi in print_path\n");
+	if(path != NULL)
+		printf("path: %s\n", path);
+}
 
 char	*path_finder(char *cmd, char **envp)
 {
@@ -26,8 +26,8 @@ char	*path_finder(char *cmd, char **envp)
 	//	printf("current path:");
 	//	print_path(current_path);
 		full_path = ft_strjoin(current_path, cmd);
-		// printf("full path:");
-		// print_path(full_path);
+	//	printf("full path:");
+	//	print_path(full_path);
 		free(current_path);
 		if (access(full_path, F_OK) == 0)
 		{

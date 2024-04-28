@@ -45,6 +45,8 @@ void	which_builtin_parent(t_data *shell, char *arg)
 	if(ft_strncmp((const char *)arg, "cd", n) == 0)
 	{
 		printf("its cd\n");
+		if(change_directory(shell) != 0)
+			perror("error in cd\n");
 	}
 	if(ft_strncmp((const char *)arg, "export", n) == 0)
 	{
@@ -61,6 +63,20 @@ void	which_builtin_parent(t_data *shell, char *arg)
 		printf("its exit\n");
 	}
 }
+
+int	change_directory(t_data *shell)
+{
+	char	*new_path;
+
+	new_path = path_finder(shell->toex[1], shell->env);
+	if(chdir(new_path) == 0)
+	{
+		printf("changes directory\n");
+		return(0);
+	}
+	return(1);
+}
+
 
 
 void	when_builtin(t_data *shell)

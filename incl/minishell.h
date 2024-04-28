@@ -36,6 +36,7 @@ void		child_process_env(char *toex, t_data *shell, int i);
 void		env_execute(t_data *shell, char *arg);
 void		count_commands(t_data *shell);
 void		print_pipeline(t_data *shell);
+void		print_path(char *path);
 
 //void		print_cmds(t_data *shell);
 void		when_builtin(t_data *shell);
@@ -51,6 +52,7 @@ void		hard_pipeline(t_data *shell);
 int			builtin_check(char *arg);
 int			execute_shell(t_data *shell);
 int			which_builtin_child(t_data *shell, char *arg);
+int			change_directory(t_data *shell);
 
 
 
