@@ -34,14 +34,12 @@ typedef struct s_command {
 	//char				**flags; //eg. -f -g
 	char				*infile; //for redirections e.g. 'filename' < echo
 	char				*outfile; //for redirections e.g. echo hi > 'filename'
-	char				*delimiter; //for heredocs e.g. cat << 'delimiter'
 	struct s_command	*next;
 }	t_command;
 
 /* typedef struct s_redir {
 	char	*infile;
 	char	*outfile;
-	char	*delimiter;
 	t_type	type;
 } t_redir; */
 
