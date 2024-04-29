@@ -61,11 +61,11 @@ void	which_builtin_parent(t_data *shell, char *arg)
 	if(ft_strncmp((const char *)arg, "exit", n) == 0)
 	{
 		printf("its exit\n");
+		bi_exit(shell);
 	}
 }
 //here toex[1] als placeholder und currentpath ueberdenken
-//also erstmal momentanes pwd bekommen, damit dieses dann oldpwd werden kann
-//in env nach HOME= suchen
+//noch cd .. klaeren
 int	change_directory(t_data *shell)
 {
 	char	*new_path;
@@ -78,13 +78,15 @@ int	change_directory(t_data *shell)
 	print_path(current_path);
 	printf("Home ");
 	print_path(home_path);
-	if(shell->toex[1] == NULL)
+	if(shell->toex[1] == NULL) //here aendern fuer ..
 	{
 		printf("going home\n");
 		chdir(home_path);
 		return(0);
 	}
-	new_path = path_finder(shell->toex[1], shell);
+	new_path = path_finder(shell->
+		chdir(home_path);
+		return(0);toex[1], shell);
 	if(new_path != NULL)
 	{
 		printf("geht zu neuem ");
@@ -97,6 +99,13 @@ int	change_directory(t_data *shell)
 	}
 	return(1);
 }
+
+void	bi_exit(t_data *shell)
+{
+	free	_data(shell);
+	exit(0);
+}
+
 
 void	when_builtin(t_data *shell)
 {

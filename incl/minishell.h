@@ -56,6 +56,8 @@ int			builtin_check(char *arg);
 int			which_builtin_child(t_data *shell, char *arg);
 int			change_directory(t_data *shell);
 char		*find_in_env(char *to_find);
+void		bi_exit(t_data *shell);
+
 
 
 

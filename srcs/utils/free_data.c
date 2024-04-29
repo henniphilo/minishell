@@ -25,12 +25,12 @@ void	*free_data(t_data *data)
 			free(data->buf);
 		if (data->fd)
 			free(data->fd);
-		if (data->arguments)
+		if (data->toex)
 		{
 			i = -1;
-			while (data->arguments[++i])
-				free(data->arguments[i]);
-			free(data->arguments);
+			while (data->toex[++i])
+				free(data->toex[i]);
+			free(data->toex);
 		}
 		free_tokens(&(data->tokens));
 		free_env_list(&(data->env_list));
