@@ -8,15 +8,16 @@ void	print_path(char *path)
 		printf("path: %s\n", path);
 }
 
-char	*find_in_env(t_data *shell, char *to_find)
+char	*find_in_env(char *to_find)
 {
-	int		i;
-	int		len;
+	char	*path;
 
-	i = 0;
-	len = ft_strlen(to_find);
-	while (ft_strnstr(shell->env[i], to_find, len) == 0)
-
+	path = getenv(to_find);
+	if(!path)
+	{
+		perror("path not found\n");
+	}
+	return (path);
 }
 
 char	*path_finder(char *cmd, t_data *shell)
@@ -37,8 +38,8 @@ char	*path_finder(char *cmd, t_data *shell)
 	//	printf("current path:");
 	//	print_path(current_path);
 		full_path = ft_strjoin(current_path, cmd);
-		printf("full path:");
-		print_path(full_path);
+	//	printf("full path:");
+	//	print_path(full_path);
 		free(current_path);
 		if (access(full_path, F_OK) == 0)
 		{

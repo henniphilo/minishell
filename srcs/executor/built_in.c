@@ -70,11 +70,21 @@ int	change_directory(t_data *shell)
 {
 	char	*new_path;
 	char	*current_path;
+	char	*home_path;
 
-	current_path = "/start_minishell/minishell"; //funktioniert noch nicht
+	current_path = find_in_env("PWD");
+	home_path = find_in_env("HOME");
 	printf("start ");
 	print_path(current_path);
-	new_path = path_finder(shell->toex[1], shell->env);
+	printf("Home ");
+	print_path(home_path);
+	if(shell->toex[1] == NULL)
+	{
+		printf("going home\n");
+		chdir(home_path);
+		return(0);
+	}
+	new_path = path_finder(shell->toex[1], shell);
 	if(new_path != NULL)
 	{
 		printf("geht zu neuem ");
@@ -85,14 +95,8 @@ int	change_directory(t_data *shell)
 			return(0);
 		}
 	}
-	else
-		chdir(current_path);
 	return(1);
 }
-
-char	*new_path()
-
-
 
 void	when_builtin(t_data *shell)
 {
