@@ -40,7 +40,7 @@ int	expand_env(t_lexer *tokens)
 	i = 0;
 	while (tokens)
 	{
-		if (tokens->type == WORD && !(tokens->single_quote))
+		if (tokens->type == WORD && !(tokens->single_quote) && tokens->previous->type != HEREDOC) //DONT expand if heredoc is before word
 		{
 			if (i = -1 || !tokens->str)
 				return (NULL);

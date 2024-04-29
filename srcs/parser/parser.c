@@ -1,19 +1,30 @@
 #include "../../incl/minishell.h"
 
-/* t_command	*init_cmd_node(t_lexer *tokens, t_command *new_node)
+int	init_cmd_args(t_lexer *tokens, t_command **node)
 {
-	t_command	*node;
-
-	node = new_node;
-
-	if (!node->cmd)
+	while (tokens && tokens->type != PIPE)
 	{
-		free(n)
+		if (tokens->type == HEREDOC)
+		{
+			tokens = tokens->next;
+			//check for syntax error? if !tokens "bash: syntax error near unexpected token `newline'"
+			(*node)->delimiter = ft_strdup(tokens->str);
+			if (!(*node)->delimiter)
+				return (error_int(ALLOC_ERR));
+		}
+		if (tokens->type == OUTPUT)
+		{
+			tokens = tokens->next;
+			//check for syntax error? if !tokens "bash: syntax error near unexpected token `newline'"
+			(*node)->filename = ft_strdup(tokens->str);
+			if (!(*node)->delimiter)
+				return (error_int(ALLOC_ERR));
+		}
+		tokens = tokens->next;
 	}
 
-
-	return (node);
-} */
+	return (0);
+}
 
 /*creates a new node*/
 t_command	*new_cmd_list(t_lexer *tokens)
@@ -22,19 +33,24 @@ t_command	*new_cmd_list(t_lexer *tokens)
 
 	new_node = ft_calloc(1, sizeof(t_command));
 	if (!new_node)
-		return (NULL);
+		return (error_ptr(ALLOC_ERR));
 	new_node->next = NULL;
 	new_node->cmd = ft_strdup(tokens->str);
 	if (!new_node->cmd)
 	{
 		free(new_node);
-		return (NULL);
+		return (error_ptr(ALLOC_ERR));
 	}
 	tokens = tokens->next;
+	if (init_cmd_args(tokens, &new_node))
+	{
+		free_cmd(new_node); //create function
+		return (NULL);
+	}
 	return (new_node);
 }
 
-/*returns the last element of the token list*/
+/*returns the last element of the command list*/
 t_lexer	*cmd_list_last(t_lexer *lst)
 {
 	if (lst == NULL)
@@ -44,7 +60,7 @@ t_lexer	*cmd_list_last(t_lexer *lst)
 	return (lst);
 }
 
-/*adds a node to the end of the token list*/
+/*adds a node to the end of the command list*/
 void	cmd_list_add_back(t_lexer **lst, t_lexer *new)
 {
 	t_lexer	*pos;

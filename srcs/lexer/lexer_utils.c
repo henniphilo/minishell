@@ -36,6 +36,7 @@ int	join_words(t_data *data)
 	{
 		while (node->next && node->type == WORD && node->next->type == WORD && node->space_after == 0)
 		{
+			//take care of heredocs, so do not join if single or double quote comes after <<
 			s = ft_strjoin(node->str, node->next->str);
 			if (!s)
 			{

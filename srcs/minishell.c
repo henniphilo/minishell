@@ -20,6 +20,7 @@ void	clear_data(t_data *data)
 		data->buf = NULL;
 	}
 	free_tokens(&(data->tokens));
+	//free_cmdlist();
 	data->tokens = NULL;
 }
 
