@@ -26,7 +26,7 @@ int	which_builtin_child(t_data *shell, char *arg)
 	if(ft_strncmp((const char *)arg, "env", n) == 0)
 	{
 		printf("its env\n");
-		print_env(shell);
+		print_env(shell->env_list);
 		return(0);
 	}
 	if(ft_strncmp((const char *)arg, "echo", n) == 0)
@@ -57,7 +57,7 @@ void	which_builtin_parent(t_data *shell, char *arg)
 	if(ft_strncmp((const char *)arg, "unset", n) == 0)
 	{
 		printf("its unset\n");
-
+		bi_unset(shell);
 	}
 	if(ft_strncmp((const char *)arg, "exit", n) == 0)
 	{

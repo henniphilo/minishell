@@ -37,8 +37,6 @@ void		env_execute(t_data *shell, char *arg);
 void		count_commands(t_data *shell);
 void		print_pipeline(t_data *shell);
 void		print_path(char *path);
-void		print_env(t_data *shell);
-
 
 //void		print_cmds(t_data *shell);
 void		execute_one_envcmd(t_data *shell, pid_t pid);
@@ -54,11 +52,14 @@ int			execute_shell(t_data *shell);
 /*built-ins*/
 void		when_builtin(t_data *shell);
 void		which_builtin_parent(t_data *shell, char *arg);
+void		print_env(t_environ *env_ptr);
 int			builtin_check(char *arg);
 int			which_builtin_child(t_data *shell, char *arg);
 int			change_directory(t_data *shell);
 char		*find_in_env(char *to_find);
 void		bi_exit(t_data *shell);
+void		bi_unset(t_data *shell);
+
 
 
 
