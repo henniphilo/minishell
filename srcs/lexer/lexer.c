@@ -117,14 +117,7 @@ int	lexer(t_data *data)
 	//	return (1);
 	join_words(data);
 	//check_syntax_error(data->tokens);
-	//test
-/* 	t_lexer	*tokens = data->tokens;
-	while (tokens)
-	{
-		printf("string: %s\ntype: %i\nsinglequote: %d\n", tokens->str, tokens->type, tokens->single_quote);
-		tokens = tokens->next;
-	} */
-
+	//	check if after pipe there is always something type WORD
 	return (0);
 }
 

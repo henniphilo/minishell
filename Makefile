@@ -11,6 +11,7 @@ MAIN = minishell
 EXEC = exec_3 exec_2 execution built_in
 UTILS = error init_env free_data check_line delete_lists utils
 LEXER = lexer create_token_list lexer_utils
+TEST = test #for testfiles (to be removed on submission)
 
 SRC = $(addsuffix .c, $(addprefix srcs/, $(MAIN))) \
 	  $(addsuffix .c, $(addprefix srcs/utils/, $(UTILS))) \
