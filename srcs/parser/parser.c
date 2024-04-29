@@ -1,23 +1,36 @@
 #include "../../incl/minishell.h"
 
-t_command	*init_cmd_node()
+/* t_command	*init_cmd_node(t_lexer *tokens, t_command *new_node)
 {
-	return ()
-}
+	t_command	*node;
+
+	node = new_node;
+
+	if (!node->cmd)
+	{
+		free(n)
+	}
+
+
+	return (node);
+} */
 
 /*creates a new node*/
 t_command	*new_cmd_list(t_lexer *tokens)
 {
 	t_command	*new_node;
-	t_command	*node;
 
 	new_node = ft_calloc(1, sizeof(t_command));
 	if (!new_node)
 		return (NULL);
 	new_node->next = NULL;
-	new_node = init_cmd_node(tokens, &new_node);
-	if (!new_node)
+	new_node->cmd = ft_strdup(tokens->str);
+	if (!new_node->cmd)
+	{
+		free(new_node);
 		return (NULL);
+	}
+	tokens = tokens->next;
 	return (new_node);
 }
 
@@ -52,6 +65,7 @@ t_command	*create_cmdlist(t_lexer *tokens)
 	t_command	*node;
 
 	list = NULL;
+	node = NULL;
 	while (tokens)
 	{
 		node = new_cmd_list(tokens);
@@ -63,7 +77,6 @@ t_command	*create_cmdlist(t_lexer *tokens)
 		if (tokens->next) //skip pipe
 			tokens = tokens->next;
 	}
-
 	return (list);
 }
 
