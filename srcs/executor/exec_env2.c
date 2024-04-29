@@ -8,17 +8,6 @@ void	print_path(char *path)
 		printf("path: %s\n", path);
 }
 
-char	*find_in_env(char *to_find)
-{
-	char	*path;
-
-	path = getenv(to_find);
-	if(!path)
-	{
-		perror("path not found\n");
-	}
-	return (path);
-}
 
 char	*path_finder(char *cmd, t_data *shell)
 {

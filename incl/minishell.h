@@ -37,6 +37,8 @@ void		env_execute(t_data *shell, char *arg);
 void		count_commands(t_data *shell);
 void		print_pipeline(t_data *shell);
 void		print_path(char *path);
+void		print_env(t_data *shell);
+
 
 //void		print_cmds(t_data *shell);
 void		execute_one_envcmd(t_data *shell, pid_t pid);

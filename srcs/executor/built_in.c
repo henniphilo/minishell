@@ -26,6 +26,7 @@ int	which_builtin_child(t_data *shell, char *arg)
 	if(ft_strncmp((const char *)arg, "env", n) == 0)
 	{
 		printf("its env\n");
+		print_env(shell);
 		return(0);
 	}
 	if(ft_strncmp((const char *)arg, "echo", n) == 0)
@@ -64,7 +65,7 @@ void	which_builtin_parent(t_data *shell, char *arg)
 		bi_exit(shell);
 	}
 }
-//here toex[1] als placeholder und currentpath ueberdenken
+//here toex[1] als placeholder
 //noch cd .. klaeren
 int	change_directory(t_data *shell)
 {
@@ -84,9 +85,9 @@ int	change_directory(t_data *shell)
 		chdir(home_path);
 		return(0);
 	}
-	new_path = path_finder(shell->
+	new_path = path_finder(shell->toex[1], shell);
 		chdir(home_path);
-		return(0);toex[1], shell);
+		return(0);
 	if(new_path != NULL)
 	{
 		printf("geht zu neuem ");
@@ -102,7 +103,7 @@ int	change_directory(t_data *shell)
 
 void	bi_exit(t_data *shell)
 {
-	free	_data(shell);
+	free_data(shell); //hier noch memory leaks bei space_toex
 	exit(0);
 }
 

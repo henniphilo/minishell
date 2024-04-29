@@ -8,7 +8,7 @@ CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
 RFLAG = -lreadline
 
 MAIN = hard_shell
-EXEC = exec_env exec_env2 execution built_in exec_extras exec_shell
+EXEC = exec_env exec_env2 execution built_in built_in_env exec_extras exec_shell
 UTILS = error init_env free_data check_line delete_lists utils
 LEXER = lexer create_token_list lexer_utils
 
