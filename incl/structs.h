@@ -25,22 +25,23 @@ typedef struct s_lexer {
 	struct s_lexer	*next;
 }	t_lexer;
 
-typedef struct s_redir {
-	char	*infile;
-	char	*outfile;
-	t_type	type;
-} t_redir;
 
 //to store command nodes
 typedef struct s_command {
-	t_type	type; //IN, OUT, HERE, WORD, APPEND
-	char	*cmd; //e.g. "ls", "echo", "cat", "pwd"
-	char	**args; //things that come after the command e.g. pathname or string
-	//char	**flags; //eg. -f -g
-	char	*filename; //for redirections
-	int		estatus; //for exit status of last pipe to store later in data
+	t_type				type; //IN, OUT, HERE, WORD, APPEND
+	char				*cmd; //e.g. "ls", "echo", "cat", "pwd"
+	char				**args; //things that come after the command e.g. pathname or string
+	//char				**flags; //eg. -f -g
+	char				*infile; //for redirections e.g. 'filename' < echo
+	char				*outfile; //for redirections e.g. echo hi > 'filename'
 	struct s_command	*next;
 }	t_command;
+
+/* typedef struct s_redir {
+	char	*infile;
+	char	*outfile;
+	t_type	type;
+} t_redir; */
 
 //from chatgpt, not sure about keeping it
 /* typedef struct s_heredoc {
@@ -62,6 +63,7 @@ typedef struct s_data {
 	t_environ	*env_list;
 	t_lexer		*tokens; //linked list of lexed tokens
 	t_command	*commands; //linked list of commandlines between pipes that point to a struct of commands
+	int			estatus; //for exit status of last pipe to store for the next prompt
 	char		**arguments; // hen: to store all the input
 	int			*fd; // hen: zum directen der fd muss noch richtig init werden
 //	t_builtin	*bi; // hen : zum tracken der builtins

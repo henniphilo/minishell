@@ -1,41 +1,102 @@
 #include "../../incl/minishell.h"
 
-/* t_command	*init_cmd_node(t_lexer *tokens, t_command *new_node)
+static char	**free_arr(char **arr1, char **arr2)
 {
-	t_command	*node;
+	int	i;
 
-	node = new_node;
-
-	if (!node->cmd)
+	i = 0;
+	if (arr1)
 	{
-		free(n)
+		while (arr1[i])
+			free(arr1[i++]);
+		free(arr1);
 	}
+	i = 0;
+	if (arr2)
+	{
+		while (arr2[i])
+			free(arr2[i++]);
+		free(arr2);
+	}
+	return (NULL);
+}
 
+static char	**append_arr(char **arr, char *new_str)
+{
+	ssize_t	i;
+	char	**new_arr;
 
-	return (node);
-} */
+	i = array_len(arr);
+	new_arr = (char **)ft_calloc(sizeof(char *), (i + 2));
+	if (!new_arr)
+		return (free_arr(arr, NULL));
+	i = 0;
+	while (arr[i])
+	{
+		new_arr[i] = ft_strdup(arr[i]);
+		if (!new_arr[i])
+			return (free_arr(arr, new_arr));
+		i++;
+	}
+	new_arr[i] = ft_strdup(new_str);
+	if (!new_arr[i])
+		return (free_arr(arr, new_arr));
+	free_arr(arr, NULL);
+	return (new_arr);
+}
+
+static int	init_cmd_args(t_lexer *tokens, t_command **node)
+{
+	while (tokens && tokens->type != PIPE)
+	{
+	/* 	if (tokens->type == HEREDOC)
+		{
+			tokens = tokens->next;
+			//check for syntax error? if !tokens "bash: syntax error near unexpected token `newline'"
+			(*node)->delimiter = ft_strdup(tokens->str);
+			if (!(*node)->delimiter)
+				return (error_int(ALLOC_ERR));
+		}
+		if (tokens->type == OUTPUT)
+		{
+			tokens = tokens->next;
+			//check for syntax error? if !tokens "bash: syntax error near unexpected token `newline'"
+			(*node)->filename = ft_strdup(tokens->str);
+			if (!(*node)->delimiter)
+				return (error_int(ALLOC_ERR));
+		} */
+		append_arr((*node)->args, tokens->str); //temporary
+		tokens = tokens->next;
+	}
+	return (0);
+}
 
 /*creates a new node*/
-t_command	*new_cmd_list(t_lexer *tokens)
+static t_command	*new_cmd_list(t_lexer *tokens)
 {
 	t_command	*new_node;
 
 	new_node = ft_calloc(1, sizeof(t_command));
 	if (!new_node)
-		return (NULL);
+		return (error_ptr(ALLOC_ERR));
 	new_node->next = NULL;
 	new_node->cmd = ft_strdup(tokens->str);
 	if (!new_node->cmd)
 	{
 		free(new_node);
-		return (NULL);
+		return (error_ptr(ALLOC_ERR));
 	}
 	tokens = tokens->next;
+	if (init_cmd_args(tokens, &new_node))
+	{
+		//free_cmd(new_node); //create function
+		return (NULL);
+	}
 	return (new_node);
 }
 
-/*returns the last element of the token list*/
-t_lexer	*cmd_list_last(t_lexer *lst)
+/*returns the last element of the command list*/
+static t_command	*cmd_list_last(t_command *lst)
 {
 	if (lst == NULL)
 		return (NULL);
@@ -44,14 +105,14 @@ t_lexer	*cmd_list_last(t_lexer *lst)
 	return (lst);
 }
 
-/*adds a node to the end of the token list*/
-void	cmd_list_add_back(t_lexer **lst, t_lexer *new)
+/*adds a node to the end of the command list*/
+static void	cmd_list_add_back(t_command **lst, t_command *new)
 {
-	t_lexer	*pos;
+	t_command	*pos;
 
 	if (lst)
 	{
-		pos = lex_list_last(*lst);
+		pos = cmd_list_last(*lst);
 		if (!pos)
 			*lst = new;
 		else
@@ -59,7 +120,7 @@ void	cmd_list_add_back(t_lexer **lst, t_lexer *new)
 	}
 }
 
-t_command	*create_cmdlist(t_lexer *tokens)
+static t_command	*create_cmdlist(t_lexer *tokens)
 {
 	t_command	*list;
 	t_command	*node;

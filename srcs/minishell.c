@@ -20,15 +20,13 @@ void	clear_data(t_data *data)
 		data->buf = NULL;
 	}
 	free_tokens(&(data->tokens));
+	//free_cmdlist();
 	data->tokens = NULL;
 }
 
 int	main(int ac, char **av, char **envp)
 {
 	t_data		*data;
-	int			i;
-	int			j;
-	int			k;
 
 	if (ac != 1 || !av[0])
 		panic(ARG_ERR, NULL);
@@ -39,19 +37,15 @@ int	main(int ac, char **av, char **envp)
 	//int i = 0; //test
 	while (1) //while (++i < 2) //test
 	{
-		i = 0;
-		j = 0;
-		k = 0;
-		// data = smth() ->
 		data->buf = (char *)get_the_line(data);
-		data->arguments = split_input(data->buf);
-		init_args(data, data->arguments);
+		//data->arguments = split_input(data->buf);
+		//init_args(data, data->arguments);
 		if (check_line(data->buf) || lexer(data))
 		{
 			clear_data(data);
 			continue ; //if lexing, parsing or line are wrong returns the prompt
 		}
-		execute_shell(data);
+		//execute_shell(data);
 		clear_data(data);
 	}
 	free_data(data); //just temporarily in this part of the code
