@@ -14,7 +14,7 @@ void	free_env(char **env)
 	}
 }
 
-/*function to free buffer and parsing + lexing structures before reentering the loop*/
+/*function to free buffer and parsing + lexing structures before reentering the prompt loop*/
 void	clear_data(t_data *shell)
 {
 	if (shell->buf)

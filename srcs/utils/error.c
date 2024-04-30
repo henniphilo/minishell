@@ -6,7 +6,7 @@
 /*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:47:45 by pbencze           #+#    #+#             */
-/*   Updated: 2024/04/30 16:34:13 by pbencze          ###   ########.fr       */
+/*   Updated: 2024/04/30 16:43:27 by pbencze          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	*cmd_error_ptr(char *str)
 	return (NULL);
 }
 
-/*puts an error message and returns int 1*/
+/*puts a specific syntax error message and returns int 1*/
 int	synt_error_int(t_type type)
 {
 	char *str;

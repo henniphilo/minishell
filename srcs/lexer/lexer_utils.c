@@ -1,5 +1,6 @@
 #include "../../incl/minishell.h"
 
+/*checks if token is <<*/
 int	check_here(t_type *type, char *buf) //missing: syntax error edge cases
 {
 	if (buf[1] == '<')
@@ -7,6 +8,7 @@ int	check_here(t_type *type, char *buf) //missing: syntax error edge cases
 	return (0);
 }
 
+/*checks if token is >>*/
 int	check_append(t_type *type, char *buf) //missing: syntax error edge cases
 {
 	if (buf[1] == '>')
@@ -14,6 +16,7 @@ int	check_append(t_type *type, char *buf) //missing: syntax error edge cases
 	return (0);
 }
 
+/*checks for syntax errors after lexing, e.g. echo hi ||| ls; | echo*/
 int	check_syntax_error(t_lexer *tokens)
 {
 	if (tokens && tokens->type == PIPE)
@@ -42,6 +45,7 @@ int	check_syntax_error(t_lexer *tokens)
 	return (0);
 }
 
+/*joins two tokens of type word if the first one is not followed by a space*/
 int	join_words(t_data *data)
 {
 	t_lexer	*node;
