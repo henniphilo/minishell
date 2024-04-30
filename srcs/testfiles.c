@@ -1,8 +1,7 @@
-#include "../../incl/minishell.h"
+#include "../incl/minishell.h"
 
 static void	print_tokens(t_lexer *tokens)
 {
- 	t_lexer	*tokens = data->tokens;
 	while (tokens)
 	{
 		printf("string: %s\ntype: %i\nsinglequote: %d\n", tokens->str, tokens->type, tokens->single_quote);
@@ -11,15 +10,22 @@ static void	print_tokens(t_lexer *tokens)
 }
 static void	print_cmds(t_command *cmds)
 {
- 	t_lexer	*tokens = data->tokens;
-	while (tokens)
+	while (cmds)
 	{
-		printf("string: %s\ntype: %i\nsinglequote: %d\n", tokens->str, tokens->type, tokens->single_quote);
-		tokens = tokens->next;
+		printf("command: %s\n", cmds->cmd);
+		int i = 0;
+		while (cmds->args && cmds->args[i])
+		{
+			printf("argument %i: ", i);
+			printf("%s\n", cmds->args[i]);
+			i++;
+		}
+		cmds = cmds->next;
 	}
 }
 
 void	test(t_data *data)
 {
 	print_tokens(data->tokens);
+	print_cmds(data->commands);
 }

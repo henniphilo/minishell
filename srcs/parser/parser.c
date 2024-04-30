@@ -27,11 +27,11 @@ static char	**append_arr(char **arr, char *new_str)
 	char	**new_arr;
 
 	i = array_len(arr);
-	new_arr = (char **)ft_calloc(sizeof(char *), (i + 2));
+	new_arr = (char **)ft_calloc((i + 2), sizeof(char *));
 	if (!new_arr)
 		return (free_arr(arr, NULL));
 	i = 0;
-	while (arr[i])
+	while (arr && arr[i])
 	{
 		new_arr[i] = ft_strdup(arr[i]);
 		if (!new_arr[i])
@@ -65,7 +65,7 @@ static int	init_cmd_args(t_lexer *tokens, t_command **node)
 			if (!(*node)->delimiter)
 				return (error_int(ALLOC_ERR));
 		} */
-		append_arr((*node)->args, tokens->str); //temporary
+		(*node)->args = append_arr((*node)->args, tokens->str); //temporary
 		tokens = tokens->next;
 	}
 	return (0);
@@ -133,9 +133,12 @@ static t_command	*create_cmdlist(t_lexer *tokens)
 		if (!node)
 			return (NULL);
 		cmd_list_add_back(&list, node);
-		while (tokens && tokens->type != PIPE) //go until pipe
-			tokens = tokens->next;
-		if (tokens->next) //skip pipe
+		while (tokens)
+		{
+			if (tokens->type != PIPE) //go until pipe
+				tokens = tokens->next;
+		}
+		if (tokens) //skip pipe
 			tokens = tokens->next;
 	}
 	return (list);

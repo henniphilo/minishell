@@ -6,7 +6,10 @@ int	array_len(char **ptr)
 	int	i;
 
 	i = 0;
-	while (ptr[i])
-		i++;
+	if (ptr)
+	{
+		while (ptr[i])
+			i++;
+	}
 	return (i);
 }

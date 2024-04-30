@@ -80,6 +80,9 @@ void		*free_data(t_data *data);
 void		clear_data(t_data *data);
 void		delone_tokens(t_lexer *token);
 void		free_tokens(t_lexer **tokens);
+void		delone_commands(t_command *cmds);
+void		free_commands(t_command **cmds);
+void		free_commands(t_command **cmds);
 void		delone_env_list(t_environ *env);
 void		free_env_list(t_environ **env);
 void		free_env(char **env);
@@ -93,5 +96,11 @@ int			check_more(t_type *type, char *buf);
 int			check_less(t_type *type, char *buf);
 int			check_pipe(char *buf);
 int			join_words(t_data *data);
+
+/*parser*/
+int	parser(t_data *data);
+
+/*test*/
+void	test(t_data *data);
 
 #endif
