@@ -23,9 +23,11 @@ static char	**free_arr(char **arr1, char **arr2)
 
 static char	**append_arr(char **arr, char *new_str)
 {
-	ssize_t	i;
+	int		i;
 	char	**new_arr;
 
+	if (!new_str)
+		return (arr);
 	i = array_len(arr);
 	new_arr = (char **)ft_calloc((i + 2), sizeof(char *));
 	if (!new_arr)
@@ -124,12 +126,15 @@ static t_command	*create_cmdlist(t_lexer *tokens)
 {
 	t_command	*list;
 	t_command	*node;
+	t_lexer		*t;
 
 	list = NULL;
 	node = NULL;
+	t = NULL;
 	while (tokens)
 	{
-		node = new_cmd_list(tokens);
+		t = tokens;
+		node = new_cmd_list(t);
 		if (!node)
 			return (NULL);
 		cmd_list_add_back(&list, node);
