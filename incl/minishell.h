@@ -35,22 +35,21 @@ void		child_process_env(char *toex, t_data *shell, int i);
 // void		init_cmds(t_data *shell, char **pipeline);
 void		env_execute(t_data *shell, char *arg);
 void		count_commands(t_data *shell);
-void		print_pipeline(t_data *shell);
+//void		print_pipeline(t_data *shell);
 void		print_path(char *path);
 
 //void		print_cmds(t_data *shell);
 void		execute_one_envcmd(t_data *shell, pid_t pid);
 void		execute_more_envcmd(t_data *shell, pid_t pid, int i);
 void		space_toex(t_data *shell, char **toex);
-void		space_pipeline(t_data *shell, char ***pipeline);
+//void		space_pipeline(t_data *shell, char ***pipeline);
 //void		space_cmds(t_data *shell, char **cmds);
 void		print_toex(t_data *shell);
 void		hard_toex(t_data *shell);
-void		hard_pipeline(t_data *shell);
+//void		hard_pipeline(t_data *shell);
 int			execute_shell(t_data *shell);
 
 /*built-ins*/
-void		when_builtin(t_data *shell);
 void		which_builtin_parent(t_data *shell, char *arg);
 void		print_env(t_environ *env_ptr);
 int			builtin_check(char *arg);
@@ -60,11 +59,8 @@ char		*find_in_env(char *to_find);
 void		bi_exit(t_data *shell);
 void		bi_unset(t_data *shell);
 void		bi_export(t_data *shell);
-
-
-
-
-
+void		bi_echo(t_data *shell);
+void		echo_env(t_data *shell, char *str);
 
 
 /*Petra*/
