@@ -77,7 +77,9 @@ static int	init_cmd_args(t_lexer *tokens, t_command **node)
 static t_command	*new_cmd_list(t_lexer *tokens)
 {
 	t_command	*new_node;
+	//t_lexer		*tmp;
 
+	//tmp = tokens;
 	new_node = ft_calloc(1, sizeof(t_command));
 	if (!new_node)
 		return (error_ptr(ALLOC_ERR));
@@ -126,22 +128,20 @@ static t_command	*create_cmdlist(t_lexer *tokens)
 {
 	t_command	*list;
 	t_command	*node;
-	t_lexer		*t;
 
 	list = NULL;
 	node = NULL;
-	t = NULL;
 	while (tokens)
 	{
-		t = tokens;
-		node = new_cmd_list(t);
+		node = new_cmd_list(tokens);
 		if (!node)
 			return (NULL);
 		cmd_list_add_back(&list, node);
 		while (tokens)
 		{
-			if (tokens->type != PIPE) //go until pipe
-				tokens = tokens->next;
+			if (tokens->type == PIPE) //go until pipe
+				break;
+			tokens = tokens->next;
 		}
 		if (tokens) //skip pipe
 			tokens = tokens->next;
