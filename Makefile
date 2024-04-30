@@ -8,18 +8,18 @@ CFLAGS = -Wall -Wextra -Werror -g
 RFLAG = -lreadline
 
 MAIN = minishell
-EXEC = exec_3 exec_2 execution built_in
+#EXEC = exec_3 exec_2 execution built_in
 UTILS = error init_env free_data check_line delete_lists utils
 LEXER = lexer create_token_list lexer_utils
 PARSER = parser
 
 SRC =	$(addsuffix .c, $(addprefix srcs/, $(MAIN))) \
 		$(addsuffix .c, $(addprefix srcs/utils/, $(UTILS))) \
-		$(addsuffix .c, $(addprefix srcs/executor/, $(EXEC))) \
 		$(addsuffix .c, $(addprefix srcs/lexer/, $(LEXER))) \
 		$(addsuffix .c, $(addprefix srcs/parser/, $(PARSER))) \
+		#$(addsuffix .c, $(addprefix srcs/executor/, $(EXEC))) \
 
-TEST_SRC = srcs/utils/test.c
+TEST_SRC = srcs/testfiles.c
 
 OBJ = $(SRC:c=o)
 TEST_OBJ = $(TEST_SRC:c=o)
@@ -44,6 +44,7 @@ $(LIBFT)/$(LIBFA):
 clean:
 	make -C $(LIBFT) clean
 	rm -f $(OBJ)
+	rm -f $(TEST_OBJ)
 
 fclean: clean
 	make -C $(LIBFT) fclean

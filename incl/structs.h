@@ -32,8 +32,8 @@ typedef struct s_command {
 	char				*cmd; //e.g. "ls", "echo", "cat", "pwd"
 	char				**args; //things that come after the command e.g. pathname or string
 	//char				**flags; //eg. -f -g
-	char				*infile; //for redirections e.g. 'filename' < echo
-	char				*outfile; //for redirections e.g. echo hi > 'filename'
+	//char				*infile; //for redirections e.g. 'filename' < echo
+	//char				*outfile; //for redirections e.g. echo hi > 'filename'
 	struct s_command	*next;
 }	t_command;
 

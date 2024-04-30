@@ -14,6 +14,18 @@ void	free_env(char **env)
 	}
 }
 
+/*function to free buffer and parsing + lexing structures before reentering the loop*/
+void	clear_data(t_data *data)
+{
+	if (data->buf)
+	{
+		free(data->buf);
+		data->buf = NULL;
+	}
+	free_tokens(&(data->tokens));
+	free_commands(&(data->commands));
+}
+
 /*frees every element of the t_data *data struct*/
 void	*free_data(t_data *data)
 {
@@ -33,6 +45,7 @@ void	*free_data(t_data *data)
 			free(data->arguments);
 		}
 		free_tokens(&(data->tokens));
+		free_commands(&(data->commands));
 		free_env_list(&(data->env_list));
 		free_env(data->env);
 		free(data);
