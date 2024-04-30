@@ -95,28 +95,28 @@ static char	*handle_words(char *tmp_buf, t_lexer **tokens)
 /*where the lexing happens, returns 1 on error,
 processes quotes first, then the special characters
 like pipes or redirections and then the rest*/
-int	lexer(t_data *data)
+int	lexer(t_data *shell)
 {
 	char	*tmp_buf;
 
-	tmp_buf = data->buf;
+	tmp_buf = shell->buf;
 	while (*tmp_buf)
 	{
 		if (*tmp_buf == 32 || *tmp_buf == 9)
 			tmp_buf++;
 		else if (*tmp_buf == '\"' || *tmp_buf == '\'')
-			tmp_buf = handle_quotes(tmp_buf, &data->tokens);
+			tmp_buf = handle_quotes(tmp_buf, &shell->tokens);
 		else if (ft_strchr("<>|", *tmp_buf))
-			tmp_buf = handle_meta(tmp_buf, &data->tokens);
+			tmp_buf = handle_meta(tmp_buf, &shell->tokens);
 		else if (*tmp_buf)
-			tmp_buf = handle_words(tmp_buf, &data->tokens);
+			tmp_buf = handle_words(tmp_buf, &shell->tokens);
 		if (!tmp_buf)
 			return (error_int(LEX_ERR));
 	}
-	//if (join_words(data) || expand_env() || check_syntax_error(data->tokens))
+	//if (join_words(shell) || expand_env() || check_syntax_error(shell->tokens))
 	//	return (1);
-	join_words(data);
-	//check_syntax_error(data->tokens);
+	join_words(shell);
+	//check_syntax_error(shell->tokens);
 	//	check if after pipe there is always something type WORD
 	return (0);
 }

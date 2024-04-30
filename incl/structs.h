@@ -5,7 +5,7 @@
 
 //token types for lexing and parsing
 typedef enum e_type {
-	WORD,		// commands, words, flags?
+	WORD,		// commands, words, flags
 	INPUT,		// <
 	OUTPUT,		// >
 	HEREDOC,	// <<
@@ -25,6 +25,11 @@ typedef struct s_lexer {
 	struct s_lexer	*next;
 }	t_lexer;
 
+typedef struct s_redir {
+	t_type	type;
+	char	*file;
+	//char *heredoc;
+} t_redir;
 
 //to store command nodes
 typedef struct s_command {
@@ -32,16 +37,9 @@ typedef struct s_command {
 	char				*cmd; //e.g. "ls", "echo", "cat", "pwd"
 	char				**args; //things that come after the command e.g. pathname or string
 	//char				**flags; //eg. -f -g
-	//char				*infile; //for redirections e.g. 'filename' < echo
-	//char				*outfile; //for redirections e.g. echo hi > 'filename'
+	t_redir				*redirs;
 	struct s_command	*next;
 }	t_command;
-
-/* typedef struct s_redir {
-	char	*infile;
-	char	*outfile;
-	t_type	type;
-} t_redir; */
 
 //from chatgpt, not sure about keeping it
 /* typedef struct s_heredoc {
