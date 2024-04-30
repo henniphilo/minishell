@@ -69,6 +69,7 @@ char		**append_arr(char **arr, char *new_str);
 void		panic(char *str, void *ptr);
 int			error_int(char *str);
 void		*error_ptr(char *str);
+void		*cmd_error_ptr(char *str);
 
 /*init*/
 void		*init_env(t_data *shell, char **envp);
@@ -94,8 +95,8 @@ int			lexer(t_data *shell);
 void		lex_list_add_back(t_lexer **lst, t_lexer *new);
 t_lexer		*lex_list_last(t_lexer *lst);
 t_lexer		*new_lex_list(t_type t, char *s, bool q);
-int			check_more(t_type *type, char *buf);
-int			check_less(t_type *type, char *buf);
+int			check_append(t_type *type, char *buf);
+int			check_here(t_type *type, char *buf);
 int			check_pipe(char *buf);
 int			join_words(t_data *shell);
 

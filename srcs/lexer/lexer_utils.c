@@ -8,18 +8,46 @@ int	check_pipe(char *buf) //missing: syntax error edge cases
 	return (0);
 }
 
-int	check_less(t_type *type, char *buf) //missing: syntax error edge cases
+int	check_here(t_type *type, char *buf) //missing: syntax error edge cases
 {
 	if (buf[1] == '<')
 		*type = HEREDOC;
 	return (0);
 }
 
-int	check_more(t_type *type, char *buf) //missing: syntax error edge cases
+int	check_append(t_type *type, char *buf) //missing: syntax error edge cases
 {
 	if (buf[1] == '>')
 		*type = APPEND;
 	return (0);
+}
+
+int	check_syntax_error(t_lexer *tokens)
+{
+	if (tokens && tokens->type == PIPE)
+		return (error_int(PIPE_ERR)); //error if first token is a pipe
+	while (tokens)
+	{
+		if (tokens->type == PIPE)
+		{
+			if (!tokens->next)
+				return (error_int(PIPE_ERR));
+			else
+			{
+				if (tokens->next->type == PIPE)
+					return (error_int(PIPE_ERR));
+			}
+		}
+		if (tokens->type == INPUT)
+		{
+
+		}
+		if (tokens->type == OUTPUT)
+		{
+
+		}
+		tokens = tokens->next;
+	}
 }
 
 int	join_words(t_data *data)

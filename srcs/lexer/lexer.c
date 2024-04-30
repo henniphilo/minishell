@@ -10,21 +10,17 @@ static char	*handle_meta(char *tmp_buf, t_lexer **tokens)
 
 	type = 0;
 	if (*tmp_buf == '|')
-	{
 		type = PIPE;
-		if (check_pipe(tmp_buf))
-			return (NULL);
-	}
 	else if (*tmp_buf == '<')
 	{
 		type = INPUT;
-		if (check_less(&type, tmp_buf))
+		if (check_here(&type, tmp_buf))
 			return (NULL);
 	}
 	else if (*tmp_buf == '>')
 	{
 		type = OUTPUT;
-		if (check_more(&type, tmp_buf))
+		if (check_append(&type, tmp_buf))
 			return (NULL);
 	}
 	node = new_lex_list(type, NULL, NULL);
@@ -116,7 +112,7 @@ int	lexer(t_data *shell)
 	//if (join_words(shell) || expand_env() || check_syntax_error(shell->tokens))
 	//	return (1);
 	join_words(shell);
-	//check_syntax_error(shell->tokens);
+	check_syntax_error(shell->tokens);
 	//	check if after pipe there is always something type WORD
 	return (0);
 }
