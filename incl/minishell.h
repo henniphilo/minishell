@@ -52,8 +52,6 @@ int			builtin_check(char *arg);
 int			execute_shell(t_data *shell);
 int			which_builtin_child(t_data *shell, char *arg);
 
-
-
 /*Petra*/
 
 /*read line*/
@@ -99,7 +97,6 @@ t_lexer		*lex_list_last(t_lexer *lst);
 t_lexer		*new_lex_list(t_type t, char *s, bool q);
 int			check_append(t_type *type, char *buf);
 int			check_here(t_type *type, char *buf);
-int			check_pipe(char *buf);
 int			join_words(t_data *shell);
 
 /*parser*/
