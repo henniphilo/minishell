@@ -36,10 +36,11 @@ void		bi_unset(t_data *shell)
 				break ;
 			}
 			else
-				head->value = shell->toex[2];
+				head->value = ft_strdup(shell->toex[2]); //funktioniert noch nicht
 		}
 		head = head->next;
 	}
+	// value muss nochh ueberschrieben werden
 	//print_env(begin);
 }
 

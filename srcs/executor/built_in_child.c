@@ -13,7 +13,6 @@ int	which_builtin_child(t_data *shell, char *arg)
 	}
 	if(ft_strncmp((const char *)arg, "echo", n) == 0)
 	{
-		//printf("its echo\n");
 		bi_echo(shell);
 		return(0);
 	}
@@ -56,16 +55,39 @@ void		echo_env(t_data *shell, char *str)
 		}
 		head = head->next;
 	}
+	free(name);
 }
 
 void		bi_echo(t_data *shell)
 {
 	int			i;
+	int			j;
+	bool		flag;
 
 	i = 1;
+	if(shell->toex[1][0] == '-' && shell->toex[1][1] == 'n')
+	{
+		j = 2;
+		while(shell->toex[1][j] != '\0')
+		{
+			if(shell->toex[1][j] == 'n') 
+			{
+				flag = 1;
+				j++;
+			}
+			else
+			{
+				flag = 0;
+				break ;
+			}
+		}
+	}
 	while(shell->toex[i] != NULL)
 	{
+		//hier stimmt noch was nicht in logik von i, wenn flag 1 -n ueberspringen
 		//hier muss es ordfentlich geparst werden von petra und dann kann variable aus der list geprintet werden
+		if(flag == 1)
+			i++;
 		if(shell->toex[i][0]== '$')
 		{
 			echo_env(shell, shell->toex[i]);
@@ -75,5 +97,6 @@ void		bi_echo(t_data *shell)
 			printf("%s ", shell->toex[i]);
 		i++;
 	}
-	printf("\n");
+	if(flag == 0)
+		printf("\n");
 }
