@@ -45,23 +45,19 @@ void	which_builtin_parent(t_data *shell, char *arg)
 	shell->bi_check = 1;
 	if(ft_strncmp((const char *)arg, "cd", n) == 0)
 	{
-		printf("its cd\n");
 		if(change_directory(shell) != 0)
 			perror("error in cd\n");
 	}
 	if(ft_strncmp((const char *)arg, "export", n) == 0)
 	{
-		printf("its export\n");
-
+		bi_export(shell);
 	}
 	if(ft_strncmp((const char *)arg, "unset", n) == 0)
 	{
-		printf("its unset\n");
 		bi_unset(shell);
 	}
 	if(ft_strncmp((const char *)arg, "exit", n) == 0)
 	{
-		printf("its exit\n");
 		bi_exit(shell);
 	}
 }

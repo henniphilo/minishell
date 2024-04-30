@@ -45,13 +45,10 @@ void		bi_unset(t_data *shell)
 	len = ft_strlen(shell->toex[1]);
 	while(head != NULL)
 	{
-			// printf("das soll geaendert werden: %s\n", shell->toex[1]);
-			// printf("next name is %s\n", head->next->name);
 		if(ft_strncmp(head->name, shell->toex[1], len) == 0)
 		{
 			if(shell->toex[2] == NULL)
 			{
-				printf("there is no toex[2]\n");
 				remove = head;
 				printf(">this to remove: %s=%s < ", remove->name, remove->value);
 				head = head->next;
@@ -59,13 +56,33 @@ void		bi_unset(t_data *shell)
 				break ;
 			}
 			else
-			{
-				printf("hat value\n");
 				head->value = shell->toex[2];
-			}
 		}
 		head = head->next;
 	}
-	printf("----hi-----");
 	print_env(begin);
+}
+
+void		bi_export(t_data *shell)
+{
+	t_environ	*new_node;
+	char		*name;
+	char		*value;
+
+	printf("lets start to be export \n");
+
+	name = ft_strdup(shell->toex[1]);
+	printf("name is: %s\n", name);
+	value = ft_strdup(shell->toex[2]);
+	printf("value is: %s\n", value);
+	new_node = new_env_node(name, value);
+	if(!new_node)
+	{
+		perror("no new node durch export\n");
+		free(name);
+		free(value);
+	}
+	add_env_back(&shell->env_list, new_node);
+	printf("------new node list-----\n");
+	print_env(shell->env_list);
 }

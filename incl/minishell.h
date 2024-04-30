@@ -59,6 +59,8 @@ int			change_directory(t_data *shell);
 char		*find_in_env(char *to_find);
 void		bi_exit(t_data *shell);
 void		bi_unset(t_data *shell);
+void		bi_export(t_data *shell);
+
 
 
 
