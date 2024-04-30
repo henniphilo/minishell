@@ -14,6 +14,7 @@ int	array_len(char **ptr)
 	return (i);
 }
 
+/*frees two 2D-arrays*/
 char	**free_arr(char **arr1, char **arr2)
 {
 	int	i;
@@ -35,6 +36,7 @@ char	**free_arr(char **arr1, char **arr2)
 	return (NULL);
 }
 
+/*appends a string to a 2D-array*/
 char	**append_arr(char **arr, char *new_str)
 {
 	int		i;

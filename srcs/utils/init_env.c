@@ -1,5 +1,6 @@
 #include "../../incl/minishell.h"
 
+/*creates a new env node*/
 t_environ	*new_env_node(char *name, char *value)
 {
 	t_environ	*node;
@@ -13,6 +14,7 @@ t_environ	*new_env_node(char *name, char *value)
 	return (node);
 }
 
+/*searches for the last element of the env list*/
 t_environ	*env_list_last(t_environ *list)
 {
 	if (list == NULL)
@@ -22,6 +24,7 @@ t_environ	*env_list_last(t_environ *list)
 	return (list);
 }
 
+/*adds an env node to the back of the list*/
 void	add_env_back(t_environ **list, t_environ *node)
 {
 	t_environ	*tmp;
@@ -37,6 +40,7 @@ void	add_env_back(t_environ **list, t_environ *node)
 
 }
 
+/*creates a linked list of environment variables; pros: easy to manipulate*/
 t_environ	*init_env_list(char **envp)
 {
 	t_environ	*list;
