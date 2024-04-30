@@ -109,11 +109,9 @@ int	lexer(t_data *shell)
 		if (!tmp_buf)
 			return (error_int(LEX_ERR));
 	}
-	//if (join_words(shell) || expand_env() || check_syntax_error(shell->tokens))
-	//	return (1);
-	join_words(shell);
-	check_syntax_error(shell->tokens);
-	//	check if after pipe there is always something type WORD
+	if (join_words(shell) || check_syntax_error(shell->tokens))
+		return (1);
+	//expand_env()
 	return (0);
 }
 

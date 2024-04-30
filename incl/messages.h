@@ -7,8 +7,10 @@
 # define ARG_ERR "amount of arguments incorrect"
 # define RL_ERR "error on reading the line"
 # define LEX_ERR "error occured during lexing"
-# define PIPE_ERR "minishell: syntax error near unexpected token '|'"
 # define PARSE_ERR "error occured during parsing"
+# define NL_ERR "minishell: syntax error near unexpected token `newline'"
+# define SYNTAX_ERR "minishell: syntax error near unexpected token "
+
 
 /*macros to define builtins*/
 # define ECHO "echo" // braucht es das?

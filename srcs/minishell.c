@@ -21,8 +21,8 @@ int	main(int ac, char **av, char **envp)
 	if (!shell)
 		panic(ALLOC_ERR, NULL);
 	init_env(shell, envp);
-	int i = 0; //test
-	while (++i < 2) //test
+	//int i = 0; //test
+	while (1) //while (i < 2) //test
 	{
 		shell->buf = (char *)get_the_line(shell);
 		//shell->arguments = split_input(shell->buf);

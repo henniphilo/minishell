@@ -6,7 +6,7 @@
 /*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:47:45 by pbencze           #+#    #+#             */
-/*   Updated: 2024/04/30 15:25:44 by pbencze          ###   ########.fr       */
+/*   Updated: 2024/04/30 16:34:13 by pbencze          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,29 @@ void	*cmd_error_ptr(char *str)
 {
 	if (str)
 		ft_putendl_fd(str, 2);
-	ft_putchar_fd(COMMAND_ERR, 2);
+	ft_putendl_fd(COMMAND_ERR, 2);
 	return (NULL);
+}
+
+/*puts an error message and returns int 1*/
+int	synt_error_int(t_type type)
+{
+	char *str;
+
+	str = SYNTAX_ERR;
+	if (str)
+		ft_putstr_fd(str, 2);
+	if (type == INPUT)
+		ft_putendl_fd("'<'", 2);
+	if (type == OUTPUT)
+		ft_putendl_fd("'>'", 2);
+	if (type == HEREDOC)
+		ft_putendl_fd("'<<'", 2);
+	if (type == APPEND)
+		ft_putendl_fd("'>>'", 2);
+	if (type == PIPE)
+		ft_putendl_fd("'|'", 2);
+	return (1);
 }
 
 

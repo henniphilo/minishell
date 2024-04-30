@@ -64,12 +64,14 @@ int			check_line(char *buf);
 int			array_len(char **ptr);
 char		**free_arr(char **arr1, char **arr2);
 char		**append_arr(char **arr, char *new_str);
+int			check_syntax_error(t_lexer *tokens);
 
 /*error*/
 void		panic(char *str, void *ptr);
 int			error_int(char *str);
 void		*error_ptr(char *str);
 void		*cmd_error_ptr(char *str);
+int			synt_error_int(t_type type);
 
 /*init*/
 void		*init_env(t_data *shell, char **envp);
