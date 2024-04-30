@@ -23,9 +23,11 @@ static char	**free_arr(char **arr1, char **arr2)
 
 static char	**append_arr(char **arr, char *new_str)
 {
-	ssize_t	i;
+	int		i;
 	char	**new_arr;
 
+	if (!new_str)
+		return (arr);
 	i = array_len(arr);
 	new_arr = (char **)ft_calloc((i + 2), sizeof(char *));
 	if (!new_arr)
@@ -75,7 +77,9 @@ static int	init_cmd_args(t_lexer *tokens, t_command **node)
 static t_command	*new_cmd_list(t_lexer *tokens)
 {
 	t_command	*new_node;
+	//t_lexer		*tmp;
 
+	//tmp = tokens;
 	new_node = ft_calloc(1, sizeof(t_command));
 	if (!new_node)
 		return (error_ptr(ALLOC_ERR));
@@ -135,8 +139,9 @@ static t_command	*create_cmdlist(t_lexer *tokens)
 		cmd_list_add_back(&list, node);
 		while (tokens)
 		{
-			if (tokens->type != PIPE) //go until pipe
-				tokens = tokens->next;
+			if (tokens->type == PIPE) //go until pipe
+				break;
+			tokens = tokens->next;
 		}
 		if (tokens) //skip pipe
 			tokens = tokens->next;

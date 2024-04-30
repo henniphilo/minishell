@@ -33,7 +33,7 @@ int	main(int ac, char **av, char **envp)
 			continue ; //if lexing, parsing or line are wrong returns the prompt
 		}
 		//execute_shell(data);
-		test(data);
+		//test(data);
 		clear_data(data);
 	}
 	free_data(data); //just temporarily in this part of the code
