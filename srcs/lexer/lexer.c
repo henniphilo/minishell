@@ -10,21 +10,17 @@ static char	*handle_meta(char *tmp_buf, t_lexer **tokens)
 
 	type = 0;
 	if (*tmp_buf == '|')
-	{
 		type = PIPE;
-		if (check_pipe(tmp_buf))
-			return (NULL);
-	}
 	else if (*tmp_buf == '<')
 	{
 		type = INPUT;
-		if (check_less(&type, tmp_buf))
+		if (check_here(&type, tmp_buf))
 			return (NULL);
 	}
 	else if (*tmp_buf == '>')
 	{
 		type = OUTPUT;
-		if (check_more(&type, tmp_buf))
+		if (check_append(&type, tmp_buf))
 			return (NULL);
 	}
 	node = new_lex_list(type, NULL, NULL);
@@ -95,29 +91,27 @@ static char	*handle_words(char *tmp_buf, t_lexer **tokens)
 /*where the lexing happens, returns 1 on error,
 processes quotes first, then the special characters
 like pipes or redirections and then the rest*/
-int	lexer(t_data *data)
+int	lexer(t_data *shell)
 {
 	char	*tmp_buf;
 
-	tmp_buf = data->buf;
+	tmp_buf = shell->buf;
 	while (*tmp_buf)
 	{
 		if (*tmp_buf == 32 || *tmp_buf == 9)
 			tmp_buf++;
 		else if (*tmp_buf == '\"' || *tmp_buf == '\'')
-			tmp_buf = handle_quotes(tmp_buf, &data->tokens);
+			tmp_buf = handle_quotes(tmp_buf, &shell->tokens);
 		else if (ft_strchr("<>|", *tmp_buf))
-			tmp_buf = handle_meta(tmp_buf, &data->tokens);
+			tmp_buf = handle_meta(tmp_buf, &shell->tokens);
 		else if (*tmp_buf)
-			tmp_buf = handle_words(tmp_buf, &data->tokens);
+			tmp_buf = handle_words(tmp_buf, &shell->tokens);
 		if (!tmp_buf)
 			return (error_int(LEX_ERR));
 	}
-	//if (join_words(data) || expand_env() || check_syntax_error(data->tokens))
-	//	return (1);
-	join_words(data);
-	//check_syntax_error(data->tokens);
-	//	check if after pipe there is always something type WORD
+	if (join_words(shell) || check_syntax_error(shell->tokens))
+		return (1);
+	//expand_env()
 	return (0);
 }
 

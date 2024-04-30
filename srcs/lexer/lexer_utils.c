@@ -1,24 +1,44 @@
 #include "../../incl/minishell.h"
 
-/*function to handle syntax errors*/
-int	check_pipe(char *buf) //missing: syntax error edge cases
-{
-	if (buf[1] == '|')
-		return (error_int(PIPE_ERR));
-	return (0);
-}
-
-int	check_less(t_type *type, char *buf) //missing: syntax error edge cases
+int	check_here(t_type *type, char *buf) //missing: syntax error edge cases
 {
 	if (buf[1] == '<')
 		*type = HEREDOC;
 	return (0);
 }
 
-int	check_more(t_type *type, char *buf) //missing: syntax error edge cases
+int	check_append(t_type *type, char *buf) //missing: syntax error edge cases
 {
 	if (buf[1] == '>')
 		*type = APPEND;
+	return (0);
+}
+
+int	check_syntax_error(t_lexer *tokens)
+{
+	if (tokens && tokens->type == PIPE)
+		return (synt_error_int(PIPE)); //error if first token is a pipe
+	while (tokens)
+	{
+		if (tokens->type == INPUT || tokens->type == OUTPUT || tokens->type == HEREDOC || tokens->type == APPEND || tokens->type == PIPE)
+		{
+			if (!tokens->next)
+				return (error_int(NL_ERR));
+		}
+		if (tokens->type == PIPE)
+		{
+			if (tokens->next->type == PIPE)
+				return (synt_error_int(PIPE));
+		}
+		else if (!(tokens->type == WORD))
+		{
+			if (tokens->next->type == WORD)
+				continue ;
+			else
+				return (synt_error_int(tokens->next->type));
+		}
+		tokens = tokens->next;
+	}
 	return (0);
 }
 

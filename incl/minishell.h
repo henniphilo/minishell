@@ -57,27 +57,32 @@ int			which_builtin_child(t_data *shell, char *arg);
 /*Petra*/
 
 /*read line*/
-const char	*get_the_line(t_data *data);
+const char	*get_the_line(t_data *shell);
 int			check_line(char *buf);
 
 /*utils*/
 int			array_len(char **ptr);
+char		**free_arr(char **arr1, char **arr2);
+char		**append_arr(char **arr, char *new_str);
+int			check_syntax_error(t_lexer *tokens);
 
 /*error*/
 void		panic(char *str, void *ptr);
 int			error_int(char *str);
 void		*error_ptr(char *str);
+void		*cmd_error_ptr(char *str);
+int			synt_error_int(t_type type);
 
 /*init*/
-void		*init_env(t_data *data, char **envp);
+void		*init_env(t_data *shell, char **envp);
 t_environ	*init_env_list(char **envp);
 t_environ	*new_env_node(char *name, char *value);
 t_environ	*env_list_last(t_environ *list);
 void		add_env_back(t_environ **list, t_environ *node);
 
 /*free*/
-void		*free_data(t_data *data);
-void		clear_data(t_data *data);
+void		*free_data(t_data *shell);
+void		clear_data(t_data *shell);
 void		delone_tokens(t_lexer *token);
 void		free_tokens(t_lexer **tokens);
 void		delone_commands(t_command *cmds);
@@ -88,19 +93,19 @@ void		free_env_list(t_environ **env);
 void		free_env(char **env);
 
 /*lexer*/
-int			lexer(t_data *data);
+int			lexer(t_data *shell);
 void		lex_list_add_back(t_lexer **lst, t_lexer *new);
 t_lexer		*lex_list_last(t_lexer *lst);
 t_lexer		*new_lex_list(t_type t, char *s, bool q);
-int			check_more(t_type *type, char *buf);
-int			check_less(t_type *type, char *buf);
+int			check_append(t_type *type, char *buf);
+int			check_here(t_type *type, char *buf);
 int			check_pipe(char *buf);
-int			join_words(t_data *data);
+int			join_words(t_data *shell);
 
 /*parser*/
-int	parser(t_data *data);
+int	parser(t_data *shell);
 
 /*test*/
-void	test(t_data *data);
+void	test(t_data *shell);
 
 #endif

@@ -15,40 +15,40 @@ void	free_env(char **env)
 }
 
 /*function to free buffer and parsing + lexing structures before reentering the loop*/
-void	clear_data(t_data *data)
+void	clear_data(t_data *shell)
 {
-	if (data->buf)
+	if (shell->buf)
 	{
-		free(data->buf);
-		data->buf = NULL;
+		free(shell->buf);
+		shell->buf = NULL;
 	}
-	free_tokens(&(data->tokens));
-	free_commands(&(data->commands));
+	free_tokens(&(shell->tokens));
+	free_commands(&(shell->commands));
 }
 
-/*frees every element of the t_data *data struct*/
-void	*free_data(t_data *data)
+/*frees every element of the t_data *shell struct*/
+void	*free_data(t_data *shell)
 {
 	int	i;
 
-	if (data)
+	if (shell)
 	{
-		if (data->buf)
-			free(data->buf);
-		if (data->fd)
-			free(data->fd);
-		if (data->arguments)
+		if (shell->buf)
+			free(shell->buf);
+		if (shell->fd)
+			free(shell->fd);
+		if (shell->arguments)
 		{
 			i = -1;
-			while (data->arguments[++i])
-				free(data->arguments[i]);
-			free(data->arguments);
+			while (shell->arguments[++i])
+				free(shell->arguments[i]);
+			free(shell->arguments);
 		}
-		free_tokens(&(data->tokens));
-		free_commands(&(data->commands));
-		free_env_list(&(data->env_list));
-		free_env(data->env);
-		free(data);
+		free_tokens(&(shell->tokens));
+		free_commands(&(shell->commands));
+		free_env_list(&(shell->env_list));
+		free_env(shell->env);
+		free(shell);
 	}
 	return (NULL);
 }

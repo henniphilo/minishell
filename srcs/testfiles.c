@@ -24,8 +24,8 @@ static void	print_cmds(t_command *cmds)
 	}
 }
 
-void	test(t_data *data)
+void	test(t_data *shell)
 {
-	print_tokens(data->tokens);
-	print_cmds(data->commands);
+	print_tokens(shell->tokens);
+	print_cmds(shell->commands);
 }
