@@ -24,7 +24,7 @@
                 //     "text": "set follow-fork-mode child"
                 // }
             ],
-            //"preLaunchTask": "make"
+            "preLaunchTask": "make"
         }
     ]
 }

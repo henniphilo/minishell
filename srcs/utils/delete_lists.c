@@ -28,6 +28,7 @@ void	delone_commands(t_command *cmds)
 				free(cmds->args[i]);
 				i++;
 			}
+			free(cmds->args);
 		}
 		free(cmds);
 	}
