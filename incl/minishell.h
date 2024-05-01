@@ -76,7 +76,7 @@ int			check_line(char *buf);
 int			array_len(char **ptr);
 char		**free_arr(char **arr1, char **arr2);
 char		**append_arr(char **arr, char *new_str);
-int			check_syntax_error(t_lexer *tokens);
+int			check_syntax_and_here(t_lexer *tokens);
 
 /*error*/
 void		panic(char *str, void *ptr);
@@ -108,7 +108,7 @@ void		free_env(char **env);
 int			lexer(t_data *shell);
 void		lex_list_add_back(t_lexer **lst, t_lexer *new);
 t_lexer		*lex_list_last(t_lexer *lst);
-t_lexer		*new_lex_list(t_type t, char *s, bool q);
+t_lexer		*new_lex_list(t_type t, char *s, bool sq, bool dq);
 int			check_append(t_type *type, char *buf);
 int			check_here(t_type *type, char *buf);
 int			join_words(t_data *shell);

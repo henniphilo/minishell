@@ -40,8 +40,12 @@ int	expand_env(t_lexer *tokens)
 	i = 0;
 	while (tokens)
 	{
-		if (tokens->type == HEREDOC)
-		if (tokens->type == WORD && !(tokens->single_quote) && tokens->previous->type != HEREDOC) //DONT expand if heredoc is before word
+		if (tokens->type == HEREDOC) //to not expand what comes after a heredoc
+		{
+			while (tokens->next && tokens->next->space_after == 0) //check if it segfaults when << is the laste element of the line
+					tokens = tokens->next;
+		}
+		if (tokens->type == WORD && !(tokens->single_quote))
 		{
 			if (i = -1 || !tokens->str)
 				return (NULL);
@@ -51,7 +55,7 @@ int	expand_env(t_lexer *tokens)
 		tokens = tokens->next;
 	}
 }
-
+/*
 pbencze@c3a8c2:~/Documents/42cursus/Minishell/Minishell_Github$ echo > $A
 bash: $A: ambiguous redirect
 pbencze@c3a8c2:~/Documents/42cursus/Minishell/Minishell_Github$ echo $A
@@ -94,8 +98,28 @@ drwxr-xr-x 2 pbencze 2023_berlin 4096 Apr 30 16:38 libft
 drwxr-xr-x 6 pbencze 2023_berlin  138 May  1 16:21 srcs
 pbencze@c3a8c2:~/Documents/42cursus/Minishell/Minishell_Github$
 
-1. heredocs
-2. expansion
+pbencze@c3a8c2:~/Documents/42cursus/Minishell/Minishell_Github$ cat << hi
+> $USER
+> hi
+pbencze
+pbencze@c3a8c2:~/Documents/42cursus/Minishell/Minishell_Github$ cat << hi"hey"
+> $USER
+> hihey
+$USERec
+
+pbencze@c3a8c2:~/Documents/42cursus/Minishell/Minishell_Github$ << ''
+>
+
+pbencze@c3a8c2:~/Documents/42cursus/Minishell/Minishell_Github$ << hi | abab | << h ><
+bash: syntax error near unexpected token `<'
+> hi
+> h
+pbencze@c3a8c2:~/Documents/42cursus/Minishell/Minishell_Github$ ><< hi | abab | << h
+bash: syntax error near unexpected token `<<'
+
+2. expansion (if heredoc: jump until space after -> start expansion)
 3. join words
-3. wenn
+4. heredocs
+// files werden nicht erstellt beim syntax error, aber heredocs bis zum error schon, also den letzten token mit error flaggen und bis dahin heredocs machen
+*/
 

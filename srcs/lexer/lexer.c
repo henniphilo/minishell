@@ -45,11 +45,12 @@ static char	*handle_quotes(char *tmp_buf, t_lexer **tokens)
 	while (tmp_buf[0] != tmp_buf[i])
 		i++;
 	if (i == 1)
-		return (tmp_buf + i + 1);
-	s = ft_substr((const char *)(tmp_buf), 1, i - 1);
+		s = ft_strdup("");
+	else
+		s = ft_substr((const char *)(tmp_buf), 1, i - 1);
 	if (!s)
 		return (NULL);
-	node = new_lex_list(WORD, s, (*tmp_buf == '\''));
+	node = new_lex_list(WORD, s, (*tmp_buf == '\''), (*tmp_buf == '\"'));
 	if (!node)
 	{
 		free (s);
@@ -109,9 +110,9 @@ int	lexer(t_data *shell)
 		if (!tmp_buf)
 			return (error_int(LEX_ERR));
 	}
-	if (join_words(shell) || check_syntax_error(shell->tokens))
-		return (1);
 	//expand_env()
+	if (join_words(shell) || check_syntax_and_here(shell->tokens)) //in check_syntax function when it finds a heredoc -> it should do the piping
+		return (1);
 	return (0);
 }
 

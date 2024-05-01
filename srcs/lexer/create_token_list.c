@@ -1,14 +1,15 @@
 #include "../../incl/minishell.h"
 
 /*creates a new node*/
-t_lexer	*new_lex_list(t_type t, char *s, bool q)
+t_lexer	*new_lex_list(t_type t, char *s, bool sq, bool dq)
 {
 	t_lexer	*new_node;
 
 	new_node = malloc(sizeof(t_lexer));
 	if (!new_node)
 		return (NULL);
-	new_node->single_quote = q;
+	new_node->single_quote = sq;
+	new_node->double_quote = dq;
 	new_node->type = t;
 	new_node->str = s;
 	new_node->space_after = 0;
