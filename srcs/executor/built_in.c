@@ -49,8 +49,8 @@ void	which_builtin_parent(t_data *shell, char *arg)
 
 static void	bi_cd_check(t_data *shell, char *home_path)
 {
-	char	*up;
-	char	*tilde;
+	const char	*up;
+	const char	*tilde;
 
 	up = "..";
 	tilde = "~";
