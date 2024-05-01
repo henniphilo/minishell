@@ -46,6 +46,25 @@ void	which_builtin_parent(t_data *shell, char *arg)
 		bi_exit(shell);
 	}
 }
+
+static void	bi_cd_check(t_data *shell, char *home_path)
+{
+	char	*up;
+	char	*tilde;
+
+	up = "..";
+	tilde = "~";
+	printf("ist in cd check\n");
+	if((ft_strncmp(shell->toex[1], up, 2))== 0)
+	{
+		printf("goes up\n");
+		chdir("..");
+		return ;
+	}
+	if((ft_strncmp(shell->toex[1], tilde, 1)) == 0)
+		chdir(home_path);
+}
+
 //here toex[1] als placeholder
 //noch cd .. klaeren
 int	change_directory(t_data *shell)
@@ -66,6 +85,7 @@ int	change_directory(t_data *shell)
 		chdir(home_path);
 		return(0);
 	}
+	bi_cd_check(shell, home_path);
 	new_path = path_finder(shell->toex[1], shell);
 	if(new_path != NULL)
 	{
@@ -80,12 +100,15 @@ int	change_directory(t_data *shell)
 	return(1);
 }
 
+
+
 void	bi_exit(t_data *shell)
 {
 	free_data(shell); //hier noch memory leaks bei space_toex
 	exit(0);
 }
-
+//nicht korrekt zeigt nicht aktuellen pfad an sondern von env
+//pwd in env updaten
 void	bi_pwd()
 {
 	char	*current_path;
