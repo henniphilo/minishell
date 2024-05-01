@@ -1,5 +1,39 @@
 #include "../../incl/minishell.h"
 
+/*frees the command list used for parsing*/
+void	free_commands(t_command **cmds)
+{
+	if (cmds && *cmds)
+	{
+		free_commands(&(*cmds)->next);
+		delone_commands(*cmds);
+		*cmds = NULL;
+	}
+}
+
+/*frees one element of the command list used for parsing*/
+void	delone_commands(t_command *cmds)
+{
+	int	i;
+
+	if (cmds)
+	{
+		if (cmds->cmd)
+			free(cmds->cmd);
+		if (cmds->args)
+		{
+			i = 0;
+			while (cmds->args[i])
+			{
+				free(cmds->args[i]);
+				i++;
+			}
+			free(cmds->args);
+		}
+		free(cmds);
+	}
+}
+
 /*frees one element of the token list used for lexing*/
 void	delone_tokens(t_lexer *token)
 {
@@ -10,7 +44,6 @@ void	delone_tokens(t_lexer *token)
 		free(token);
 	}
 }
-
 /*frees the token list used for lexing*/
 void	free_tokens(t_lexer **tokens)
 {
@@ -18,7 +51,7 @@ void	free_tokens(t_lexer **tokens)
 	{
 		free_tokens(&(*tokens)->next);
 		delone_tokens(*tokens);
-		tokens = NULL;
+		*tokens = NULL;
 	}
 }
 
@@ -43,6 +76,6 @@ void	free_env_list(t_environ **env)
 	{
 		free_env_list(&(*env)->next);
 		delone_env_list(*env);
-		env = NULL;
+		*env = NULL;
 	}
 }

@@ -5,14 +5,13 @@
 
 //token types for lexing and parsing
 typedef enum e_type {
-	WORD,		// commands, words, flags?
+	WORD,		// commands, words, flags
 	INPUT,		// <
 	OUTPUT,		// >
 	HEREDOC,	// <<
 	APPEND,		// >>
 	PIPE,		// |
 	//ESTATUS,	// $?
-	//BUILTIN //
 	//ENV, // environment vars, but they will be handled probably differently
 }	t_type;
 
@@ -26,19 +25,18 @@ typedef struct s_lexer {
 }	t_lexer;
 
 typedef struct s_redir {
-	char	*infile;
-	char	*outfile;
-	t_type	type;
+	t_type	type; //HERE, APPEND, IN, OUT
+	char	*file; //int fd;
+	//char *heredoc;
 } t_redir;
 
 //to store command nodes
 typedef struct s_command {
-	t_type	type; //IN, OUT, HERE, WORD, APPEND
-	char	*cmd; //e.g. "ls", "echo", "cat", "pwd"
-	char	**args; //things that come after the command e.g. pathname or string
-	//char	**flags; //eg. -f -g
-	char	*filename; //for redirections
-	int		estatus; //for exit status of last pipe to store later in data
+	t_type				type; //IN, OUT, HERE, WORD, APPEND
+	char				*cmd; //e.g. "ls", "echo", "cat", "pwd"
+	char				**args; //things that come after the command e.g. pathname or string
+	//char				**flags; //eg. -f -g
+	t_redir				*redirs;
 	struct s_command	*next;
 }	t_command;
 
@@ -62,6 +60,7 @@ typedef struct s_data {
 	t_environ	*env_list;
 	t_lexer		*tokens; //linked list of lexed tokens
 	t_command	*commands; //linked list of commandlines between pipes that point to a struct of commands
+	int			estatus; //for exit status of last pipe to store for the next prompt
 	char		**arguments; // hen: to store all the input
 	int			*fd; // hen: zum directen der fd muss noch richtig init werden
 //	t_builtin	*bi; // hen : zum tracken der builtins

@@ -4,25 +4,33 @@ LIBFT = libft
 LIBFA = libft.a
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g
 RFLAG = -lreadline
 
-MAIN = hard_shell
-EXEC = exec_env exec_env2 execution built_in built_in_env built_in_child exec_extras exec_shell
+MAIN = minishell
+#EXEC = exec_env exec_env2 execution built_in built_in_env built_in_child exec_extras exec_shell
 UTILS = error init_env free_data check_line delete_lists utils
 LEXER = lexer create_token_list lexer_utils
+PARSER = parser
 
-SRC = $(addsuffix .c, $(addprefix srcs/, $(MAIN))) \
-	  $(addsuffix .c, $(addprefix srcs/utils/, $(UTILS))) \
-	  $(addsuffix .c, $(addprefix srcs/executor/, $(EXEC))) \
-	  $(addsuffix .c, $(addprefix srcs/lexer/, $(LEXER))) \
+SRC =	$(addsuffix .c, $(addprefix srcs/, $(MAIN))) \
+		$(addsuffix .c, $(addprefix srcs/utils/, $(UTILS))) \
+		$(addsuffix .c, $(addprefix srcs/lexer/, $(LEXER))) \
+		$(addsuffix .c, $(addprefix srcs/parser/, $(PARSER))) \
+		#$(addsuffix .c, $(addprefix srcs/executor/, $(EXEC))) \
+
+TEST_SRC = srcs/testfiles.c
 
 OBJ = $(SRC:c=o)
+TEST_OBJ = $(TEST_SRC:c=o)
 
 all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBFT)/$(LIBFA)
 	$(CC) $(CFLAGS) -L$(LIBFT) $(RFLAG) $(OBJ) -ldl -lft -o $(NAME)
+
+test: $(OBJ) $(LIBFT)/$(LIBFA) $(TEST_OBJ)
+	$(CC) $(CFLAGS) -L$(LIBFT) $(RFLAG) $(OBJ) $(TEST_OBJ) -ldl -lft -o $(NAME)
 
 debug: $(OBJ) $(LIBFT)/$(LIBFA)
 	$(CC) $(CFLAGS) -L$(LIBFT) $(RFLAG) $(OBJ) -ldl -lft -g3 -fsanitize=address -o $(NAME)
@@ -36,6 +44,7 @@ $(LIBFT)/$(LIBFA):
 clean:
 	make -C $(LIBFT) clean
 	rm -f $(OBJ)
+	rm -f $(TEST_OBJ)
 
 fclean: clean
 	make -C $(LIBFT) fclean

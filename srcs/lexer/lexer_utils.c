@@ -1,27 +1,51 @@
 #include "../../incl/minishell.h"
 
-/*function to handle syntax errors*/
-int	check_pipe(char *buf) //missing: syntax error edge cases
-{
-	if (buf[1] == '|')
-		return (error_int(PIPE_ERR));
-	return (0);
-}
-
-int	check_less(t_type *type, char *buf) //missing: syntax error edge cases
+/*checks if token is <<*/
+int	check_here(t_type *type, char *buf) //missing: syntax error edge cases
 {
 	if (buf[1] == '<')
 		*type = HEREDOC;
 	return (0);
 }
 
-int	check_more(t_type *type, char *buf) //missing: syntax error edge cases
+/*checks if token is >>*/
+int	check_append(t_type *type, char *buf) //missing: syntax error edge cases
 {
 	if (buf[1] == '>')
 		*type = APPEND;
 	return (0);
 }
 
+/*checks for syntax errors after lexing, e.g. echo hi ||| ls; | echo*/
+int	check_syntax_error(t_lexer *tokens)
+{
+	if (tokens && tokens->type == PIPE)
+		return (synt_error_int(PIPE)); //error if first token is a pipe
+	while (tokens)
+	{
+		if (tokens->type == INPUT || tokens->type == OUTPUT || tokens->type == HEREDOC || tokens->type == APPEND || tokens->type == PIPE)
+		{
+			if (!tokens->next)
+				return (error_int(NL_ERR));
+		}
+		if (tokens->type == PIPE)
+		{
+			if (tokens->next->type == PIPE)
+				return (synt_error_int(PIPE));
+		}
+		else if (!(tokens->type == WORD))
+		{
+			if (tokens->next->type == WORD)
+				continue ;
+			else
+				return (synt_error_int(tokens->next->type));
+		}
+		tokens = tokens->next;
+	}
+	return (0);
+}
+
+/*joins two tokens of type word if the first one is not followed by a space*/
 int	join_words(t_data *data)
 {
 	t_lexer	*node;
@@ -36,6 +60,7 @@ int	join_words(t_data *data)
 	{
 		while (node->next && node->type == WORD && node->next->type == WORD && node->space_after == 0)
 		{
+			//take care of heredocs, so do not join if single or double quote comes after <<
 			s = ft_strjoin(node->str, node->next->str);
 			if (!s)
 			{
