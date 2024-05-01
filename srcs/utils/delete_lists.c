@@ -65,6 +65,7 @@ void	delone_env_list(t_environ *env)
 		if (env->name)
 			free(env->name);
 		free(env);
+		env = NULL;
 	}
 }
 
