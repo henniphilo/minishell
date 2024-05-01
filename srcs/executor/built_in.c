@@ -54,14 +54,16 @@ static void	bi_cd_check(t_data *shell, char *home_path)
 
 	up = "..";
 	tilde = "~";
-	printf("ist in cd check\n");
-	if((ft_strncmp(shell->toex[1], up, 2))== 0)
+	printf("tilde ist: %s und up: %s\n", tilde, up);
+	printf("Home path in cd check ");
+	print_path(home_path);
+	if((ft_strncmp(shell->toex[1], up, 3))== 0)
 	{
 		printf("goes up\n");
 		chdir("..");
 		return ;
 	}
-	if((ft_strncmp(shell->toex[1], tilde, 1)) == 0)
+	if((ft_strncmp(shell->toex[1], tilde, 2)) == 0)
 		chdir(home_path);
 }
 
@@ -113,6 +115,6 @@ void	bi_pwd()
 {
 	char	*current_path;
 
-	current_path = find_in_env("PWD");
-	printf("%s\n", current_path);
+	current_path = getenv("PWD");
+	printf("neues pwd: %s\n", current_path);
 }
