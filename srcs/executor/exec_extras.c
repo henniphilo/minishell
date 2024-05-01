@@ -11,6 +11,7 @@ void	print_toex(t_data *shell)
 		printf("toex[%d] is: %s\n", i, shell->toex[i]);
 		i++;
 	}
+	printf("last toex[%d] is: %s\n", i, shell->toex[i]);
 }
 
 /*

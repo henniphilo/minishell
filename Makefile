@@ -7,8 +7,8 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 RFLAG = -lreadline
 
-MAIN = minishell
-#EXEC = exec_3 exec_2 execution built_in
+MAIN = hard_shell
+EXEC = exec_env exec_env2 execution built_in built_in_env built_in_child exec_extras exec_shell
 UTILS = error init_env free_data check_line delete_lists utils
 LEXER = lexer create_token_list lexer_utils
 PARSER = parser

@@ -33,16 +33,16 @@ void	*free_data(t_data *shell)
 
 	if (shell)
 	{
-		if (shell->buf)
-			free(shell->buf);
-		if (shell->fd)
-			free(shell->fd);
-		if (shell->arguments)
+		if (data->buf)
+			free(data->buf);
+		if (data->fd)
+			free(data->fd);
+		if (data->toex)
 		{
 			i = -1;
-			while (shell->arguments[++i])
-				free(shell->arguments[i]);
-			free(shell->arguments);
+			while (data->toex[++i])
+				free(data->toex[i]);
+			free(data->toex);
 		}
 		free_tokens(&(shell->tokens));
 		free_commands(&(shell->commands));

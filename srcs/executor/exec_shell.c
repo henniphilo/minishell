@@ -3,7 +3,7 @@
 
 void		count_commands(t_data *shell)
 {
-	printf("hi we are in count cmd\n");
+	//printf("hi we are in count cmd\n");
 	int		cmd_count;
 	int		i;
 
@@ -38,7 +38,7 @@ int	execute_shell(t_data *shell)
 	{
 		if(builtin_check(shell->toex[i]) != 1)
 		{
-			printf("toex zwischen check:\n");
+			printf("-toex zwischen check -\n");
 			print_toex(shell);
 			printf("-toex zwischen check ende -\n");
 
@@ -50,8 +50,11 @@ int	execute_shell(t_data *shell)
 		else
 		{
 			printf("im parent\n");
-			if(builtin_check(shell->toex[i]) == 0)
+			if(builtin_check(shell->toex[i]) == 1)
+			{
+				printf("checkt jetzt builtin bei toex[%d]:%s\n", i, shell->toex[i]);
 				which_builtin_parent(shell, shell->toex[i]);
+			}
 		//	printf("parent: PID = %d, child-PID = %d\n", getpid(), pid);
 		}
 		i++;

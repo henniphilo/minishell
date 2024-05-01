@@ -1,24 +1,25 @@
 
 #include "../../incl/minishell.h"
 
-// static void	print_path(char *path)
-// {
-// //	printf("hi in print_path\n");
-// 	if(path != NULL)
-// 		printf("path: %s\n", path);
-// }
-
-char	*path_finder(char *cmd, char **envp)
+void	print_path(char *path)
 {
-	int	i;
+//	printf("hi in print_path\n");
+	if(path != NULL)
+		printf("path: %s\n", path);
+}
+
+
+char	*path_finder(char *cmd, t_data *shell)
+{
+	int		i;
 	char	**path_components;
 	char	*current_path;
 	char	*full_path;
 
 	i = 0;
-	while (ft_strnstr(envp[i], "PATH=", 5) == 0)
+	while (ft_strnstr(shell->env[i], "PATH=", 5) == 0)
 		i++;
-	path_components = ft_split(envp[i] + 5, ':');
+	path_components = ft_split(shell->env[i] + 5, ':');
 	i = 0;
 	while (path_components[i] != NULL)
 	{
@@ -26,8 +27,8 @@ char	*path_finder(char *cmd, char **envp)
 	//	printf("current path:");
 	//	print_path(current_path);
 		full_path = ft_strjoin(current_path, cmd);
-		// printf("full path:");
-		// print_path(full_path);
+	//	printf("full path:");
+	//	print_path(full_path);
 		free(current_path);
 		if (access(full_path, F_OK) == 0)
 		{
@@ -52,7 +53,7 @@ void	env_execute(t_data *shell, char *toex)
 
 	while(toex != NULL)
 	{
-		path = path_finder(toex, shell->env);
+		path = path_finder(toex, shell);
 		if(!path)
 		{
 			free(toex);
