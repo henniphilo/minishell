@@ -27,7 +27,7 @@ static char	*handle_meta(char *tmp_buf, t_lexer **tokens)
 	if (!node)
 		return (NULL);
 	lex_list_add_back(tokens, node);
-	if (tmp_buf[0] == tmp_buf[1])
+	if (tmp_buf[0] == tmp_buf[1] && (tmp_buf[1] == '<' || tmp_buf[1] == '>'))
 		tmp_buf++;
 	return (tmp_buf + 1);
 }

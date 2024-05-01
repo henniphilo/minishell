@@ -25,8 +25,8 @@ typedef struct s_lexer {
 }	t_lexer;
 
 typedef struct s_redir {
-	t_type	type;
-	char	*file;
+	t_type	type; //HERE, APPEND, IN, OUT
+	char	*file; //int fd;
 	//char *heredoc;
 } t_redir;
 
