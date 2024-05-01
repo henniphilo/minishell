@@ -61,6 +61,7 @@ void		bi_unset(t_data *shell);
 void		bi_export(t_data *shell);
 void		bi_echo(t_data *shell);
 void		echo_env(t_data *shell, char *str);
+t_environ	*replace_value(t_environ *list_ptr, char *replace);
 
 
 /*Petra*/

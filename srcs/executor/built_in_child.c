@@ -70,7 +70,7 @@ void		bi_echo(t_data *shell)
 		j = 2;
 		while(shell->toex[1][j] != '\0')
 		{
-			if(shell->toex[1][j] == 'n') 
+			if(shell->toex[1][j] == 'n')
 			{
 				flag = 1;
 				j++;
@@ -100,3 +100,5 @@ void		bi_echo(t_data *shell)
 	if(flag == 0)
 		printf("\n");
 }
+
+//noch pwd bearbeiten
