@@ -49,6 +49,7 @@ void		hard_toex(t_data *shell);
 //void		hard_pipeline(t_data *shell);
 int			execute_shell(t_data *shell);
 
+
 /*built-ins*/
 void		which_builtin_parent(t_data *shell, char *arg);
 void		print_env(t_environ *env_ptr);
@@ -61,6 +62,7 @@ void		bi_unset(t_data *shell);
 void		bi_export(t_data *shell);
 void		bi_echo(t_data *shell);
 void		echo_env(t_data *shell, char *str);
+void		bi_pwd();
 t_environ	*replace_value(t_environ *list_ptr, char *replace);
 
 

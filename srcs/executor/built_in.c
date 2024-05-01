@@ -9,6 +9,7 @@ int	builtin_check(char *arg)
 	if((ft_strncmp((const char *)arg, "cd", n) == 0)
 		|| (ft_strncmp((const char *)arg, "exit", n) == 0)
 		|| (ft_strncmp((const char *)arg, "unset", n) == 0)
+		|| (ft_strncmp((const char *)arg, "pwd", n) == 0)
 		|| (ft_strncmp((const char *)arg, "export", n) == 0))
 	{
 		printf("is a builtin in parent \n");
@@ -31,6 +32,10 @@ void	which_builtin_parent(t_data *shell, char *arg)
 	if(ft_strncmp((const char *)arg, "export", n) == 0)
 	{
 		bi_export(shell);
+	}
+	if(ft_strncmp((const char *)arg, "pwd", n) == 0)
+	{
+		bi_pwd();
 	}
 	if(ft_strncmp((const char *)arg, "unset", n) == 0)
 	{
@@ -62,8 +67,6 @@ int	change_directory(t_data *shell)
 		return(0);
 	}
 	new_path = path_finder(shell->toex[1], shell);
-		chdir(home_path);
-		return(0);
 	if(new_path != NULL)
 	{
 		printf("geht zu neuem ");
@@ -81,4 +84,12 @@ void	bi_exit(t_data *shell)
 {
 	free_data(shell); //hier noch memory leaks bei space_toex
 	exit(0);
+}
+
+void	bi_pwd()
+{
+	char	*current_path;
+
+	current_path = find_in_env("PWD");
+	printf("%s\n", current_path);
 }
