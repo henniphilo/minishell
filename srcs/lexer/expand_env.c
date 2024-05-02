@@ -1,19 +1,28 @@
 #include "../../incl/minishell.h"
 
 
-static char *find_limit(char *dollar)
+static char *find_limit(char *start)
 {
-	while (dollar)
+	if (start && *start >= 48 && start <= 57)
+		return (start);
+	while (start)
 	{
-		if ((dollar >))
-			dollar++;
+		if ((*start >= 48 && start <= 57) || (*start >= 65 && *start <= 90) || *start == 95)
+			start++;
 		else
-			return (dollar);
+			return (start);
 	}
-	return (dollar);
+	return (start);
 }
 
-int	find_and_replace(char **str)
+static char	*split_expand_join(char **str, char *dollar, char *limit, t_environ *env)
+{
+	char *name;
+
+
+}
+
+static int	find_and_replace(char **str, t_environ *env)
 {
 	char	*tmp;
 	char	*dollar;
@@ -27,18 +36,22 @@ int	find_and_replace(char **str)
 		dollar = ft_strchr(tmp, '$');
 		if (!dollar)
 			return (0);
-		limit = find_limit(dollar); //if there is nothing ater dollar, it will be printed
+		limit = find_limit(dollar + 1); //if there is nothing ater dollar, it will be printed
 		if (limit == dollar + 1)
 			tmp = limit;
 		else
-			tmp = split_expand_join(str, dollar, limit);
+			tmp = split_expand_join(str, dollar, limit, env);
 	}
 	if (!tmp)
 		return (1);
 	return (0);
 }
 
-int	expand_env(t_lexer *tokens)
+/*expands environment variable to their values;
+environment variable names consist solely of
+uppercase letters, digits, and the <underscore>
+and do not begin with a digit. */
+int	expand_env(t_lexer *tokens, t_environ *env)
 {
 	int	i;
 
@@ -55,7 +68,7 @@ int	expand_env(t_lexer *tokens)
 			if (i = 1 || !tokens->str)
 				return (error_int(EXPAN_ERR));
 			if (ft_strchr(tokens->str, '$'))
-				i = find_and_replace(&(tokens->str));
+				i = find_and_replace(&(tokens->str), env);
 		}
 		tokens = tokens->next;
 	}
