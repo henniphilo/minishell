@@ -6,7 +6,7 @@
 #    By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/02 15:58:16 by hwiemann          #+#    #+#              #
-#    Updated: 2024/04/23 10:22:20 by pbencze          ###   ########.fr        #
+#    Updated: 2024/05/02 18:37:06 by pbencze          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ ft_memmove.c \
 ft_memset.c \
 ft_split.c \
 ft_strchr.c \
+ft_strcmp.c \
 ft_strdup.c \
 ft_strjoin.c \
 ft_strlcat.c \

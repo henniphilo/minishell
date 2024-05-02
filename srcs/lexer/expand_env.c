@@ -19,6 +19,11 @@ static char	*split_expand_join(char **str, char *dollar, char *limit, t_environ 
 {
 	char *name;
 
+	while (env)
+	{
+		if (env->name == ft_strcmp()) //create strcmp
+	}
+
 
 }
 
