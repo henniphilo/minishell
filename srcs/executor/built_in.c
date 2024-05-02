@@ -30,7 +30,7 @@ void	which_builtin_parent(t_data *shell, char *arg)
 	if(ft_strncmp((const char *)arg, "cd", n) == 0)
 	{
 		if(change_directory(shell) != 0)
-			perror("error in cd\n");
+			perror("error in \n");
 	}
 	if(ft_strncmp((const char *)arg, "export", n) == 0)
 	{
@@ -38,7 +38,9 @@ void	which_builtin_parent(t_data *shell, char *arg)
 	}
 	if(ft_strncmp((const char *)arg, "pwd", n) == 0)
 	{
-		bi_pwd();
+		//printf("%s\n", getenv("PWD"));
+		bi_pwd(shell);
+			//perror("cd error\n");
 	}
 	if(ft_strncmp((const char *)arg, "unset", n) == 0)
 	{
@@ -57,21 +59,24 @@ static int	bi_cd_check(t_data *shell, char *home_path)
 
 	up = "..";
 	tilde = "~";
-	printf("Home path in cd check ");
-	print_path(home_path);
+	// printf("Home path in cd check ");
+	// print_path(home_path);
 	if((ft_strncmp(shell->toex[1], up, 3))== 0)
 	{
 		if(chdir("..") == 0)
 			printf("goes up\n");
+		update_old_pwd(shell);
 		return (0);
 	}
 	if((ft_strncmp(shell->toex[1], tilde, 2)) == 0)
 	{
 		chdir(home_path);
+		update_old_pwd(shell);
 		return (0);
 	}
 	return (1);
 }
+
 
 //here toex[1] als placeholder
 //noch path protecten
@@ -80,35 +85,76 @@ int	change_directory(t_data *shell)
 	char	*new_path;
 	char	*current_path;
 	char	*home_path;
+	char	cwd[1024];
+	t_environ	*env_ptr;
 
-	current_path = find_in_env("PWD");
+	env_ptr = find_name_in_envlist(shell, "PWD");
+	current_path = getcwd(cwd, sizeof(cwd));
 	home_path = find_in_env("HOME");
-	printf("start ");
-	print_path(current_path);
-	printf("Home ");
-	print_path(home_path);
-	if(shell->toex[1] == NULL) //here aendern fuer ..
+	if(shell->toex[1] == NULL)
 	{
-		printf("going home\n");
 		chdir(home_path);
+		update_old_pwd(shell);
 		return(0);
 	}
 	if(bi_cd_check(shell, home_path) == 0)
 		return(0);
-	new_path = path_finder(shell->toex[1], shell);
+	new_path = shell->toex[1];
 	if(new_path != NULL)
 	{
-		printf("geht zu neuem ");
-		print_path(new_path);
-		if(chdir(new_path) == 0)
-		{
-			printf("changes directory\n");
-			return(0);
-		}
+		chdir(new_path);
+		update_old_pwd(shell);
+		return(0);
 	}
 	return(1);
 }
 
+void		update_envlist(t_data *shell, char *to_up, char *new)
+{
+	t_environ	*head;
+
+	head = shell->env_list;
+
+	while(head != NULL)
+	{
+		if(ft_strncmp(to_up, head->name, 50) == 0)
+		{
+			head = replace_value(head, new);
+			break ;
+		}
+		head = head->next;
+	}
+}
+
+void	update_old_pwd(t_data *shell)
+{
+	char	*new_path;
+	char	*old_path;
+	char	cwd[1024];
+	t_environ *old_path_ptr;
+
+	old_path_ptr = find_name_in_envlist(shell, "PWD");
+	old_path = old_path_ptr->value;
+	update_envlist(shell, "OLDPWD", old_path);
+	new_path = getcwd(cwd, sizeof(cwd));
+	update_envlist(shell, "PWD", new_path);
+}
+
+t_environ	*find_name_in_envlist(t_data *shell, char *name)
+{
+	t_environ	*head;
+
+	head = shell->env_list;
+	while(head != NULL)
+	{
+		if(ft_strncmp(name, head->name, 50) == 0)
+		{
+			return (head);
+		}
+		head = head->next;
+	}
+	return(NULL);
+}
 
 
 void	bi_exit(t_data *shell)
@@ -116,12 +162,21 @@ void	bi_exit(t_data *shell)
 	free_data(shell); //hier noch memory leaks bei space_toex
 	exit(0);
 }
-//nicht korrekt zeigt nicht aktuellen pfad an sondern von env
-//pwd in env updaten
-void	bi_pwd()
-{
-	char	*current_path;
 
-	current_path = getenv("PWD");
-	printf("neues pwd: %s\n", current_path);
+void		bi_pwd(t_data *shell)
+{
+	char		*current_path;
+	t_environ	*head;
+
+	head = shell->env_list;
+	while(head != NULL)
+	{
+		if(ft_strncmp(head->name, "PWD", 4) == 0)
+		{
+			current_path = head->value;
+			printf("%s\n", current_path);
+			break ;
+		}
+		head = head->next;
+	}
 }

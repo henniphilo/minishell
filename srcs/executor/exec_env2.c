@@ -24,15 +24,10 @@ char	*path_finder(char *cmd, t_data *shell)
 	while (path_components[i] != NULL)
 	{
 		current_path = ft_strjoin(path_components[i], "/");
-	//	printf("current path:");
-	//	print_path(current_path);
 		full_path = ft_strjoin(current_path, cmd);
-	//	printf("full path:");
-	//	print_path(full_path);
 		free(current_path);
 		if (access(full_path, F_OK) == 0)
 		{
-		//	print_path(full_path);
 			return (full_path);
 		}
 		free (full_path);

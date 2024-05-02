@@ -3,14 +3,14 @@
 
 char	*find_in_env(char *to_find)
 {
-	char	*path;
+	char	*value;
 
-	path = getenv(to_find);
-	if(!path)
+	value = getenv(to_find);
+	if(!value)
 	{
-		perror("path not found\n");
+		perror("env value not found\n");
 	}
-	return (path);
+	return (value);
 }
 //noch beachten dass es unset USER="Henrike" ist also nicht mit weiteren toex[..]
 
