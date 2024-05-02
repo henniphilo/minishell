@@ -50,7 +50,7 @@ void		echo_env(t_data *shell, char *str)
 	{
 		if(ft_strncmp(name, head->name, n - 1) == 0)
 		{
-			printf("%s\n", head->value);
+			printf("%s", head->value);
 			return ;
 		}
 		head = head->next;
@@ -58,16 +58,15 @@ void		echo_env(t_data *shell, char *str)
 	free(name);
 }
 
-void		bi_echo(t_data *shell)
+static int	set_flag(t_data *shell)
 {
-	int			i;
-	int			j;
-	bool		flag;
+	int		j;
+	int		flag;
 
-	i = 1;
+	flag = 0;
 	if(shell->toex[1][0] == '-' && shell->toex[1][1] == 'n')
 	{
-		j = 2;
+		j = 1;
 		while(shell->toex[1][j] != '\0')
 		{
 			if(shell->toex[1][j] == 'n')
@@ -82,16 +81,26 @@ void		bi_echo(t_data *shell)
 			}
 		}
 	}
+	return(flag);
+}
+
+//hier muss es ordfentlich geparst werden von petra und dann kann variable aus der list geprintet werden
+void		bi_echo(t_data *shell)
+{
+	int			i;
+	int		flag;
+
+	i = 1;
+	flag = set_flag(shell);
+	printf("flag is %d\n", flag);
 	while(shell->toex[i] != NULL)
 	{
-		//hier stimmt noch was nicht in logik von i, wenn flag 1 -n ueberspringen
-		//hier muss es ordfentlich geparst werden von petra und dann kann variable aus der list geprintet werden
 		if(flag == 1)
 			i++;
 		if(shell->toex[i][0]== '$')
 		{
 			echo_env(shell, shell->toex[i]);
-			return ;
+			break ;
 		}
 		else
 			printf("%s ", shell->toex[i]);
@@ -101,4 +110,5 @@ void		bi_echo(t_data *shell)
 		printf("\n");
 }
 
-//noch pwd bearbeiten
+// macht bei -n $HOME noch new line
+

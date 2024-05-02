@@ -38,9 +38,7 @@ void	which_builtin_parent(t_data *shell, char *arg)
 	}
 	if(ft_strncmp((const char *)arg, "pwd", n) == 0)
 	{
-		//printf("%s\n", getenv("PWD"));
 		bi_pwd(shell);
-			//perror("cd error\n");
 	}
 	if(ft_strncmp((const char *)arg, "unset", n) == 0)
 	{
