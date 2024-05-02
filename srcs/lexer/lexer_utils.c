@@ -37,7 +37,7 @@ int	check_syntax_and_here(t_lexer *tokens)
 		{
 			if (tokens->next->type == WORD)
 			{
-				if (tokens->type == HEREDOC)
+				//if (tokens->type == HEREDOC)
 					//handle_heredoc(); //do this function
 				continue ;
 			}
@@ -70,7 +70,7 @@ int	join_words(t_data *data)
 				free(s);
 				return (error_int(ALLOC_ERR));
 			}
-			if (node->str || node->next->str)
+			if (node->single_quote == 1 || node->next->single_quote || node->)
 				node->here_quote = 1; //for heredocs
 			free(node->str);
 			node->str = s;
