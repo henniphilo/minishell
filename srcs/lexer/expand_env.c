@@ -3,11 +3,11 @@
 
 static char *find_limit(char *start)
 {
-	if (start && *start >= 48 && start <= 57)
+	if (*start && *start >= 48 && *start <= 57)
 		return (start);
-	while (start)
+	while (*start)
 	{
-		if ((*start >= 48 && start <= 57) || (*start >= 65 && *start <= 90) || *start == 95)
+		if ((*start >= 48 && *start <= 57) || (*start >= 65 && *start <= 90) || *start == 95)
 			start++;
 		else
 			return (start);
@@ -15,16 +15,24 @@ static char *find_limit(char *start)
 	return (start);
 }
 
-static char	*split_expand_join(char **str, char *dollar, char *limit, t_environ *env)
+static char	*split_expand_join(char *str, char *dollar, char *limit, t_environ *env)
 {
-	char *name;
+	char	*name;
+	char	*value;
+	char	*ret;
 
-	while (env)
+	name = ft_substr(dollar, 1, limit - dollar); //check if correct
+	if (!name)
+		return (error_ptr(ALLOC_ERR));
+	value = NULL;
+	while (env && !value)
 	{
-		if (env->name == ft_strcmp()) //create strcmp
+		if (ft_strcmp(env->name, name) == 0) //create strcmp
+			value = env->value;
+		env = env->next;
 	}
-
-
+	ret = join3();
+	return (ret);
 }
 
 static int	find_and_replace(char **str, t_environ *env)
@@ -45,7 +53,7 @@ static int	find_and_replace(char **str, t_environ *env)
 		if (limit == dollar + 1)
 			tmp = limit;
 		else
-			tmp = split_expand_join(str, dollar, limit, env);
+			tmp = split_expand_join(*str, dollar, limit, env);
 	}
 	if (!tmp)
 		return (1);
@@ -70,10 +78,13 @@ int	expand_env(t_lexer *tokens, t_environ *env)
 		}
 		if (tokens->type == WORD && !(tokens->quote == SINGLE))
 		{
-			if (i = 1 || !tokens->str)
+			if (!tokens->str)
 				return (error_int(EXPAN_ERR));
 			if (ft_strchr(tokens->str, '$'))
-				i = find_and_replace(&(tokens->str), env);
+			{
+				if (find_and_replace(&(tokens->str), env))
+					return (error_int(EXPAN_ERR));
+			}
 		}
 		tokens = tokens->next;
 	}
