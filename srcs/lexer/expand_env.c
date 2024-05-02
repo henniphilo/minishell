@@ -3,11 +3,14 @@
 
 static char *find_limit(char *dollar)
 {
-	while (*dollar)
+	while (dollar)
 	{
-		if (!(*dollar >))
-		dollar++;
+		if ((dollar >))
+			dollar++;
+		else
+			return (dollar);
 	}
+	return (dollar);
 }
 
 int	find_and_replace(char **str)
@@ -15,21 +18,23 @@ int	find_and_replace(char **str)
 	char	*tmp;
 	char	*dollar;
 	char	*limit;
-	char	*name;
-	char	*value;
 
-	tmp = NULL;
-	if (!str)
-		return (-1);
-	dollar = ft_strchr(str, '$');
-	limit = find_limit(dollar);
-	name = ft_substr(dollar, 1, limit - dollar);
-	if (!name)
-		return (-1);
-	tmp = split_expand_join(str, dollar, limit);
-	free(*str);
-	str = tmp;
-	return(ft_strlen((const char *)value));
+	if (!str || !*str)
+		return (1);
+	tmp = *str;
+	while (tmp)
+	{
+		dollar = ft_strchr(tmp, '$');
+		if (!dollar)
+			return (0);
+		limit = find_limit(dollar); //if there is nothing ater dollar, it will be printed
+		if (limit == dollar + 1)
+			tmp = limit;
+		else
+			tmp = split_expand_join(str, dollar, limit);
+	}
+	if (!tmp)
+		return (1);
 	return (0);
 }
 
@@ -47,13 +52,14 @@ int	expand_env(t_lexer *tokens)
 		}
 		if (tokens->type == WORD && !(tokens->quote == SINGLE))
 		{
-			if (i = -1 || !tokens->str)
-				return (NULL);
-			while (ft_strchr(&(tokens->str[i]), '$'))
+			if (i = 1 || !tokens->str)
+				return (error_int(EXPAN_ERR));
+			if (ft_strchr(tokens->str, '$'))
 				i = find_and_replace(&(tokens->str));
 		}
 		tokens = tokens->next;
 	}
+	return (0);
 }
 /*
 pbencze@c3a8c2:~/Documents/42cursus/Minishell/Minishell_Github$ echo > $A

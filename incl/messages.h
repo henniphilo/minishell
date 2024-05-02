@@ -8,6 +8,7 @@
 # define RL_ERR "error on reading the line"
 # define LEX_ERR "error occured during lexing"
 # define PARSE_ERR "error occured during parsing"
+# define EXPAN_ERR "error occured during expansion"
 # define NL_ERR "minishell: syntax error near unexpected token `newline'"
 # define SYNTAX_ERR "minishell: syntax error near unexpected token "
 
