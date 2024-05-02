@@ -56,14 +56,17 @@ void		print_env(t_environ *env_ptr);
 int			builtin_check(char *arg);
 int			which_builtin_child(t_data *shell, char *arg);
 int			change_directory(t_data *shell);
+void		bi_pwd(t_data *shell);
 char		*find_in_env(char *to_find);
 void		bi_exit(t_data *shell);
 void		bi_unset(t_data *shell);
 void		bi_export(t_data *shell);
 void		bi_echo(t_data *shell);
 void		echo_env(t_data *shell, char *str);
-void		bi_pwd();
+void		update_old_pwd(t_data *shell);
+void		update_envlist(t_data *shell, char *to_up, char *new);
 t_environ	*replace_value(t_environ *list_ptr, char *replace);
+t_environ	*find_name_in_envlist(t_data *shell, char *name);
 
 
 /*Petra*/
