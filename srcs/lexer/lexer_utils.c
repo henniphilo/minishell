@@ -70,8 +70,8 @@ int	join_words(t_data *data)
 				free(s);
 				return (error_int(ALLOC_ERR));
 			}
-			if (node->single_quote == 1 || node->next->single_quote || node->)
-				node->here_quote = 1; //for heredocs
+			if (!(node->quote == NONE && node->next->quote == NONE))
+				node->quote = HERE; //for heredocs
 			free(node->str);
 			node->str = s;
 			if (node->next->space_after == 1)

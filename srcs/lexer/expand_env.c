@@ -45,7 +45,7 @@ int	expand_env(t_lexer *tokens)
 			while (tokens->next && tokens->next->space_after == 0) //check if it segfaults when << is the laste element of the line
 					tokens = tokens->next;
 		}
-		if (tokens->type == WORD && !(tokens->single_quote))
+		if (tokens->type == WORD && !(tokens->quote == SINGLE))
 		{
 			if (i = -1 || !tokens->str)
 				return (NULL);
