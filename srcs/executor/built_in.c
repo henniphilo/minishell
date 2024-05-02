@@ -18,6 +18,9 @@ int	builtin_check(char *arg)
 	return (0);
 }
 
+
+// alles was path verwendet muss protectet werden, checken ob path exists
+
 void	which_builtin_parent(t_data *shell, char *arg)
 {
 	int	n;
@@ -47,28 +50,31 @@ void	which_builtin_parent(t_data *shell, char *arg)
 	}
 }
 
-static void	bi_cd_check(t_data *shell, char *home_path)
+static int	bi_cd_check(t_data *shell, char *home_path)
 {
 	const char	*up;
 	const char	*tilde;
 
 	up = "..";
 	tilde = "~";
-	printf("tilde ist: %s und up: %s\n", tilde, up);
 	printf("Home path in cd check ");
 	print_path(home_path);
 	if((ft_strncmp(shell->toex[1], up, 3))== 0)
 	{
-		printf("goes up\n");
-		chdir("..");
-		return ;
+		if(chdir("..") == 0)
+			printf("goes up\n");
+		return (0);
 	}
 	if((ft_strncmp(shell->toex[1], tilde, 2)) == 0)
+	{
 		chdir(home_path);
+		return (0);
+	}
+	return (1);
 }
 
 //here toex[1] als placeholder
-//noch cd .. klaeren
+//noch path protecten
 int	change_directory(t_data *shell)
 {
 	char	*new_path;
@@ -87,7 +93,8 @@ int	change_directory(t_data *shell)
 		chdir(home_path);
 		return(0);
 	}
-	bi_cd_check(shell, home_path);
+	if(bi_cd_check(shell, home_path) == 0)
+		return(0);
 	new_path = path_finder(shell->toex[1], shell);
 	if(new_path != NULL)
 	{
