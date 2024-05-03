@@ -1,31 +1,19 @@
 #include "../../incl/minishell.h"
 
 
-void		count_commands(t_data *shell)
+void		count_commands(t_data *shell) // wird erssetzt von pipe count petra
 {
 	//printf("hi we are in count cmd\n");
-	int		cmd_count;
-	int		i;
+	// int		cmd_count;
+	// int		i;
 
-	i = 0;
-	cmd_count = 0;
-	while (shell->toex[cmd_count] != NULL) //eigentlich gerade ein pipe count
-		cmd_count++;
-	// if(cmd_count >= 1)
-	// {
-	// 	while(i < cmd_count)
-	// 	{
-	// 		printf("in c_count is arg[%d]: %s\n", i, shell->arguments[i]);
-	// 		shell->cmds = split_pipe_in_cmd(shell->arguments[i]);
-	// 		//shell->cmds = ft_split(shell->arguments[i], ' ');
-	// 		i++;
-	// 	}
-	// }
-	shell->cmd_count = cmd_count; // -1 then you hve numbers of pipes
+	// i = 0;
+	// cmd_count = 0;
+	//while (shell->toex[cmd_count] != NULL) //eigentlich gerade ein pipe count
+	//	cmd_count++;
+	shell->cmd_count = 1; // -1 then you hve numbers of pipes
 	printf("count is: %d\n", shell->cmd_count);
 }
-
-
 
 int	execute_shell(t_data *shell)
 {
@@ -36,7 +24,7 @@ int	execute_shell(t_data *shell)
 	pid = 0;
 	if(shell->cmd_count > 0)
 	{
-		if(builtin_check(shell->toex[i]) != 1)
+		if(builtin_check(shell->toex->cmd) != 1)
 		{
 			printf("-toex zwischen check -\n");
 			print_toex(shell);
@@ -50,10 +38,10 @@ int	execute_shell(t_data *shell)
 		else
 		{
 			printf("im parent\n");
-			if(builtin_check(shell->toex[i]) == 1)
+			if(builtin_check(shell->toex->cmd) == 1)
 			{
-				printf("checkt jetzt builtin bei toex[%d]:%s\n", i, shell->toex[i]);
-				which_builtin_parent(shell, shell->toex[i]);
+				printf("checkt jetzt builtin bei toex[%d]:%s\n", i, shell->toex->cmd);
+				which_builtin_parent(shell, shell->toex->cmd);
 			}
 		//	printf("parent: PID = %d, child-PID = %d\n", getpid(), pid);
 		}

@@ -1,18 +1,7 @@
 #include "../incl/minishell.h"
 
 
-void	print_toex(t_data *shell)
-{
-	int		i;
 
-	i = 0;
-	while(shell->toex[i] != NULL)
-	{
-		printf("toex[%d] is: %s\n", i, shell->toex[i]);
-		i++;
-	}
-	printf("last toex[%d] is: %s\n", i, shell->toex[i]);
-}
 
 /*
 void	space_pipeline(t_data *shell, char ***pipeline)

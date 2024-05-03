@@ -13,10 +13,12 @@ void	execute_one_envcmd(t_data *shell, pid_t pid)
 	if (pid == 0)
 	{
 	//	printf("count: %d & i: %d\n", cmd_count, i);
-		if((which_builtin_child(shell, shell->toex[0]))== 1)
-			child_process_env(shell->toex[0], shell, 0);
+		if((which_builtin_child(shell, shell->toex->cmd))== 1)
+			child_process_env(shell->toex->cmd, shell, 0);
 	}
 }
+
+// -> macht nicht so viel sinn weil nur ein ausfuehrbarer command 
 void	execute_more_envcmd(t_data *shell, pid_t pid, int i)
 {
 	printf("mehrere toex\n");
@@ -29,8 +31,8 @@ void	execute_more_envcmd(t_data *shell, pid_t pid, int i)
 	if (pid == 0)
 	{
 		printf("count: %d & i: %d\n", shell->cmd_count, i);
-		if((which_builtin_child(shell, shell->toex[i]))== 1)
-			child_process_env(shell->toex[i], shell, i);
+		if((which_builtin_child(shell, shell->toex->cmd))== 1)
+			child_process_env(shell->toex->cmd, shell, i);
 	}
 }
 

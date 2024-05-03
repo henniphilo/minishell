@@ -59,17 +59,13 @@ typedef struct s_data {
 	char		**env; //2Darray to store environmental variables
 	t_environ	*env_list;
 	t_lexer		*tokens; //linked list of lexed tokens
-	t_command	*commands; //linked list of commandlines between pipes that point to a struct of commands
+	t_command	*toex; //hen: to execute as replacement for cmds arg confusion, toex is the input seperated by a pipe
 	int			estatus; //for exit status of last pipe to store for the next prompt
-	char		**arguments; // hen: to store all the input
 	int			*fd; // hen: zum directen der fd muss noch richtig init werden
-//	t_builtin	*bi; // hen : zum tracken der builtins
-	bool		bi_check;
+	bool		bi_check; //hen: built_in check
 //	pid_t		*pid; //process id, evt als array fuer individuelle prozess? - doch nicht
-	int			cmd_count;
-//	char		**cmds;
+	int			cmd_count; // wird von petra upgedatet in pipe count
 	char		***pipeline; //hen: 3d array was auf die auszufuehrenden toex zeigt
-	char		**toex; //hen: to execute as replacement for cmds arg confusion, toex is the input seperated by a pipe
 }	t_data;
 
 #endif

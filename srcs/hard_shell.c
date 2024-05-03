@@ -12,6 +12,22 @@ const char	*get_the_line(t_data *data)
 	return (line);
 }
 
+void	print_toex(t_data *shell)
+{
+	int		i;
+
+	i = 0;
+	if(shell->toex->cmd != NULL)
+		printf("cmd is: %s\n", shell->toex->cmd);
+
+	while(shell->toex->args != NULL)
+	{
+		printf("arg[%d] is: %s\n", i, shell->toex->args[i]);
+		i++;
+	}
+	printf("last toex[%d] is: %s\n", i, shell->toex->args[i]);
+}
+
 
 int	main(int ac, char **av, char **envp)
 {
@@ -26,14 +42,17 @@ int	main(int ac, char **av, char **envp)
 	while(1)
 	{
 		shell->buf = (char *)get_the_line(shell);
-		hard_toex(shell);
-	//	space_pipeline(shell);
-	//	hard_pipeline(shell);
-		print_toex(shell);
+		if (check_line(shell->buf) || lexer(shell) || parser(shell))
+		{
+			clear_data(shell);
+			continue ; //if lexing, parsing or line are wrong returns the prompt
+		}
+	//	test(shell);
+	//	hard_toex(shell);
 		count_commands(shell);
+	//	print_toex(shell);
 		execute_shell(shell);
-
-
+		clear_data(shell);
 	}
 
 }
@@ -49,13 +68,18 @@ void	hard_pipeline(t_data *shell)
 */
 
 
+
+
+
+//hier ersetzen von petra -----> hab ich von char **toex in t_command *toex geaendert
+/*
 void	hard_toex(t_data *shell)
 {
 	space_toex(shell, &shell->buf);
 	shell->toex = ft_split(shell->buf, ' ');
 	if(!shell->toex)
 		shell->toex = &shell->buf;
-}
+} */
 /*
 void	hard_toex(t_data *shell) //wenn ***pipeline funktioniert
 {
