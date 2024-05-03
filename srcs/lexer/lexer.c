@@ -23,7 +23,7 @@ static char	*handle_meta(char *tmp_buf, t_lexer **tokens)
 		if (check_append(&type, tmp_buf))
 			return (NULL);
 	}
-	node = new_lex_list(type, NULL, NULL);
+	node = new_lex_list(type, NULL, NULL, NULL);
 	if (!node)
 		return (NULL);
 	lex_list_add_back(tokens, node);
@@ -77,7 +77,7 @@ static char	*handle_words(char *tmp_buf, t_lexer **tokens)
 	s = ft_substr((const char *)(tmp_buf), 0, i);
 	if (!s)
 		return (NULL);
-	node = new_lex_list(WORD, s, NULL);
+	node = new_lex_list(WORD, s, NULL, NULL);
 	if (!node)
 	{
 		free (s);
