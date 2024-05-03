@@ -10,16 +10,14 @@ typedef enum e_type {
 	OUTPUT,		// >
 	HEREDOC,	// <<
 	APPEND,		// >>
-	PIPE,		// |
-	//ESTATUS,	// $?
-	//ENV, // environment vars, but they will be handled probably differently
+	PIPE		// |
 }	t_type;
 
 typedef enum e_quote {
 	NONE,
 	SINGLE, //'ab'
 	DOUBLE, //"ab"
-	HERE, // << a'b'
+	HERE // << a'b'
 }	t_quote;
 
 typedef struct s_lexer {
@@ -42,7 +40,7 @@ typedef struct s_command {
 	t_type				type; //IN, OUT, HERE, WORD, APPEND
 	char				*cmd; //e.g. "ls", "echo", "cat", "pwd"
 	char				**args; //things that come after the command e.g. pathname or string
-	//char				**flags; //eg. -f -g
+	char				**argv; //command + args together of execve()
 	t_redir				*redirs;
 	struct s_command	*next;
 }	t_command;
@@ -68,11 +66,13 @@ typedef struct s_data {
 	t_lexer		*tokens; //linked list of lexed tokens
 	t_command	*toex; //hen: to execute as replacement for cmds arg confusion, toex is the input seperated by a pipe
 	int			estatus; //for exit status of last pipe to store for the next prompt
-	int			*fd; // hen: zum directen der fd muss noch richtig init werden
+	int			cmd_count; // wird von petra upgedatet in pipe count
+	int			*fd; // hen: zum directen der fd muss noch richtig init werde
 	bool		bi_check; //hen: built_in check
 //	pid_t		*pid; //process id, evt als array fuer individuelle prozess? - doch nicht
-	int			cmd_count; // wird von petra upgedatet in pipe count
-	char		***pipeline; //hen: 3d array was auf die auszufuehrenden toex zeigt
+//	char		**arguments; // hen: to store all the input
+//	char		***pipeline; //hen: 3d array was auf die auszufuehrenden toex zeigt
+//	char		***pipeline; //hen: 3d array was auf die auszufuehrenden toex zeigt
 }	t_data;
 
 #endif

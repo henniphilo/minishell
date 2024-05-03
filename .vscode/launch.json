@@ -1,6 +1,7 @@
 {
     "version": "0.2.0",
     "configurations": [
+
         {
             "name": "gcc - Build and debug active file",
             "type": "cppdbg",
@@ -24,7 +25,7 @@
                 //     "text": "set follow-fork-mode child"
                 // }
             ],
-            "preLaunchTask": "make"
+            //"preLaunchTask": "make test"
         }
     ]
 }

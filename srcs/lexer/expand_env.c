@@ -1,6 +1,5 @@
 #include "../../incl/minishell.h"
 
-
 static char *find_limit(char *start)
 {
 	if (*start && *start >= 48 && *start <= 57)
@@ -71,10 +70,11 @@ int	expand_env(t_lexer *tokens, t_environ *env)
 	i = 0;
 	while (tokens)
 	{
-		if (tokens->type == HEREDOC) //to not expand what comes after a heredoc
+		if (!(tokens->type == WORD)) //to not expand what comes after a heredoc or redirection
 		{
-			while (tokens->next && tokens->next->space_after == 0) //check if it segfaults when << is the laste element of the line
-					tokens = tokens->next;
+			tokens = tokens->next;
+			while (tokens && tokens->space_after == 0 && tokens->type == WORD) //check if it segfaults when << is the laste element of the line
+				tokens = tokens->next;
 		}
 		if (tokens->type == WORD && !(tokens->quote == SINGLE))
 		{
@@ -152,9 +152,10 @@ bash: syntax error near unexpected token `<'
 pbencze@c3a8c2:~/Documents/42cursus/Minishell/Minishell_Github$ ><< hi | abab | << h
 bash: syntax error near unexpected token `<<'
 
-2. expansion (if heredoc: jump until space after -> start expansion)
+2. expansion (if heredoc or redirection: jump until space after -> start expansion)
 3. join words
-4. heredocs
-// files werden nicht erstellt beim syntax error, aber heredocs bis zum error schon, also den letzten token mit error flaggen und bis dahin heredocs machen
+4. heredocs and syntax error simultaneously
+5. expansion of filenames and parsing of filedescriptors
+// files werden nicht erstellt beim syntax error, aber heredocs bis zum error schon, also bis zum ersten token mit error heredocs machen
 */
 

@@ -1,6 +1,5 @@
 #include "../incl/minishell.h"
 
-
 const char	*get_the_line(t_data *data)
 {
 	const char	*line;

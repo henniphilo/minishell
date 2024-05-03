@@ -34,7 +34,7 @@ void		child_process_env(char *toex, t_data *shell, int i);
 // void		init_args(t_data *shell, char **split);
 // void		init_cmds(t_data *shell, char **pipeline);
 void		env_execute(t_data *shell, char *arg);
-int			count_commands(t_command *toex);
+int			count_commands(t_lexer *tokens);
 //void		print_pipeline(t_data *shell);
 void		print_path(char *path);
 
@@ -117,7 +117,14 @@ int			check_here(t_type *type, char *buf);
 int			join_words(t_data *shell);
 
 /*parser*/
-int	parser(t_data *shell);
+int			parser(t_data *shell);
+t_command	*new_cmd_list(void);
+t_command	*cmd_list_last(t_command *lst);
+t_command	*create_cmdlist(t_lexer *tokens);
+int			init_cmd_list(t_lexer *tokens, t_data *shell);
+void		cmd_list_add_back(t_command **lst, t_command *new);
+//t_command	*new_cmd_list(t_lexer *tokens);
+//int			init_cmd_args(t_lexer *tokens, t_command **node);
 
 /*test*/
 void	test(t_data *shell);

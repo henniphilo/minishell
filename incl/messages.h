@@ -4,6 +4,7 @@
 /* header file to specify error message macros */
 # define COMMAND_ERR ": command not found"
 # define ALLOC_ERR "error on memory allocation"
+# define QUOTE_ERR "wrong input: unclosed quotes"
 # define ARG_ERR "amount of arguments incorrect"
 # define RL_ERR "error on reading the line"
 # define LEX_ERR "error occured during lexing"

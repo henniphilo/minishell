@@ -14,22 +14,11 @@ void	free_commands(t_command **cmds)
 /*frees one element of the command list used for parsing*/
 void	delone_commands(t_command *cmds)
 {
-	int	i;
-
 	if (cmds)
 	{
 		if (cmds->cmd)
 			free(cmds->cmd);
-		if (cmds->args)
-		{
-			i = 0;
-			while (cmds->args[i])
-			{
-				free(cmds->args[i]);
-				i++;
-			}
-			free(cmds->args);
-		}
+		free_arr(cmds->args, cmds->argv);
 		free(cmds);
 	}
 }
