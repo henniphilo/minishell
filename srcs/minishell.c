@@ -30,7 +30,7 @@ int	main(int ac, char **av, char **envp)
 		if (check_line(shell->buf) || lexer(shell) || parser(shell))
 		{
 			if (shell->tokens)
-				parse_heredocs();
+				//parse_heredocs();
 			clear_data(shell);
 			continue ; //if lexing, parsing or line are wrong returns the prompt
 		}
