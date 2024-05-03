@@ -27,5 +27,6 @@ static void	print_cmds(t_command *cmds)
 void	test(t_data *shell)
 {
 	print_tokens(shell->tokens);
-	print_cmds(shell->commands);
+	print_cmds(shell->toex);
+	printf("\nnumber of pipes: %i\n", count_commands(shell->toex));
 }

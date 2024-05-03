@@ -1,32 +1,5 @@
 #include "../../incl/minishell.h"
 
-
-void		count_commands(t_data *shell)
-{
-	//printf("hi we are in count cmd\n");
-	int		cmd_count;
-	int		i;
-
-	i = 0;
-	cmd_count = 0;
-	while (shell->toex[cmd_count] != NULL) //eigentlich gerade ein pipe count
-		cmd_count++;
-	// if(cmd_count >= 1)
-	// {
-	// 	while(i < cmd_count)
-	// 	{
-	// 		printf("in c_count is arg[%d]: %s\n", i, shell->arguments[i]);
-	// 		shell->cmds = split_pipe_in_cmd(shell->arguments[i]);
-	// 		//shell->cmds = ft_split(shell->arguments[i], ' ');
-	// 		i++;
-	// 	}
-	// }
-	shell->cmd_count = cmd_count; // -1 then you hve numbers of pipes
-	printf("count is: %d\n", shell->cmd_count);
-}
-
-
-
 int	execute_shell(t_data *shell)
 {
 	int		i;

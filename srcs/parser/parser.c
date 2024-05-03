@@ -104,8 +104,8 @@ static t_command	*create_cmdlist(t_lexer *tokens)
 
 int	parser(t_data *shell)
 {
-	shell->commands = create_cmdlist(shell->tokens);
-	if (!shell->commands)
+	shell->toex = create_cmdlist(shell->tokens);
+	if (!shell->toex)
 		return (error_int(PARSE_ERR));
 	return (0);
 }
