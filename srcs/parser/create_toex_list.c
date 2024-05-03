@@ -1,55 +1,47 @@
 #include "../../incl/minishell.h"
 
-int	init_cmd_args(t_lexer *tokens, t_command **node)
+int	init_cmd_list(t_lexer *tokens, t_data *shell)
 {
-	while (tokens && tokens->type != PIPE)
+	t_command *node;
+
+	node = shell->toex;
+	while (tokens)
 	{
-	/* 	if (tokens->type == HEREDOC)
-		{
-			tokens = tokens->next;
-			//check for syntax error? if !tokens "bash: syntax error near unexpected token `newline'"
-			(*node)->delimiter = ft_strdup(tokens->str);
-			if (!(*node)->delimiter)
-				return (error_int(ALLOC_ERR));
-		}
-		if (tokens->type == OUTPUT)
-		{
-			tokens = tokens->next;
-			//check for syntax error? if !tokens "bash: syntax error near unexpected token `newline'"
-			(*node)->filename = ft_strdup(tokens->str);
-			if (!(*node)->delimiter)
-				return (error_int(ALLOC_ERR));
-		} */
-		if (!(tokens->type == WORD)) //later tbd: handling of redirections
-			tokens = tokens->next; //later tbd: handling of redirections
+		if (tokens->type == PIPE)
+			node = node->next;
 		else
-			(*node)->args = append_arr((*node)->args, tokens->str); //temporary
+		{
+			if (!(tokens->type == WORD)) //later tbd: handling of redirections
+				tokens = tokens->next; //later tbd: handling of redirections
+			else
+			{
+				if (!node->cmd)
+				{
+					node->cmd = ft_strdup(tokens->str);
+					if (!node->cmd)
+						return (1);
+				}
+				else
+				{
+					node->args = append_arr(node->args, tokens->str); //temporary
+					if (!node->args)
+						return (1);
+				}
+			}
+		}
 		tokens = tokens->next;
 	}
 	return (0);
 }
 
 /*creates a new node*/
-t_command	*new_cmd_list(t_lexer *tokens)
+t_command	*new_cmd_list(void)
 {
 	t_command	*new_node;
 
 	new_node = ft_calloc(1, sizeof(t_command));
 	if (!new_node)
 		return (error_ptr(ALLOC_ERR));
-	new_node->next = NULL;
-	new_node->cmd = ft_strdup(tokens->str);
-	if (!new_node->cmd)
-	{
-		free(new_node);
-		return (error_ptr(ALLOC_ERR));
-	}
-	tokens = tokens->next;
-	if (init_cmd_args(tokens, &new_node))
-	{
-		//free_cmd(new_node); //create function
-		return (NULL);
-	}
 	return (new_node);
 }
 
@@ -82,23 +74,18 @@ t_command	*create_cmdlist(t_lexer *tokens)
 {
 	t_command	*list;
 	t_command	*node;
+	int			i;
 
 	list = NULL;
 	node = NULL;
-	while (tokens)
+	i = 0;
+	while (i < count_commands(tokens))
 	{
-		node = new_cmd_list(tokens);
+		node = new_cmd_list();
 		if (!node)
 			return (NULL);
 		cmd_list_add_back(&list, node);
-		while (tokens)
-		{
-			if (tokens->type == PIPE) //go until pipe
-				break;
-			tokens = tokens->next;
-		}
-		if (tokens) //skip pipe
-			tokens = tokens->next;
+		i++;
 	}
 	return (list);
 }
