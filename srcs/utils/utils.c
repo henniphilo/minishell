@@ -19,19 +19,25 @@ char	**free_arr(char **arr1, char **arr2)
 {
 	int	i;
 
-	i = 0;
+	i = -1;
 	if (arr1)
 	{
-		while (arr1[i])
-			free(arr1[i++]);
+		while (arr1[++i])
+		{
+			free(arr1[i]);
+			arr1[i] = NULL;
+		}
 		free(arr1);
 		arr1 = NULL;
 	}
-	i = 0;
+	i = -1;
 	if (arr2)
 	{
-		while (arr2[i])
-			free(arr2[i++]);
+		while (arr2[++i])
+		{
+			free(arr2[i]);
+			arr2[i] = NULL;
+		}
 		free(arr2);
 		arr2 = NULL;
 	}

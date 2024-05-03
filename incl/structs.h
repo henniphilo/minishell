@@ -10,16 +10,14 @@ typedef enum e_type {
 	OUTPUT,		// >
 	HEREDOC,	// <<
 	APPEND,		// >>
-	PIPE,		// |
-	//ESTATUS,	// $?
-	//ENV, // environment vars, but they will be handled probably differently
+	PIPE		// |
 }	t_type;
 
 typedef enum e_quote {
 	NONE,
 	SINGLE, //'ab'
 	DOUBLE, //"ab"
-	HERE, // << a'b'
+	HERE // << a'b'
 }	t_quote;
 
 typedef struct s_lexer {

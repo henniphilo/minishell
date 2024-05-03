@@ -1,5 +1,34 @@
 #include "../../incl/minishell.h"
 
+int	init_cmd_args(t_lexer *tokens, t_command **node)
+{
+	while (tokens && tokens->type != PIPE)
+	{
+	/* 	if (tokens->type == HEREDOC)
+		{
+			tokens = tokens->next;
+			//check for syntax error? if !tokens "bash: syntax error near unexpected token `newline'"
+			(*node)->delimiter = ft_strdup(tokens->str);
+			if (!(*node)->delimiter)
+				return (error_int(ALLOC_ERR));
+		}
+		if (tokens->type == OUTPUT)
+		{
+			tokens = tokens->next;
+			//check for syntax error? if !tokens "bash: syntax error near unexpected token `newline'"
+			(*node)->filename = ft_strdup(tokens->str);
+			if (!(*node)->delimiter)
+				return (error_int(ALLOC_ERR));
+		} */
+		if (!(tokens->type == WORD)) //later tbd: handling of redirections
+			tokens = tokens->next; //later tbd: handling of redirections
+		else
+			(*node)->args = append_arr((*node)->args, tokens->str); //temporary
+		tokens = tokens->next;
+	}
+	return (0);
+}
+
 /*creates a new node*/
 t_command	*new_cmd_list(t_lexer *tokens)
 {

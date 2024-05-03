@@ -31,12 +31,9 @@ void	*free_data(t_data *shell)
 {
 	if (shell)
 	{
-		if (shell->buf)
-			free(shell->buf);
+		clear_data(shell);
 		if (shell->fd)
 			free(shell->fd);
-		free_tokens(&(shell->tokens));
-		free_commands(&(shell->toex));
 		free_env_list(&(shell->env_list));
 		free_env(shell->env);
 		free(shell);

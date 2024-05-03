@@ -34,12 +34,9 @@ int	check_line(char *buf)
 	int	i;
 
 	if (check_unclosed(buf))
-	{
-		ft_putendl_fd("wrong input: unclosed quotes", 2);
-		return (1);
-	}
+		return (error_int(QUOTE_ERR));
 	i = 0;
-	while (buf[i] == 32) //check spaces
+	while (buf[i] == 32 || buf[i] == 9) //check spaces
 		i++;
 	if (buf[i] == '\0')
 		return (1);
