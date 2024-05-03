@@ -4,7 +4,7 @@ static void	print_tokens(t_lexer *tokens)
 {
 	while (tokens)
 	{
-		printf("string: %s\ntype: %i\nsinglequote: %d\n", tokens->str, tokens->type, tokens->single_quote);
+		printf("string: %s\ntype: %i\nquote: %d\n", tokens->str, tokens->type, tokens->quote);
 		tokens = tokens->next;
 	}
 }

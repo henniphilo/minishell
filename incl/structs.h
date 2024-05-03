@@ -15,10 +15,17 @@ typedef enum e_type {
 	//ENV, // environment vars, but they will be handled probably differently
 }	t_type;
 
+typedef enum e_quote {
+	NONE,
+	SINGLE, //'ab'
+	DOUBLE, //"ab"
+	HERE, // << a'b'
+}	t_quote;
+
 typedef struct s_lexer {
 	t_type			type;
 	char			*str;
-	bool			single_quote; //to store if '' was removed for $ expansion
+	t_quote			quote;
 	bool			space_after; //to check if a space follows the quoted word e.g. 'l's vs. 'l' s
 	struct s_lexer	*previous;
 	struct s_lexer	*next;
@@ -26,7 +33,7 @@ typedef struct s_lexer {
 
 typedef struct s_redir {
 	t_type	type; //HERE, APPEND, IN, OUT
-	char	*file; //int fd;
+	char	*file; //or int fd;
 	//char *heredoc;
 } t_redir;
 

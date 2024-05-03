@@ -17,7 +17,7 @@ int	check_append(t_type *type, char *buf) //missing: syntax error edge cases
 }
 
 /*checks for syntax errors after lexing, e.g. echo hi ||| ls; | echo*/
-int	check_syntax_error(t_lexer *tokens)
+int	check_syntax_and_here(t_lexer *tokens)
 {
 	if (tokens && tokens->type == PIPE)
 		return (synt_error_int(PIPE)); //error if first token is a pipe
@@ -36,7 +36,11 @@ int	check_syntax_error(t_lexer *tokens)
 		else if (!(tokens->type == WORD))
 		{
 			if (tokens->next->type == WORD)
+			{
+				//if (tokens->type == HEREDOC)
+					//handle_heredoc(); //do this function
 				continue ;
+			}
 			else
 				return (synt_error_int(tokens->next->type));
 		}
@@ -60,13 +64,14 @@ int	join_words(t_data *data)
 	{
 		while (node->next && node->type == WORD && node->next->type == WORD && node->space_after == 0)
 		{
-			//take care of heredocs, so do not join if single or double quote comes after <<
 			s = ft_strjoin(node->str, node->next->str);
 			if (!s)
 			{
 				free(s);
 				return (error_int(ALLOC_ERR));
 			}
+			if (!(node->quote == NONE && node->next->quote == NONE))
+				node->quote = HERE; //for heredocs
 			free(node->str);
 			node->str = s;
 			if (node->next->space_after == 1)
