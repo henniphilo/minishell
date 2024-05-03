@@ -1,5 +1,5 @@
 #include "../../incl/minishell.h"
-
+/*
 char	**split_input_at_pipe(const char *line)
 {
 	char	**split_line;
@@ -81,6 +81,7 @@ void	space_toex(t_data *shell, char **toex)
 	}
 	shell->toex = (char **)ft_calloc(sizeof(toex) * i, sizeof(char));
 }
+*/
 /*
 static char	*line_trim(const char *line)
 {

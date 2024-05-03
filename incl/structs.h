@@ -42,6 +42,7 @@ typedef struct s_command {
 	t_type				type; //IN, OUT, HERE, WORD, APPEND
 	char				*cmd; //e.g. "ls", "echo", "cat", "pwd"
 	char				**args; //things that come after the command e.g. pathname or string
+	
 	//char				**flags; //eg. -f -g
 	t_redir				*redirs;
 	struct s_command	*next;

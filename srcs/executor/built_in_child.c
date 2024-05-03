@@ -102,7 +102,7 @@ void		bi_echo(t_data *shell)
 			break ;
 		}
 		else
-			printf("%s ", shell->toex[i]);
+			printf("%s ", shell->toex->args[i]);
 		i++;
 	}
 	if(flag == 0)
