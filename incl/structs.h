@@ -66,15 +66,11 @@ typedef struct s_data {
 	t_lexer		*tokens; //linked list of lexed tokens
 	t_command	*toex; //linked list of commandlines between pipes that point to a struct of commands
 	int			estatus; //for exit status of last pipe to store for the next prompt
-	char		**arguments; // hen: to store all the input
 	int			*fd; // hen: zum directen der fd muss noch richtig init werden
-//	t_builtin	*bi; // hen : zum tracken der builtins
-	bool		bi_check;
-//	pid_t		*pid; //process id, evt als array fuer individuelle prozess? - doch nicht
 	int			cmd_count;
-//	char		**cmds;
-	char		***pipeline; //hen: 3d array was auf die auszufuehrenden toex zeigt
-	//char		**toex; //hen: to execute as replacement for cmds arg confusion, toex is the input seperated by a pipe
+//	char		**arguments; // hen: to store all the input
+//	pid_t		*pid; //process id, evt als array fuer individuelle prozess? - doch nicht
+//	char		***pipeline; //hen: 3d array was auf die auszufuehrenden toex zeigt
 }	t_data;
 
 #endif
