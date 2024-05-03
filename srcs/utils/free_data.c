@@ -23,29 +23,27 @@ void	clear_data(t_data *shell)
 		shell->buf = NULL;
 	}
 	free_tokens(&(shell->tokens));
-	free_commands(&(shell->commands));
+	free_commands(&(shell->toex));
 }
 
 /*frees every element of the t_data *shell struct*/
 void	*free_data(t_data *shell)
 {
-	int	i;
-
 	if (shell)
 	{
 		if (shell->buf)
 			free(shell->buf);
 		if (shell->fd)
 			free(shell->fd);
-		if (shell->toex)
+/* 		if (shell->toex)
 		{
 			i = -1;
 			while (shell->toex[++i])
 				free(shell->toex[i]);
 			free(shell->toex);
-		}
+		} */
 		free_tokens(&(shell->tokens));
-		free_commands(&(shell->commands));
+		free_commands(&(shell->toex));
 		free_env_list(&(shell->env_list));
 		free_env(shell->env);
 		free(shell);

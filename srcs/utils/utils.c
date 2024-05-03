@@ -62,3 +62,16 @@ char	**append_arr(char **arr, char *new_str)
 	free_arr(arr, NULL);
 	return (new_arr);
 }
+
+int	count_commands(t_command *toex)
+{
+	int	count;
+
+	count = 0;
+	while (toex)
+	{
+		count++;
+		toex = toex->next;
+	}
+	return (count);
+}
