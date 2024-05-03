@@ -38,8 +38,9 @@ void	*free_data(t_data *shell)
 /* 		if (shell->toex)
 		{
 			i = -1;
-			while (shell->toex[++i])
-				free(shell->toex[i]);
+			while (shell->toex->args[++i])
+				free(shell->toex->args[i]);
+			free(shell->toex->cmd);
 			free(shell->toex);
 		} */
 		free_tokens(&(shell->tokens));

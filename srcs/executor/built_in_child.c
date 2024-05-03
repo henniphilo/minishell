@@ -51,7 +51,7 @@ void		echo_env(t_data *shell, char *str)
 		if(ft_strncmp(name, head->name, n - 1) == 0)
 		{
 			printf("%s", head->value);
-			return ;
+			break ;
 		}
 		head = head->next;
 	}
@@ -64,12 +64,12 @@ static int	set_flag(t_data *shell)
 	int		flag;
 
 	flag = 0;
-	if(shell->toex[1][0] == '-' && shell->toex[1][1] == 'n')
+	if(shell->toex->args[0][0] == '-' && shell->toex->args[0][1] == 'n')
 	{
 		j = 1;
-		while(shell->toex[1][j] != '\0')
+		while(shell->toex->args[0][j] != '\0')
 		{
-			if(shell->toex[1][j] == 'n')
+			if(shell->toex->args[0][j] == 'n')
 			{
 				flag = 1;
 				j++;
@@ -83,23 +83,22 @@ static int	set_flag(t_data *shell)
 	}
 	return(flag);
 }
-
-//hier muss es ordfentlich geparst werden von petra und dann kann variable aus der list geprintet werden
+// bei echo tilde home noch einfuegen
 void		bi_echo(t_data *shell)
 {
-	int			i;
+	int		i;
 	int		flag;
 
 	i = 1;
 	flag = set_flag(shell);
 	printf("flag is %d\n", flag);
-	while(shell->toex[i] != NULL)
+	while(shell->toex->args[i] != NULL)
 	{
 		if(flag == 1)
 			i++;
-		if(shell->toex[i][0]== '$')
+		if(shell->toex->args[i][0]== '$')
 		{
-			echo_env(shell, shell->toex[i]);
+			echo_env(shell, shell->toex->args[i]);
 			break ;
 		}
 		else

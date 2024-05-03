@@ -17,8 +17,6 @@ int	builtin_check(char *arg)
 	}
 	return (0);
 }
-
-
 // alles was path verwendet muss protectet werden, checken ob path exists
 
 void	which_builtin_parent(t_data *shell, char *arg)
@@ -59,14 +57,14 @@ static int	bi_cd_check(t_data *shell, char *home_path)
 	tilde = "~";
 	// printf("Home path in cd check ");
 	// print_path(home_path);
-	if((ft_strncmp(shell->toex[1], up, 3))== 0)
+	if((ft_strncmp(shell->toex->args[0], up, 3))== 0)
 	{
 		if(chdir("..") == 0)
 			printf("goes up\n");
 		update_old_pwd(shell);
 		return (0);
 	}
-	if((ft_strncmp(shell->toex[1], tilde, 2)) == 0)
+	if((ft_strncmp(shell->toex->args[0], tilde, 2)) == 0)
 	{
 		chdir(home_path);
 		update_old_pwd(shell);
@@ -89,7 +87,7 @@ int	change_directory(t_data *shell)
 	env_ptr = find_name_in_envlist(shell, "PWD");
 	current_path = getcwd(cwd, sizeof(cwd));
 	home_path = find_in_env("HOME");
-	if(shell->toex[1] == NULL)
+	if(shell->toex->args[0] == NULL)
 	{
 		chdir(home_path);
 		update_old_pwd(shell);
@@ -97,12 +95,15 @@ int	change_directory(t_data *shell)
 	}
 	if(bi_cd_check(shell, home_path) == 0)
 		return(0);
-	new_path = shell->toex[1];
-	if(new_path != NULL)
+	if(shell->toex->args[1] == NULL)
 	{
-		chdir(new_path);
-		update_old_pwd(shell);
-		return(0);
+		new_path = shell->toex->args[0];
+		if(new_path != NULL)
+		{
+			chdir(new_path);
+			update_old_pwd(shell);
+			return(0);
+		}
 	}
 	return(1);
 }

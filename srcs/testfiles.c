@@ -2,6 +2,7 @@
 
 static void	print_tokens(t_lexer *tokens)
 {
+	printf("TOKENIZER:\n");
 	while (tokens)
 	{
 		printf("string: %s\ntype: %i\nquote: %d\n", tokens->str, tokens->type, tokens->quote);
@@ -10,6 +11,7 @@ static void	print_tokens(t_lexer *tokens)
 }
 static void	print_cmds(t_command *cmds)
 {
+	printf("\nPARSER:\n");
 	while (cmds)
 	{
 		printf("command: %s\n", cmds->cmd);
