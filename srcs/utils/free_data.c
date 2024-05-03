@@ -35,13 +35,6 @@ void	*free_data(t_data *shell)
 			free(shell->buf);
 		if (shell->fd)
 			free(shell->fd);
-/* 		if (shell->toex)
-		{
-			i = -1;
-			while (shell->toex[++i])
-				free(shell->toex[i]);
-			free(shell->toex);
-		} */
 		free_tokens(&(shell->tokens));
 		free_commands(&(shell->toex));
 		free_env_list(&(shell->env_list));

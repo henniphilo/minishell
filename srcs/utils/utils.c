@@ -25,6 +25,7 @@ char	**free_arr(char **arr1, char **arr2)
 		while (arr1[i])
 			free(arr1[i++]);
 		free(arr1);
+		arr1 = NULL;
 	}
 	i = 0;
 	if (arr2)
@@ -32,6 +33,7 @@ char	**free_arr(char **arr1, char **arr2)
 		while (arr2[i])
 			free(arr2[i++]);
 		free(arr2);
+		arr2 = NULL;
 	}
 	return (NULL);
 }

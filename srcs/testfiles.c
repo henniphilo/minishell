@@ -20,6 +20,13 @@ static void	print_cmds(t_command *cmds)
 			printf("%s\n", cmds->args[i]);
 			i++;
 		}
+		int i = 0;
+		while (cmds->argv && cmds->argv[i])
+		{
+			printf("/nargv[%i]: ", i);
+			printf("%s\n", cmds->argv[i]);
+			i++;
+		}
 		cmds = cmds->next;
 	}
 }
