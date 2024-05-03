@@ -1,6 +1,5 @@
 #include "../../incl/minishell.h"
 
-
 static char *find_limit(char *start)
 {
 	if (*start && *start >= 48 && *start <= 57)

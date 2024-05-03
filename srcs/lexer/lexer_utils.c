@@ -54,8 +54,6 @@ int	join_words(t_data *data)
 
 	node = data->tokens;
 	next = NULL;
-	//if (!node)
-	//	return (1);
 	while (node)
 	{
 		while (node->next && node->type == WORD && node->next->type == WORD && node->space_after == 0)
@@ -66,10 +64,10 @@ int	join_words(t_data *data)
 				free(s);
 				return (error_int(ALLOC_ERR));
 			}
-			if (!(node->quote == NONE && node->next->quote == NONE))
-				node->quote = HERE; //for heredocs
 			free(node->str);
 			node->str = s;
+			if (!(node->quote == NONE && node->next->quote == NONE))
+				node->quote = HERE; //for heredocs
 			if (node->next->space_after == 1)
 				node->space_after = 1;
 			next = node->next->next;

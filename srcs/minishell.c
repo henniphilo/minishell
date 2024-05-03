@@ -28,10 +28,8 @@ int	main(int ac, char **av, char **envp)
 		shell->buf = (char *)get_the_line(shell);
 		if (check_line(shell->buf) || lexer(shell) || parser(shell))
 		{
-			//if (shell->tokens)
-				//parse_heredocs();
 			clear_data(shell);
-			continue ; //if lexing, parsing or input are wrong, returns the prompt
+			continue ; //if lexing, parsing, or input are wrong, returns the prompt
 		}
 		//execute_shell(shell);
 		test(shell);

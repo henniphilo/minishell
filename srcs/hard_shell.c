@@ -1,6 +1,5 @@
 #include "../incl/minishell.h"
 
-
 const char	*get_the_line(t_data *data)
 {
 	const char	*line;
@@ -11,7 +10,6 @@ const char	*get_the_line(t_data *data)
 	add_history(line);
 	return (line);
 }
-
 
 int	main(int ac, char **av, char **envp)
 {
