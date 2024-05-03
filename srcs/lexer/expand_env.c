@@ -71,10 +71,11 @@ int	expand_env(t_lexer *tokens, t_environ *env)
 	i = 0;
 	while (tokens)
 	{
-		if (tokens->type == HEREDOC) //to not expand what comes after a heredoc
+		if (!(tokens->type == WORD)) //to not expand what comes after a heredoc or redirection
 		{
-			while (tokens->next && tokens->next->space_after == 0) //check if it segfaults when << is the laste element of the line
-					tokens = tokens->next;
+			tokens = tokens->next;
+			while (tokens && tokens->space_after == 0 && tokens->type == WORD) //check if it segfaults when << is the laste element of the line
+				tokens = tokens->next;
 		}
 		if (tokens->type == WORD && !(tokens->quote == SINGLE))
 		{
