@@ -112,6 +112,7 @@ t_lexer		*new_lex_list(t_type t, char *s, bool sq, bool dq);
 int			check_append(t_type *type, char *buf);
 int			check_here(t_type *type, char *buf);
 int			join_words(t_data *shell);
+int			expand_env(t_lexer *tokens, t_environ *env);
 
 /*parser*/
 int			parser(t_data *shell);
