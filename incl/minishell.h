@@ -118,6 +118,8 @@ int			join_words(t_data *shell);
 int			expand_env(t_lexer *tokens, t_data *shell);
 int			ft_trim_last(t_lexer *tokens);
 char		*find_limit(char *start);
+int			expand_tilde(t_lexer *tokens, t_environ *env);
+char		*expand_estatus(t_lexer *tokens, char *dollar, char *limit, int estatus);
 
 /*parser*/
 int			parser(t_data *shell);

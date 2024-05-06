@@ -30,3 +30,38 @@ int	ft_trim_last(t_lexer *tokens)
 	tokens->str = str;
 	return (0);
 }
+
+char	*expand_estatus(t_lexer *tokens, char *dollar, char *limit, int estatus)
+{
+	char	*value;
+	char	*ret;
+
+	value = ft_itoa(estatus);
+	if (!value)
+		return (error_ptr(ALLOC_ERR));
+	ret = expand(tokens, dollar, limit, value);
+	free(value);
+	return (ret);
+}
+
+/*expands special character ~ to HOME*/
+int	expand_tilde(t_lexer *tokens, t_environ *env)
+{
+	if (tokens->quote == NONE && ft_strcmp("~", tokens->str) == 0)
+	{
+		free(tokens->str);
+		tokens->str = NULL;
+		while (env)
+		{
+			if (ft_strcmp("HOME", env->name))
+			{
+				tokens->str = ft_strdup(env->value);
+				if (!tokens->str)
+					return (error_int(ALLOC_ERR));
+				return (0);
+			}
+			env = env->next;
+		}
+	}
+	return (0);
+}

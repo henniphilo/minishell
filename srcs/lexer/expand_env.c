@@ -33,16 +33,12 @@ static char	*split_expand_join(t_lexer *tokens, char *dollar, char *limit, t_dat
 
 	value = NULL;
 	env = shell->env_list;
-	if (limit == dollar + 1 && *limit == '?')
-	{
-		limit++;
-		value = ft_itoa(shell->estatus);
-		if (!value)
-			return (error_ptr(ALLOC_ERR));
-	}
 	name = ft_substr(dollar, 1, limit - dollar - 1);
 	if (!name)
+	{
+		free(value);
 		return (error_ptr(ALLOC_ERR));
+	}
 	while (env && !value)
 	{
 		if (ft_strcmp(env->name, name) == 0)
@@ -66,39 +62,20 @@ static int	find_and_replace(t_lexer *tokens, t_data *shell)
 	while (ft_strchr(tmp, '$'))
 	{
 		limit = find_limit(ft_strchr(tmp, '$') + 1); //if there is nothing after '$', but a space or a delimiter, it will be printed
-		if (limit == ft_strchr(tmp, '$') + 1 && !(*limit == '?')) //handle $ before a quote or space
+		if (limit == ft_strchr(tmp, '$') + 1) //&& !(*limit == '?')) //handle $ before a quote or space
 		{
-			if (*limit == '\0' && tokens->space_after == 0 && tokens->next)
+			if (*limit == '?')
+				tmp = expand_estatus(tokens, ft_strchr(tmp, '$'), limit + 1, shell->estatus);
+			else if (*limit == '\0' && tokens->space_after == 0 && tokens->next)
 				return (ft_trim_last(tokens));
-			tmp = limit;
+			else
+				tmp = limit;
 		}
 		else //handle $ expansion or $?
 			tmp = split_expand_join(tokens, ft_strchr(tmp, '$'), limit, shell); //ch
 	}
 	if (!tmp)
 		return (1);
-	return (0);
-}
-
-/*expands special character ~ to HOME*/
-static int	expand_tilde(t_lexer *tokens, t_environ *env)
-{
-	if (tokens->quote == NONE && ft_strcmp("~", tokens->str) == 0)
-	{
-		free(tokens->str);
-		tokens->str = NULL;
-		while (env)
-		{
-			if (ft_strcmp("HOME", env->name))
-			{
-				tokens->str = ft_strdup(env->value);
-				if (!tokens->str)
-					return (error_int(ALLOC_ERR));
-				return (0);
-			}
-			env = env->next;
-		}
-	}
 	return (0);
 }
 
