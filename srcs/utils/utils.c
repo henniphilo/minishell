@@ -63,15 +63,16 @@ char	**append_arr(char **arr, char *new_str)
 	return (new_arr);
 }
 
-int	count_commands(t_command *toex)
+int	count_commands(t_lexer *tokens)
 {
 	int	count;
 
-	count = 0;
-	while (toex)
+	count = 1;
+	while (tokens)
 	{
-		count++;
-		toex = toex->next;
+		if (tokens->type == PIPE)
+			count++;
+		tokens = tokens->next;
 	}
 	return (count);
 }

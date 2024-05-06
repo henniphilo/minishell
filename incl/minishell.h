@@ -34,7 +34,7 @@ void		child_process_env(char *toex, t_data *shell, int i);
 // void		init_args(t_data *shell, char **split);
 // void		init_cmds(t_data *shell, char **pipeline);
 void		env_execute(t_data *shell, char *arg);
-int			count_commands(t_command *toex);
+int			count_commands(t_lexer *tokens);
 //void		print_pipeline(t_data *shell);
 void		print_path(char *path);
 
