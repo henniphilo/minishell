@@ -12,7 +12,11 @@ int	init_cmd_list(t_lexer *tokens, t_data *shell)
 		else
 		{
 			if (!(tokens->type == WORD)) //later tbd: handling of redirections
+			{
+				if (add_redir(tokens, node))
+					return (1);
 				tokens = tokens->next; //later tbd: handling of redirections
+			}
 			else
 			{
 				if (!node->cmd)
@@ -29,7 +33,8 @@ int	init_cmd_list(t_lexer *tokens, t_data *shell)
 				}
 			}
 		}
-		tokens = tokens->next;
+		if (tokens)
+			tokens = tokens->next;
 	}
 	return (0);
 }

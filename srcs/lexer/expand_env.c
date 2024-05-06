@@ -1,27 +1,5 @@
 #include "../../incl/minishell.h"
 
-/*joining of 3 strings:
-the part before the expansion, the expanded value,
-and the part after the expansion if they exist*/
-static char	*expand(t_lexer *tokens, char *dollar, char *limit, char *value)
-{
-	char	*joined;
-	char	*end;
-	int		len;
-
-	end = ft_strjoin(value, limit);
-	if (!end)
-		return (error_ptr(ALLOC_ERR));
-	*dollar = '\0';
-	joined = ft_strjoin(tokens->str, end);
-	free(end);
-	if (!joined)
-		return (error_ptr(ALLOC_ERR));
-	len = ft_strlen(tokens->str);
-	free(tokens->str);
-	tokens->str = joined;
-	return (&(joined[len]));
-}
 
 /*loops through the environment variables and finds the value for the expansion*/
 static char	*split_expand_join(t_lexer *tokens, char *dollar, char *limit, t_data *shell)
@@ -77,6 +55,29 @@ static int	find_and_replace(t_lexer *tokens, t_data *shell)
 	if (!tmp)
 		return (1);
 	return (0);
+}
+
+/*joining of 3 strings:
+the part before the expansion, the expanded value,
+and the part after the expansion if they exist*/
+char	*expand(t_lexer *tokens, char *dollar, char *limit, char *value)
+{
+	char	*joined;
+	char	*end;
+	int		len;
+
+	end = ft_strjoin(value, limit);
+	if (!end)
+		return (error_ptr(ALLOC_ERR));
+	*dollar = '\0';
+	joined = ft_strjoin(tokens->str, end);
+	free(end);
+	if (!joined)
+		return (error_ptr(ALLOC_ERR));
+	len = ft_strlen(tokens->str);
+	free(tokens->str);
+	tokens->str = joined;
+	return (&(joined[len]));
 }
 
 /*expands environment variable to their values;
