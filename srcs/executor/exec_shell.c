@@ -8,6 +8,7 @@ int	execute_shell(t_data *shell)
 	i = 0;
 	pid = 0;
 	shell->cmd_count = count_commands(shell->toex);
+	printf("command count is: %d\n", shell->cmd_count);
 	if(shell->cmd_count > 0)
 	{
 		if(builtin_check(shell->toex->cmd) != 1)
