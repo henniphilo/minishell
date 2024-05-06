@@ -40,7 +40,7 @@ static char	*split_expand_join(t_lexer *tokens, char *dollar, char *limit, t_dat
 		if (!value)
 			return (error_ptr(ALLOC_ERR));
 	}
-	name = ft_substr(dollar, 1, limit - dollar);
+	name = ft_substr(dollar, 1, limit - dollar - 1);
 	if (!name)
 		return (error_ptr(ALLOC_ERR));
 	while (env && !value)
