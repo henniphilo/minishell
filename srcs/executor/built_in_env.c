@@ -66,9 +66,62 @@ t_environ	*replace_value(t_environ *list_ptr, char *replace)
 	return(list_ptr);
 }
 
+
+static t_environ *sort_env(t_environ *head, t_environ *new_node)
+{
+    t_environ *current;
+
+    if (head == NULL || ft_strcmp(head->name, new_node->name) > 0)
+	{
+        new_node->next = head;
+        return (new_node);
+    }
+	else
+	{
+        current = head;
+        while (current->next != NULL && ft_strcmp(current->next->name, new_node->name) <= 0)
+		{
+            current = current->next;
+        }
+        new_node->next = current->next;
+        current->next = new_node;
+        return (head);
+    }
+}
+
+t_environ *sort_env_list(t_environ *head)
+{
+    t_environ *sorted_head = NULL;
+    t_environ *current = head;
+    t_environ *next;
+
+    while (current != NULL)
+	{
+        next = current->next;
+        sorted_head = sort_env(sorted_head, current);
+    }
+    return sorted_head;
+}
+
+static void	only_export(t_data *shell)
+{
+	t_environ	*to_sort;
+
+	printf("ist jetzt in only export\n");
+
+	to_sort = sort_env_list(shell->env_list);
+	if(!to_sort)
+	{
+		printf("error not sorted list ptr \n");
+		return;
+	}
+	else
+		print_env(to_sort);
+}
+
 //wie umgehen mit istgleich ???
 
-void		bi_export(t_data *shell)
+void		export_env(t_data *shell)
 {
 	t_environ	*new_node;
 	t_environ	*head;
@@ -78,10 +131,10 @@ void		bi_export(t_data *shell)
 	name = ft_strdup(shell->toex->args[0]);
 	value = ft_strdup(shell->toex->args[1]);
 	head = find_name_in_envlist(shell, name);
-	if(!head)
+	if (!head)
 	{
 		new_node = new_env_node(name, value);
-		if(!new_node)
+		if (!new_node)
 		{
 			perror("no new node durch export\n");
 			free(name);
@@ -95,4 +148,12 @@ void		bi_export(t_data *shell)
 		free(name);
 		free(value);
 	}
+}
+
+void	bi_export(t_data *shell)
+{
+	if(shell->toex->args != NULL)
+		export_env(shell);
+	else
+		only_export(shell);
 }

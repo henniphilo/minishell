@@ -37,7 +37,7 @@ void		print_path(char *path);
 
 void		execute_one_envcmd(t_data *shell, pid_t pid);
 void		execute_more_envcmd(t_data *shell, pid_t pid, int i);
-void		space_toex(t_data *shell, char **toex);
+//void		space_toex(t_data *shell, char **toex);
 void		print_toex(t_data *shell);
 void		hard_toex(t_data *shell);
 int			execute_shell(t_data *shell);
@@ -55,11 +55,13 @@ void		bi_exit(t_data *shell);
 void		bi_unset(t_data *shell);
 void		bi_export(t_data *shell);
 void		bi_echo(t_data *shell);
+void		export_env(t_data *shell);
 void		echo_env(t_data *shell, char *str);
 void		update_old_pwd(t_data *shell);
 void		update_envlist(t_data *shell, char *to_up, char *new);
 t_environ	*replace_value(t_environ *list_ptr, char *replace);
 t_environ	*find_name_in_envlist(t_data *shell, char *name);
+t_environ *sort_env_list(t_environ *head);
 
 
 /*Petra*/

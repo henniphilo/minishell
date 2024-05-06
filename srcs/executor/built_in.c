@@ -1,7 +1,7 @@
 #include "../../incl/minishell.h"
 
-// export erstellt immer neu und ueberschreibt nicht
 // > hallo fueht in libft folder reon
+// muss noch klaeren relativen und absoluten path
 
 
 int	builtin_check(char *arg)
@@ -117,9 +117,9 @@ void		update_envlist(t_data *shell, char *to_up, char *new)
 
 	head = shell->env_list;
 
-	while(head != NULL)
+	while (head != NULL)
 	{
-		if(ft_strncmp(to_up, head->name, 50) == 0)
+		if (ft_strncmp(to_up, head->name, 50) == 0)
 		{
 			head = replace_value(head, new);
 			break ;
@@ -147,9 +147,9 @@ t_environ	*find_name_in_envlist(t_data *shell, char *name)
 	t_environ	*head;
 
 	head = shell->env_list;
-	while(head != NULL)
+	while (head != NULL)
 	{
-		if(ft_strncmp(name, head->name, 50) == 0)
+		if (ft_strncmp(name, head->name, 50) == 0)
 		{
 			return (head);
 		}
@@ -171,9 +171,9 @@ void		bi_pwd(t_data *shell)
 	t_environ	*head;
 
 	head = shell->env_list;
-	while(head != NULL)
+	while (head != NULL)
 	{
-		if(ft_strncmp(head->name, "PWD", 4) == 0)
+		if (ft_strncmp(head->name, "PWD", 4) == 0)
 		{
 			current_path = head->value;
 			printf("%s\n", current_path);
