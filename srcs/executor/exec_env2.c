@@ -58,7 +58,7 @@ void	env_execute(t_data *shell, char *toex)
 		printf("will executen: %s\n", toex);
 		// printf("path in execute:");
 		// print_path(path);
-		if(execve(path, shell->toex, shell->env) < 0)  //warum nur moeglich mir shell->arguments und nicht args?
+		if(execve(path, shell->toex->argv, shell->env) < 0)  //warum nur moeglich mir shell->arguments und nicht args?
 		{
 			perror("command couldnt be executed\n");
 			// while (shell->arguments[i++])

@@ -48,7 +48,7 @@ int	main(int ac, char **av, char **envp)
 		}
 	//	test(shell);
 	//	hard_toex(shell);
-		count_commands(shell);
+		count_commands(shell->tokens);
 	//	print_toex(shell);
 		execute_shell(shell);
 		clear_data(shell);
