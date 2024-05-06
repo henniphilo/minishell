@@ -115,7 +115,9 @@ t_lexer		*new_lex_list(t_type t, char *s, bool sq, bool dq);
 int			check_append(t_type *type, char *buf);
 int			check_here(t_type *type, char *buf);
 int			join_words(t_data *shell);
-int			expand_env(t_lexer *tokens, t_environ *env);
+int			expand_env(t_lexer *tokens, t_data *shell);
+int			ft_trim_last(t_lexer *tokens);
+char		*find_limit(char *start);
 
 /*parser*/
 int			parser(t_data *shell);
@@ -124,8 +126,6 @@ t_command	*cmd_list_last(t_command *lst);
 t_command	*create_cmdlist(t_lexer *tokens);
 int			init_cmd_list(t_lexer *tokens, t_data *shell);
 void		cmd_list_add_back(t_command **lst, t_command *new);
-//t_command	*new_cmd_list(t_lexer *tokens);
-//int			init_cmd_args(t_lexer *tokens, t_command **node);
 
 /*test*/
 void	test(t_data *shell);
