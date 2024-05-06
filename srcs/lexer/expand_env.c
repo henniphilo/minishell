@@ -1,20 +1,66 @@
 #include "../../incl/minishell.h"
 
-static char *find_limit(char *start)
+
+/*loops through the environment variables and finds the value for the expansion*/
+static char	*split_expand_join(t_lexer *tokens, char *dollar, char *limit, t_data *shell)
 {
-	if (*start && *start >= 48 && *start <= 57)
-		return (start);
-	while (*start)
+	char		*name;
+	char		*value;
+	char		*tmp;
+	t_environ	*env;
+
+	value = NULL;
+	env = shell->env_list;
+	name = ft_substr(dollar, 1, limit - dollar - 1);
+	if (!name)
 	{
-		if ((*start >= 48 && *start <= 57) || (*start >= 65 && *start <= 90) || *start == 95)
-			start++;
-		else
-			return (start);
+		free(value);
+		return (error_ptr(ALLOC_ERR));
 	}
-	return (start);
+	while (env && !value)
+	{
+		if (ft_strcmp(env->name, name) == 0)
+			value = env->value;
+		env = env->next;
+	}
+	tmp = expand(tokens, dollar, limit, value);
+	free(name);
+	return (tmp);
 }
 
-static char	*expand(t_lexer *tokens, char *dollar, char *limit, char *value)
+/*looks for a delimiter and sends the string to expansion if it finds a $*/
+static int	find_and_replace(t_lexer *tokens, t_data *shell)
+{
+	char	*tmp;
+	char	*limit;
+
+	if (!tokens->str)
+		return (1);
+	tmp = tokens->str;
+	while (ft_strchr(tmp, '$'))
+	{
+		limit = find_limit(ft_strchr(tmp, '$') + 1); //if there is nothing after '$', but a space or a delimiter, it will be printed
+		if (limit == ft_strchr(tmp, '$') + 1) //&& !(*limit == '?')) //handle $ before a quote or space
+		{
+			if (*limit == '?')
+				tmp = expand_estatus(tokens, ft_strchr(tmp, '$'), limit + 1, shell->estatus);
+			else if (*limit == '\0' && tokens->space_after == 0 && tokens->next)
+				return (ft_trim_last(tokens));
+			else
+				tmp = limit;
+		}
+		else //handle $ expansion or $?
+			tmp = split_expand_join(tokens, ft_strchr(tmp, '$'), limit, shell); //ch
+	}
+	if (!tmp)
+		return (1);
+	return (0);
+}
+
+/*joining of 3 strings:
+the part before the expansion, the expanded value,
+and the part after the expansion if they exist*/
+char	*expand(t_lexer *tokens, char *dollar, char *limit, char *value)
 {
 	char	*joined;
 	char	*end;
@@ -34,167 +80,33 @@ static char	*expand(t_lexer *tokens, char *dollar, char *limit, char *value)
 	return (&(joined[len]));
 }
 
-static char	*split_expand_join(t_lexer *tokens, char *dollar, char *limit, t_environ *env)
-{
-	char	*name;
-	char	*value;
-	char	*tmp;
-
-	name = ft_substr(dollar, 1, limit - dollar); //check if correct
-	if (!name)
-		return (error_ptr(ALLOC_ERR));
-	value = NULL;
-	while (env && !value)
-	{
-		if (ft_strcmp(env->name, name) == 0)
-			value = env->value;
-		env = env->next;
-	}
-	tmp = expand(tokens, dollar, limit, value);
-	free (value);
-	return (tmp);
-}
-
-static int	ft_trim_last(t_lexer *tokens)
-{
-	char	*str;
-	int		len;
-
-	len = ft_strlen(tokens->str);
-	str = ft_calloc(len, 1);
-	if (!tokens->str)
-		return (error_int(ALLOC_ERR));
-	ft_memmove(str, tokens->str, len - 1);
-	free(tokens->str);
-	tokens->str = str;
-	return (0);
-}
-
-static int	find_and_replace(t_lexer *tokens, t_environ *env)
-{
-	char	*tmp;
-	char	*limit;
-
-	if (!tokens->str)
-		return (1);
-	tmp = tokens->str;
-	while (ft_strchr(tmp, '$'))
-	{
-		limit = find_limit(ft_strchr(tmp, '$') + 1); //if there is nothing after '$', but a space or a delimiter, it will be printed
-		if (limit == ft_strchr(tmp, '$') + 1)
-		{
-			if (*limit == '\0' && tokens->space_after == 0 && tokens->next)
-				return (ft_trim_last(tokens));
-			tmp = limit;
-		}
-		else
-			tmp = split_expand_join(tokens, ft_strchr(tmp, '$'), limit, env);
-	}
-	if (!tmp)
-		return (1);
-	return (0);
-}
-
 /*expands environment variable to their values;
 environment variable names consist solely of
 uppercase letters, digits, and the <underscore>
 and do not begin with a digit. */
-int	expand_env(t_lexer *tokens, t_environ *env)
+int	expand_env(t_lexer *tokens, t_data *shell)
 {
-	int	i;
-
-	i = 0;
 	while (tokens)
 	{
-		if (!(tokens->type == WORD)) //to not expand what comes after a heredoc or redirection
+		if (!(tokens->type == PIPE) && !(tokens->type == WORD)) //to not expand what comes after a heredoc or redirection
 		{
 			tokens = tokens->next;
-			while (tokens && tokens->space_after == 0 && tokens->type == WORD) //check if it segfaults when << is the laste element of the line
+			while (tokens && tokens->next && tokens->type == WORD && tokens->space_after == 0) //check if it segfaults when << is the laste element of the line
 				tokens = tokens->next;
 		}
-		if (tokens->type == WORD && !(tokens->quote == SINGLE))
+		else if (tokens->type == WORD && !(tokens->quote == SINGLE) && tokens->str)
 		{
-			if (!tokens->str) //necessary?
-				return (error_int(EXPAN_ERR)); //necessary?
+			if (ft_strcmp("~", tokens->str) == 0 && expand_tilde(tokens, shell->env_list)) //check
+				return (error_int(EXPAN_ERR));
 			if (ft_strchr(tokens->str, '$'))
 			{
-				if (find_and_replace(tokens, env))
+				if (find_and_replace(tokens, shell))
 					return (error_int(EXPAN_ERR));
 			}
 		}
-		tokens = tokens->next;
+		if (tokens)
+			tokens = tokens->next;
 	}
 	return (0);
 }
-/*
-pbencze@c3a8c2:~/Documents/42cursus/Minishell/Minishell_Github$ echo > $A
-bash: $A: ambiguous redirect
-pbencze@c3a8c2:~/Documents/42cursus/Minishell/Minishell_Github$ echo $A
-
-//wird nicht als syntax error gesehen
-pbencze@c3a8c2:~/Documents/42cursus/Minishell/Minishell_Github$ echo > $A | ls
-bash: $A: ambiguous redirect
- incl   libft   Makefile   srcs
-pbencze@c3a8c2:~/Documents/42cursus/Minishell/Minishell_Github$ echo > "$A" | ls
-bash: : No such file or directory
- incl   libft   Makefile   srcs
-pbencze@c3a8c2:~/Documents/42cursus/Minishell/Minishell_Github$ echo > '$A' | ls
- '$A'   incl   libft   Makefile   srcs
-
-pbencze@c3a8c2:~/Documents/42cursus/Minishell/Minishell_Github$ $A
-pbencze@c3a8c2:~/Documents/42cursus/Minishell/Minishell_Github$ '$A'
-$A: command not found
-pbencze@c3a8c2:~/Documents/42cursus/Minishell/Minishell_Github$ "$A"
-Command '' not found, but can be installed with:
-
-pbencze@c3a8c2:~/Documents/42cursus/Minishell/Minishell_Github$ ls "$A"
-ls: cannot access '': No such file or directory
-pbencze@c3a8c2:~/Documents/42cursus/Minishell/Minishell_Github$ ls $A
-'$USER'   incl   libft   Makefile   pbencze   srcs
-pbencze@c3a8c2:~/Documents/42cursus/Minishell/Minishell_Github$ ls '$A'
-ls: cannot access '$A': No such file or directory
-
-pbencze@c3a8c2:~/Documents/42cursus/Minishell/Minishell_Github$ pwd > file1  > $A | ls
-bash: $A: ambiguous redirect
-file1  incl  libft  Makefile  srcs
-
-pbencze@c3a8c2:~/Documents/42cursus/Minishell/Minishell_Github$ ls "$A"
-ls: cannot access '': No such file or directory
-pbencze@c3a8c2:~/Documents/42cursus/Minishell/Minishell_Github$ ls "$A"-l
-total 8
--rw-r--r-- 1 pbencze 2023_berlin    0 May  1 17:15 file1
-drwxr-xr-x 2 pbencze 2023_berlin   60 May  1 16:21 incl
-drwxr-xr-x 2 pbencze 2023_berlin 4096 Apr 30 16:38 libft
--rw-r--r-- 1 pbencze 2023_berlin 1344 May  1 16:21 Makefile
-drwxr-xr-x 6 pbencze 2023_berlin  138 May  1 16:21 srcs
-pbencze@c3a8c2:~/Documents/42cursus/Minishell/Minishell_Github$
-
-pbencze@c3a8c2:~/Documents/42cursus/Minishell/Minishell_Github$ cat << hi
-> $USER
-> hi
-pbencze
-pbencze@c3a8c2:~/Documents/42cursus/Minishell/Minishell_Github$ cat << hi"hey"
-> $USER
-> hihey
-$USERec
-
-pbencze@c3a8c2:~/Documents/42cursus/Minishell/Minishell_Github$ << ''
->
-
-pbencze@c3a8c2:~/Documents/42cursus/Minishell/Minishell_Github$ << hi | abab | << h ><
-bash: syntax error near unexpected token `<'
-> hi
-> h
-pbencze@c3a8c2:~/Documents/42cursus/Minishell/Minishell_Github$ ><< hi | abab | << h
-bash: syntax error near unexpected token `<<'
-
-pbencze@c1b4c1:~/Documents/42cursus/Minishell/Minishell_Github$ echo $
-$
-
-2. expansion (if heredoc or redirection: jump until space after -> start expansion)
-3. join words
-4. heredocs and syntax error simultaneously
-5. expansion of filenames and parsing of filedescriptors
-// files werden nicht erstellt beim syntax error, aber heredocs bis zum error schon, also bis zum ersten token mit error heredocs machen
-*/
 

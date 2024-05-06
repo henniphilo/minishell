@@ -11,6 +11,7 @@ static void	print_tokens(t_lexer *tokens)
 static void	print_cmds(t_command *cmds)
 {
 	int i;
+	t_redir *redirs;
 
 	while (cmds)
 	{
@@ -40,6 +41,14 @@ static void	print_cmds(t_command *cmds)
 		}
 		else
 			(printf("argv: %p\n", cmds->argv));
+		printf("redirs: \n");
+		redirs = cmds->redirs;
+		while (redirs)
+		{
+			printf("file: %s\n", redirs->file);
+			printf("type: %d\n", redirs->type);
+			redirs = redirs->next;
+		}
 		cmds = cmds->next;
 	}
 }

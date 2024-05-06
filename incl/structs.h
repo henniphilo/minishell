@@ -30,14 +30,14 @@ typedef struct s_lexer {
 }	t_lexer;
 
 typedef struct s_redir {
-	t_type	type; //HERE, APPEND, IN, OUT
-	char	*file; //or int fd;
+	t_type			type; //HERE, APPEND, IN, OUT
+	char			*file; //or int fd;
+	struct s_redir	*next;
 	//char *heredoc;
 } t_redir;
 
 //to store command nodes
 typedef struct s_command {
-	t_type				type; //IN, OUT, HERE, WORD, APPEND
 	char				*cmd; //e.g. "ls", "echo", "cat", "pwd"
 	char				**args; //things that come after the command e.g. pathname or string
 	char				**argv; //command + args together of execve()

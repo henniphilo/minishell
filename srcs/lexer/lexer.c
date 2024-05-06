@@ -110,9 +110,7 @@ int	lexer(t_data *shell)
 		if (!tmp_buf)
 			return (error_int(LEX_ERR));
 	}
-	if (expand_env(shell->tokens, shell->env_list))
-		return (1);
-	if (join_words(shell) || check_syntax_and_here(shell->tokens)) //in check_syntax function when it finds a heredoc -> it should do the piping
+	if (expand_env(shell->tokens, shell) || join_words(shell) || check_syntax_and_here(shell->tokens)) //in check_syntax function when it finds a heredoc -> it should do the piping
 		return (1);
 	return (0);
 }
