@@ -83,27 +83,35 @@ static int	set_flag(t_data *shell)
 	}
 	return(flag);
 }
-// bei echo tilde home noch einfuegen
+
+//echo ~ noch home
 void		bi_echo(t_data *shell)
 {
 	int		i;
 	int		flag;
 
 	i = 1;
-	flag = set_flag(shell);
-	printf("flag is %d\n", flag);
-	while(shell->toex->args[i] != NULL)
+	flag = 0;
+	if(shell->toex->args)
 	{
+		flag = set_flag(shell);
 		if(flag == 1)
 			i++;
-		if(shell->toex->args[i][0]== '$')
+		while(shell->toex->argv[i])
 		{
-			echo_env(shell, shell->toex->args[i]);
-			break ;
+			if(shell->toex->argv[i][0]== '$')
+			{
+				echo_env(shell, shell->toex->argv[i]);
+				break ;
+			}
+			else
+			{
+				printf("%s", shell->toex->argv[i]);
+				if(shell->toex->argv[i + 1] != NULL)
+					printf(" ");
+			}
+			i++;
 		}
-		else
-			printf("%s ", shell->toex->args[i]);
-		i++;
 	}
 	if(flag == 0)
 		printf("\n");

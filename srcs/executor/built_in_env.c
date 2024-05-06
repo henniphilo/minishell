@@ -66,20 +66,33 @@ t_environ	*replace_value(t_environ *list_ptr, char *replace)
 	return(list_ptr);
 }
 
+//wie umgehen mit istgleich ???
+
 void		bi_export(t_data *shell)
 {
 	t_environ	*new_node;
+	t_environ	*head;
 	char		*name;
 	char		*value;
 
 	name = ft_strdup(shell->toex->args[0]);
 	value = ft_strdup(shell->toex->args[1]);
-	new_node = new_env_node(name, value);
-	if(!new_node)
+	head = find_name_in_envlist(shell, name);
+	if(!head)
 	{
-		perror("no new node durch export\n");
+		new_node = new_env_node(name, value);
+		if(!new_node)
+		{
+			perror("no new node durch export\n");
+			free(name);
+			free(value);
+		}
+		add_env_back(&shell->env_list, new_node);
+	}
+	else
+	{
+		head = replace_value(head, value);
 		free(name);
 		free(value);
 	}
-	add_env_back(&shell->env_list, new_node);
 }

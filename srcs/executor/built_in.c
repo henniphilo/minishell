@@ -1,5 +1,9 @@
 #include "../../incl/minishell.h"
 
+// export erstellt immer neu und ueberschreibt nicht
+// > hallo fueht in libft folder reon
+
+
 int	builtin_check(char *arg)
 {
 	int	n;
@@ -57,18 +61,22 @@ static int	bi_cd_check(t_data *shell, char *home_path)
 	tilde = "~";
 	// printf("Home path in cd check ");
 	// print_path(home_path);
-	if((ft_strncmp(shell->toex->args[0], up, 3))== 0)
+
+	if (shell->toex && shell->toex->argv)
 	{
-		if(chdir("..") == 0)
-			printf("goes up\n");
-		update_old_pwd(shell);
-		return (0);
-	}
-	if((ft_strncmp(shell->toex->args[0], tilde, 2)) == 0)
-	{
-		chdir(home_path);
-		update_old_pwd(shell);
-		return (0);
+		if(shell->toex->argv[1] != NULL && (ft_strncmp(shell->toex->argv[1], up, 3))== 0)
+		{
+			if(chdir("..") == 0)
+				printf("goes up\n");
+			update_old_pwd(shell);
+			return (0);
+		}
+		if(shell->toex->argv[1] != NULL && (ft_strncmp(shell->toex->argv[1], tilde, 2)) == 0)
+		{
+			chdir(home_path);
+			update_old_pwd(shell);
+			return (0);
+		}
 	}
 	return (1);
 }
@@ -79,23 +87,18 @@ static int	bi_cd_check(t_data *shell, char *home_path)
 int	change_directory(t_data *shell)
 {
 	char	*new_path;
-	char	*current_path;
 	char	*home_path;
-	char	cwd[1024];
-	t_environ	*env_ptr;
 
-	env_ptr = find_name_in_envlist(shell, "PWD");
-	current_path = getcwd(cwd, sizeof(cwd));
 	home_path = find_in_env("HOME");
-	if(shell->toex->args[0] == NULL)
+	if (shell->toex->args == NULL)
 	{
 		chdir(home_path);
 		update_old_pwd(shell);
 		return(0);
 	}
-	if(bi_cd_check(shell, home_path) == 0)
+	if (bi_cd_check(shell, home_path) == 0)
 		return(0);
-	if(shell->toex->args[1] == NULL)
+	if (array_len(shell->toex->args) == 1)
 	{
 		new_path = shell->toex->args[0];
 		if(new_path != NULL)

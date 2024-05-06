@@ -1,6 +1,8 @@
 #include "../../incl/minishell.h"
 
 
+
+
 void	execute_one_envcmd(t_data *shell, pid_t pid)
 {
 	printf("ein toex\n");
@@ -18,7 +20,7 @@ void	execute_one_envcmd(t_data *shell, pid_t pid)
 	}
 }
 
-// -> macht nicht so viel sinn weil nur ein ausfuehrbarer command 
+// -> macht nicht so viel sinn weil nur ein ausfuehrbarer command
 void	execute_more_envcmd(t_data *shell, pid_t pid, int i)
 {
 	printf("mehrere toex\n");
