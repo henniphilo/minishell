@@ -51,7 +51,7 @@ static char	*split_expand_join(t_lexer *tokens, char *dollar, char *limit, t_env
 		env = env->next;
 	}
 	tmp = expand(tokens, dollar, limit, value);
-	free (value);
+	free(name);
 	return (tmp);
 }
 
@@ -95,27 +95,51 @@ static int	find_and_replace(t_lexer *tokens, t_environ *env)
 	return (0);
 }
 
+static int	expand_tilde(t_lexer *tokens, t_environ *env)
+{
+	if (tokens->quote == NONE && ft_strcmp("~", tokens->str) == 0)
+	{
+		free(tokens->str);
+		tokens->str = NULL;
+		while (env)
+		{
+			if (ft_strcmp("HOME", env->name))
+			{
+				tokens->str = ft_strdup(env->value);
+				if (!tokens->str)
+					return (error_int(ALLOC_ERR));
+				return (0);
+			}
+			env = env->next;
+		}
+	}
+	return (0);
+}
+
 /*expands environment variable to their values;
 environment variable names consist solely of
 uppercase letters, digits, and the <underscore>
 and do not begin with a digit. */
 int	expand_env(t_lexer *tokens, t_environ *env)
 {
-	int	i;
-
-	i = 0;
 	while (tokens)
 	{
-		if (!(tokens->type == WORD)) //to not expand what comes after a heredoc or redirection
+		while (!(tokens->type == WORD)) //to not expand what comes after a heredoc or redirection
 		{
 			tokens = tokens->next;
-			while (tokens && tokens->space_after == 0 && tokens->type == WORD) //check if it segfaults when << is the laste element of the line
+			while (tokens && !(tokens->previous->type == PIPE) && tokens->type == WORD) //check if it segfaults when << is the laste element of the line
+			{
 				tokens = tokens->next;
+				if ( tokens && tokens->space_after == 1)
+					break ;
+			}
 		}
 		if (tokens->type == WORD && !(tokens->quote == SINGLE))
 		{
 			if (!tokens->str) //necessary?
 				return (error_int(EXPAN_ERR)); //necessary?
+			if (ft_strcmp("~", tokens->str) == 0 && expand_tilde(tokens, env)) //check
+				return (error_int(EXPAN_ERR));
 			if (ft_strchr(tokens->str, '$'))
 			{
 				if (find_and_replace(tokens, env))
@@ -126,75 +150,4 @@ int	expand_env(t_lexer *tokens, t_environ *env)
 	}
 	return (0);
 }
-/*
-pbencze@c3a8c2:~/Documents/42cursus/Minishell/Minishell_Github$ echo > $A
-bash: $A: ambiguous redirect
-pbencze@c3a8c2:~/Documents/42cursus/Minishell/Minishell_Github$ echo $A
-
-//wird nicht als syntax error gesehen
-pbencze@c3a8c2:~/Documents/42cursus/Minishell/Minishell_Github$ echo > $A | ls
-bash: $A: ambiguous redirect
- incl   libft   Makefile   srcs
-pbencze@c3a8c2:~/Documents/42cursus/Minishell/Minishell_Github$ echo > "$A" | ls
-bash: : No such file or directory
- incl   libft   Makefile   srcs
-pbencze@c3a8c2:~/Documents/42cursus/Minishell/Minishell_Github$ echo > '$A' | ls
- '$A'   incl   libft   Makefile   srcs
-
-pbencze@c3a8c2:~/Documents/42cursus/Minishell/Minishell_Github$ $A
-pbencze@c3a8c2:~/Documents/42cursus/Minishell/Minishell_Github$ '$A'
-$A: command not found
-pbencze@c3a8c2:~/Documents/42cursus/Minishell/Minishell_Github$ "$A"
-Command '' not found, but can be installed with:
-
-pbencze@c3a8c2:~/Documents/42cursus/Minishell/Minishell_Github$ ls "$A"
-ls: cannot access '': No such file or directory
-pbencze@c3a8c2:~/Documents/42cursus/Minishell/Minishell_Github$ ls $A
-'$USER'   incl   libft   Makefile   pbencze   srcs
-pbencze@c3a8c2:~/Documents/42cursus/Minishell/Minishell_Github$ ls '$A'
-ls: cannot access '$A': No such file or directory
-
-pbencze@c3a8c2:~/Documents/42cursus/Minishell/Minishell_Github$ pwd > file1  > $A | ls
-bash: $A: ambiguous redirect
-file1  incl  libft  Makefile  srcs
-
-pbencze@c3a8c2:~/Documents/42cursus/Minishell/Minishell_Github$ ls "$A"
-ls: cannot access '': No such file or directory
-pbencze@c3a8c2:~/Documents/42cursus/Minishell/Minishell_Github$ ls "$A"-l
-total 8
--rw-r--r-- 1 pbencze 2023_berlin    0 May  1 17:15 file1
-drwxr-xr-x 2 pbencze 2023_berlin   60 May  1 16:21 incl
-drwxr-xr-x 2 pbencze 2023_berlin 4096 Apr 30 16:38 libft
--rw-r--r-- 1 pbencze 2023_berlin 1344 May  1 16:21 Makefile
-drwxr-xr-x 6 pbencze 2023_berlin  138 May  1 16:21 srcs
-pbencze@c3a8c2:~/Documents/42cursus/Minishell/Minishell_Github$
-
-pbencze@c3a8c2:~/Documents/42cursus/Minishell/Minishell_Github$ cat << hi
-> $USER
-> hi
-pbencze
-pbencze@c3a8c2:~/Documents/42cursus/Minishell/Minishell_Github$ cat << hi"hey"
-> $USER
-> hihey
-$USERec
-
-pbencze@c3a8c2:~/Documents/42cursus/Minishell/Minishell_Github$ << ''
->
-
-pbencze@c3a8c2:~/Documents/42cursus/Minishell/Minishell_Github$ << hi | abab | << h ><
-bash: syntax error near unexpected token `<'
-> hi
-> h
-pbencze@c3a8c2:~/Documents/42cursus/Minishell/Minishell_Github$ ><< hi | abab | << h
-bash: syntax error near unexpected token `<<'
-
-pbencze@c1b4c1:~/Documents/42cursus/Minishell/Minishell_Github$ echo $
-$
-
-2. expansion (if heredoc or redirection: jump until space after -> start expansion)
-3. join words
-4. heredocs and syntax error simultaneously
-5. expansion of filenames and parsing of filedescriptors
-// files werden nicht erstellt beim syntax error, aber heredocs bis zum error schon, also bis zum ersten token mit error heredocs machen
-*/
 
