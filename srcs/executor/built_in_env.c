@@ -20,19 +20,17 @@ void		bi_unset(t_data *shell)
 	t_environ	*begin;
 	t_environ	*remove;
 	t_environ	*head;
-	int			len; //len spaeter vlt. wegmachen
 
 	begin = shell->env_list;
 	head = begin;
 	prev = NULL;
-	len = ft_strlen(shell->toex[1]);
-	if (shell->toex[1] != NULL)
+	if (shell->toex->args[0] != NULL)
 	{
 		while(head != NULL)
 		{
-			if(ft_strncmp(head->name, shell->toex[1], len + 1) == 0)
+			if(ft_strncmp(head->name, shell->toex->args[0], 50) == 0)
 			{
-				if(shell->toex[2] == NULL)
+				if(shell->toex->args[1] == NULL)
 				{
 					remove = head;
 		//			printf(">this to remove: %s=%s < \n", remove->name, remove->value);
@@ -46,7 +44,7 @@ void		bi_unset(t_data *shell)
 				}
 				else
 				{
-					head = replace_value(head, shell->toex[2]);
+					head = replace_value(head, shell->toex->args[1]);
 					break ;
 				}
 			}
@@ -74,8 +72,8 @@ void		bi_export(t_data *shell)
 	char		*name;
 	char		*value;
 
-	name = ft_strdup(shell->toex[1]);
-	value = ft_strdup(shell->toex[2]);
+	name = ft_strdup(shell->toex->args[0]);
+	value = ft_strdup(shell->toex->args[1]);
 	new_node = new_env_node(name, value);
 	if(!new_node)
 	{

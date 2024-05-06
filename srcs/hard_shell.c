@@ -19,12 +19,12 @@ void	print_toex(t_data *shell)
 	if(shell->toex->cmd != NULL)
 		printf("cmd is: %s\n", shell->toex->cmd);
 
-	while(shell->toex->args != NULL)
+	while(shell->toex->args != NULL && shell->toex->args[i])
 	{
 		printf("arg[%d] is: %s\n", i, shell->toex->args[i]);
 		i++;
 	}
-	printf("last toex[%d] is: %s\n", i, shell->toex->args[i]);
+	//printf("last toex[%d] is: %s\n", i, shell->toex->args[i]);
 }
 
 
@@ -48,7 +48,6 @@ int	main(int ac, char **av, char **envp)
 		}
 	//	test(shell);
 	//	hard_toex(shell);
-		count_commands(shell->tokens);
 	//	print_toex(shell);
 		execute_shell(shell);
 		clear_data(shell);

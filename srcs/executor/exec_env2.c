@@ -61,8 +61,6 @@ void	env_execute(t_data *shell, char *toex)
 		if(execve(path, shell->toex->argv, shell->env) < 0)  //warum nur moeglich mir shell->arguments und nicht args?
 		{
 			perror("command couldnt be executed\n");
-			// while (shell->arguments[i++])
-			// 	free(shell->arguments[i]);
 			free(toex);
 			exit(1);
 		}
