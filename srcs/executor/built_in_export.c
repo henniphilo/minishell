@@ -41,9 +41,103 @@ void	init_export_list(t_data *shell)
 }
 
 
-void	print_export_list(t_data *shell)
+static void	swap(t_environ *a, t_environ *b)
 {
-	printf("muss noch sortiert werden, hier die neue liste: \n");
-	print_env(shell->export_list);
+	char	*temp_name;
+	char	*temp_value ;
+
+	temp_name = a->name;
+	temp_value = a->value;
+	a->name = b->name;
+	a->value = b->value;
+	b->name = temp_name;
+	b->value = temp_value;
 }
 
+void	sort_export_list(t_data *shell)
+{
+	t_environ	*head;
+	t_environ	*current;
+	t_environ	*last_sort;
+	int			swapped;
+
+	head = shell->export_list;
+	last_sort = NULL;
+	swapped = 1;
+	while (swapped)
+	{
+		swapped = 0;
+		current = head;
+		while (current->next != last_sort)
+		{
+			if (ft_strcmp(current->name, current->next->name) > 0)
+			{
+				swap(current, current->next);
+					swapped = 1;
+			}
+			current = current->next;
+		}
+		last_sort = current;
+	}
+}
+
+void	print_export_list(t_data *shell)
+{
+	t_environ	*export_lst;
+
+	export_lst = shell->export_list;
+	while(export_lst != NULL)
+	{
+		printf("export_list....");
+		printf("%s=", export_lst->name);
+		printf("%s\n", export_lst->value);
+		export_lst = export_lst->next;
+	}
+}
+
+static void	only_export(t_data *shell)
+{
+	sort_export_list(shell);
+	print_export_list(shell);
+}
+
+//wie umgehen mit istgleich ??? -> petra schreibt funktion
+
+void		export_env(t_data *shell)
+{
+	t_environ	*new_node;
+	t_environ	*head;
+	char		*name;
+	char		*value;
+
+	name = ft_strdup(shell->toex->args[0]);
+	value = ft_strdup(shell->toex->args[1]);
+	head = find_name_in_envlist(shell, name);
+	if (!head)
+	{
+		new_node = new_env_node(name, value);
+		if (!new_node)
+		{
+			perror("no new node durch export\n");
+			free(name);
+			free(value);
+		}
+		add_env_back(&shell->env_list, new_node);
+	}
+	else
+	{
+		head = replace_value(head, value);
+		free(name);
+		free(value);
+	}
+}
+
+void	bi_export(t_data *shell)
+{
+	init_export_list(shell);
+	if(shell->toex->args != NULL)
+		export_env(shell);
+	else
+		//print_export_list(shell);
+		only_export(shell);
+}
