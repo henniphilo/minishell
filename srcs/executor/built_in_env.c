@@ -66,7 +66,7 @@ t_environ	*replace_value(t_environ *list_ptr, char *replace)
 	return(list_ptr);
 }
 
-
+/*
 static t_environ *sort_env(t_environ *head, t_environ *new_node)
 {
     t_environ *current;
@@ -89,37 +89,76 @@ static t_environ *sort_env(t_environ *head, t_environ *new_node)
     }
 }
 
-t_environ *sort_env_list(t_environ *head)
+t_environ *sort_export_list(t_environ *head)
 {
     t_environ *sorted_head = NULL;
-    t_environ *current = head;
     t_environ *next;
 
-    while (current != NULL)
+    while (head != NULL)
 	{
-        next = current->next;
-        sorted_head = sort_env(sorted_head, current);
+        sorted_head = sort_env(sorted_head, head);
+		head = head->next;
     }
-    return sorted_head;
+    return (sorted_head);
+} */
+
+static void	swap(t_environ *a, t_environ *b)
+{
+	char	*temp_name;
+	char	*temp_value ;
+
+	temp_name = a->name;
+	temp_value = a->value;
+	a->name = b->name;
+	a->value = b->value;
+	b->name = temp_name;
+	b->value = temp_value;
+}
+
+void	sort_export_list(t_data *shell)
+{
+	t_environ	*head;
+	t_environ	*ptr1;
+	t_environ	*lptr;
+	int			swapped;
+
+	head = shell->export_list;
+	lptr = NULL;
+	swapped = 1;
+	while (swapped)
+	{
+		swapped = 0;
+		ptr1 = head;
+		while (ptr1->next != lptr)
+		{
+			if (strcmp(ptr1->name, ptr1->next->name) > 0)
+			{
+				swap(ptr1, ptr1->next);
+					swapped = 1;
+			}
+			ptr1 = ptr1->next;
+		}
+		lptr = ptr1;
+	}
 }
 
 static void	only_export(t_data *shell)
 {
-	t_environ	*to_sort;
+	// t_environ	*sorted_lst;
 
-	printf("ist jetzt in only export\n");
-
-	to_sort = sort_env_list(shell->env_list);
-	if(!to_sort)
-	{
-		printf("error not sorted list ptr \n");
-		return;
-	}
-	else
-		print_env(to_sort);
+	// printf("ist jetzt in only export\n");
+	// sorted_lst = sort_export_list(shell->export_list);
+	// if(!(sorted_lst))
+	// {
+	// 	printf("error not sorted list ptr \n");
+	// 	return;
+	// }
+	// else
+	sort_export_list(shell);
+	print_export_list(shell);
 }
 
-//wie umgehen mit istgleich ???
+//wie umgehen mit istgleich ??? -> petra schreibt funktion
 
 void		export_env(t_data *shell)
 {
@@ -152,8 +191,10 @@ void		export_env(t_data *shell)
 
 void	bi_export(t_data *shell)
 {
+	init_export_list(shell);
 	if(shell->toex->args != NULL)
 		export_env(shell);
 	else
+		//print_export_list(shell);
 		only_export(shell);
 }
