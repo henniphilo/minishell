@@ -45,7 +45,7 @@ int	main(int ac, char **av, char **envp)
 			clear_data(shell);
 			continue ; //if lexing, parsing or line are wrong returns the prompt
 		}
-	//	test(shell);
+		test(shell);
 	//	hard_toex(shell);
 	//	print_toex(shell);
 		execute_shell(shell);

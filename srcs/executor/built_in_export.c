@@ -102,7 +102,7 @@ static void	only_export(t_data *shell)
 }
 
 //wie umgehen mit istgleich ??? -> petra schreibt funktion
-
+// noch etwas buggy beim hinzufuegen von node mit name und value muss man zweimmal ausfuehren ehe es in der export liste erscheint
 void		export_env(t_data *shell)
 {
 	t_environ	*new_node;
@@ -112,6 +112,7 @@ void		export_env(t_data *shell)
 
 	name = ft_strdup(shell->toex->args[0]);
 	value = ft_strdup(shell->toex->args[1]);
+	init_export_list(shell);
 	head = find_name_in_envlist(shell, name);
 	if (!head)
 	{
@@ -132,12 +133,34 @@ void		export_env(t_data *shell)
 	}
 }
 
+void	to_export_list(t_data *shell)
+{
+	t_environ	*new_node;
+	char		*name;
+	char		*value;
+
+	name = ft_strdup(shell->toex->args[0]);
+	value = " ";
+	new_node = new_env_node(name, value);
+	printf("ist in to export list drin\n");
+	if (!new_node)
+	{
+		perror("no new node in export list\n");
+		free(name);
+//		free(value);
+	}
+	add_env_back(&shell->export_list, new_node);
+}
+
 void	bi_export(t_data *shell)
 {
-	init_export_list(shell);
 	if(shell->toex->args != NULL)
-		export_env(shell);
+	{
+		if(shell->toex->args[1] == NULL)
+			to_export_list(shell);
+		else
+			export_env(shell);
+	}
 	else
-		//print_export_list(shell);
 		only_export(shell);
 }

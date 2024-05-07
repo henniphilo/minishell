@@ -28,7 +28,6 @@ t_environ	*env_list_last(t_environ *list)
 void	add_env_back(t_environ **list, t_environ *node)
 {
 	t_environ	*tmp;
-
 	if (list)
 	{
 		tmp = env_list_last(*list);
@@ -86,5 +85,6 @@ void	*init_env(t_data *shell, char **envp)
 	shell->env_list = init_env_list(envp);
 	if (!shell->env_list)
 		panic(ALLOC_ERR, shell);
+	init_export_list(shell);
 	return (NULL);
 }

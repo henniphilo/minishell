@@ -25,9 +25,7 @@
 # include <stddef.h>	 // Null
 
 /*Henni*/
-// char		**split_input_at_pipe(const char *line);
-// char		**split_pipe_in_cmd(const char *split_line);
-// char		**no_pipe(const char *line);
+
 char		*path_finder(char *cmd, t_data *shell);
 void		child_process_env(char *toex, t_data *shell, int i);
 
@@ -37,9 +35,7 @@ void		print_path(char *path);
 
 void		execute_one_envcmd(t_data *shell, pid_t pid);
 void		execute_more_envcmd(t_data *shell, pid_t pid, int i);
-//void		space_toex(t_data *shell, char **toex);
 void		print_toex(t_data *shell);
-//void		hard_toex(t_data *shell);
 int			execute_shell(t_data *shell);
 
 
@@ -61,10 +57,11 @@ void		update_old_pwd(t_data *shell);
 void		update_envlist(t_data *shell, char *to_up, char *new);
 void		print_export_list(t_data *shell);
 void		init_export_list(t_data *shell);
+void		sort_export_list(t_data *shell);
+void		to_export_list(t_data *shell);
 t_environ	*list_duplicate(t_environ *lst_ptr);
 t_environ	*replace_value(t_environ *list_ptr, char *replace);
 t_environ	*find_name_in_envlist(t_data *shell, char *name);
-void		sort_export_list(t_data *shell);
 
 
 /*Petra*/
