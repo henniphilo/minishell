@@ -28,7 +28,6 @@ t_environ	*env_list_last(t_environ *list)
 void	add_env_back(t_environ **list, t_environ *node)
 {
 	t_environ	*tmp;
-
 	if (list)
 	{
 		tmp = env_list_last(*list);
@@ -69,22 +68,23 @@ t_environ	*init_env_list(char **envp)
 }
 
 /*stores the variables form envp in data->env*/
-void	*init_env(t_data *data, char **envp)
+void	*init_env(t_data *shell, char **envp)
 {
 	int	i;
 
-	data->env = ft_calloc((array_len(envp) + 1), sizeof(char *));
-	if (!data->env)
-		panic(ALLOC_ERR, data);
+	shell->env = ft_calloc((array_len(envp) + 1), sizeof(char *));
+	if (!shell->env)
+		panic(ALLOC_ERR, shell);
 	i = -1;
 	while (envp[++i])
 	{
-		data->env[i] = ft_strdup(envp[i]);
-		if (!data->env[i])
-			panic(ALLOC_ERR, data);
+		shell->env[i] = ft_strdup(envp[i]);
+		if (!shell->env[i])
+			panic(ALLOC_ERR, shell);
 	}
-	data->env_list = init_env_list(envp);
-	if (!data->env_list)
-		panic(ALLOC_ERR, data);
+	shell->env_list = init_env_list(envp);
+	if (!shell->env_list)
+		panic(ALLOC_ERR, shell);
+	init_export_list(shell);
 	return (NULL);
 }

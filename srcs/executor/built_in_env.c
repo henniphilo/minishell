@@ -65,21 +65,3 @@ t_environ	*replace_value(t_environ *list_ptr, char *replace)
 	list_ptr->value = new_value;
 	return(list_ptr);
 }
-
-void		bi_export(t_data *shell)
-{
-	t_environ	*new_node;
-	char		*name;
-	char		*value;
-
-	name = ft_strdup(shell->toex->args[0]);
-	value = ft_strdup(shell->toex->args[1]);
-	new_node = new_env_node(name, value);
-	if(!new_node)
-	{
-		perror("no new node durch export\n");
-		free(name);
-		free(value);
-	}
-	add_env_back(&shell->env_list, new_node);
-}

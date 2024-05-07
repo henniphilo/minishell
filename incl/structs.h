@@ -63,6 +63,7 @@ typedef struct s_data {
 	char		*buf; //buffer to store the line read
 	char		**env; //2Darray to store environmental variables
 	t_environ	*env_list;
+	t_environ	*export_list; //hen: Liste von Umgebungsvariablen die auch nicht deklarierte Export Variablen enhalten
 	t_lexer		*tokens; //linked list of lexed tokens
 	t_command	*toex; //hen: to execute as replacement for cmds arg confusion, toex is the input seperated by a pipe
 	int			estatus; //for exit status of last pipe to store for the next prompt
