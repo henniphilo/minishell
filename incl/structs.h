@@ -49,12 +49,6 @@ typedef struct s_command {
 	struct s_command	*next;
 }	t_command;
 
-//from chatgpt, not sure about keeping it
-/* typedef struct s_heredoc {
-	char	*delimiter;
-	char	*input;	// Input associated with the here-doc
-}	t_heredoc; */
-
 /*linked list of env variables*/
 typedef struct s_environ {
 	char				*name; //e.g. USER
