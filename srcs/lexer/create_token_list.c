@@ -5,13 +5,9 @@ t_lexer	*new_lex_list(t_type t, char *s, bool sq, bool dq)
 {
 	t_lexer	*new_node;
 
-	new_node = malloc(sizeof(t_lexer));
+	new_node = ft_calloc(1, sizeof(t_lexer));
 	if (!new_node)
 		return (NULL);
-	new_node->quote = NONE;
-	new_node->space_after = 0;
-	new_node->next = NULL;
-	new_node->previous = NULL;
 	if (sq == 1)
 		new_node->quote = SINGLE;
 	if (dq == 1)

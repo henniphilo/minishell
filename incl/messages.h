@@ -12,6 +12,7 @@
 # define EXPAN_ERR "error occured during expansion"
 # define NL_ERR "minishell: syntax error near unexpected token `newline'"
 # define SYNTAX_ERR "minishell: syntax error near unexpected token "
+# define FILE_ERR "error creating file"
 
 
 /*macros to define builtins*/

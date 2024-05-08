@@ -47,6 +47,8 @@ t_command	*new_cmd_list(void)
 	new_node = ft_calloc(1, sizeof(t_command));
 	if (!new_node)
 		return (error_ptr(ALLOC_ERR));
+	new_node->fd_in = -2;
+	new_node->fd_out = -2;
 	return (new_node);
 }
 

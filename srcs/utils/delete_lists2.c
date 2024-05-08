@@ -7,8 +7,10 @@ void	delone_redirs(t_redir *redirs)
 	{
 		if (redirs->file)
 			free(redirs->file);
-		if (redirs->file)
-			free(redirs->file);
+		redirs->file = NULL;
+		if (redirs->ambig_redir)
+			free(redirs->ambig_redir);
+		redirs->ambig_redir = NULL;
 		free(redirs);
 	}
 }

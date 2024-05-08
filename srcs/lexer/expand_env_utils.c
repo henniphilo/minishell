@@ -7,7 +7,8 @@ char *find_limit(char *start)
 		return (start);
 	while (*start)
 	{
-		if ((*start >= 48 && *start <= 57) || (*start >= 65 && *start <= 90) || *start == 95)
+		if ((*start >= 48 && *start <= 57) || (*start >= 65 && *start <= 90)
+			|| (*start >= 97 && *start <= 122) || *start == 95)
 			start++;
 		else
 			return (start);

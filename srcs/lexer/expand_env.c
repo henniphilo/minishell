@@ -66,7 +66,7 @@ char	*expand(t_lexer *tokens, char *dollar, char *limit, char *value)
 	char	*end;
 	int		len;
 
-	if (!value && tokens->str == dollar && *limit == '0')
+	if (!value && tokens->str == dollar && *limit == '\0')
 	{
 		tokens->ambig_redir = ft_strdup(tokens->str);
 		if (!tokens->ambig_redir)
