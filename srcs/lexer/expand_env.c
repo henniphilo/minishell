@@ -66,6 +66,12 @@ char	*expand(t_lexer *tokens, char *dollar, char *limit, char *value)
 	char	*end;
 	int		len;
 
+	if (!value && tokens->str == dollar && *limit == '0')
+	{
+		tokens->ambig_redir = ft_strdup(tokens->str);
+		if (!tokens->ambig_redir)
+			return (error_ptr(ALLOC_ERR));
+	}
 	end = ft_strjoin(value, limit);
 	if (!end)
 		return (error_ptr(ALLOC_ERR));
@@ -88,13 +94,13 @@ int	expand_env(t_lexer *tokens, t_data *shell)
 {
 	while (tokens)
 	{
-		if (!(tokens->type == PIPE) && !(tokens->type == WORD)) //to not expand what comes after a heredoc or redirection
+		/* if (!(tokens->type == PIPE) && !(tokens->type == WORD)) //to not expand what comes after a heredoc or redirection
 		{
 			tokens = tokens->next;
 			while (tokens && tokens->next && tokens->type == WORD && tokens->space_after == 0) //check if it segfaults when << is the laste element of the line
 				tokens = tokens->next;
 		}
-		else if (tokens->type == WORD && !(tokens->quote == SINGLE) && tokens->str)
+		else */ if (tokens->type == WORD && !(tokens->quote == SINGLE) && tokens->str)
 		{
 			if (ft_strcmp("~", tokens->str) == 0 && expand_tilde(tokens, shell->env_list)) //check
 				return (error_int(EXPAN_ERR));

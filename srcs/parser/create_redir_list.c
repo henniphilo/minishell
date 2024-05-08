@@ -14,6 +14,15 @@ static t_redir	*new_redir_list(t_lexer *tokens)
 		free (new_node);
 		return (error_ptr(ALLOC_ERR));
 	}
+	if (tokens->ambig_redir)
+	{
+		new_node->ambig_redir = ft_strdup((tokens->ambig_redir));
+		if (!new_node->ambig_redir)
+		{
+			free (new_node);
+			return (error_ptr(ALLOC_ERR));
+		}
+	}
 	new_node->type = tokens->previous->type;
 	return (new_node);
 }
@@ -54,5 +63,3 @@ int	add_redir(t_lexer *tokens, t_command *toex)
 	redir_list_add_back(&(toex->redirs), node);
 	return (0);
 }
-
-//add a free function!!!

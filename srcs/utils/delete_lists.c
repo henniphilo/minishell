@@ -19,6 +19,7 @@ void	delone_commands(t_command *cmds)
 		if (cmds->cmd)
 			free(cmds->cmd);
 		free_arr(cmds->args, cmds->argv);
+		free_redirs(&(cmds->redirs));
 		free(cmds);
 	}
 }
