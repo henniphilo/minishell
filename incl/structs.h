@@ -25,6 +25,7 @@ typedef struct s_lexer {
 	char			*str;
 	t_quote			quote;
 	bool			space_after; //to check if a space follows the quoted word e.g. 'l's vs. 'l' s
+	char			*ambig_redir;
 	struct s_lexer	*previous;
 	struct s_lexer	*next;
 }	t_lexer;
@@ -32,6 +33,7 @@ typedef struct s_lexer {
 typedef struct s_redir {
 	t_type			type; //HERE, APPEND, IN, OUT
 	char			*file; //or int fd;
+	char			*ambig_redir;
 	struct s_redir	*next;
 	//char *heredoc;
 } t_redir;
@@ -41,7 +43,9 @@ typedef struct s_command {
 	char				*cmd; //e.g. "ls", "echo", "cat", "pwd"
 	char				**args; //things that come after the command e.g. pathname or string
 	char				**argv; //command + args together of execve()
-	t_redir				*redirs;
+	int					fd_in; //fd for infiles (and maybe heredoc tmpfiles)
+	int					fd_out; //fd for outfiles and append
+	t_redir				*redirs; //only used for parsing, not for execution
 	struct s_command	*next;
 }	t_command;
 

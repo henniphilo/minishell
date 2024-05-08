@@ -81,7 +81,9 @@ void		panic(char *str, void *ptr);
 int			error_int(char *str);
 void		*error_ptr(char *str);
 void		*cmd_error_ptr(char *str);
+int			infile_err_int(char *str);
 int			synt_error_int(t_type type);
+int			ambig_redir_err_int(char *str);
 
 /*init*/
 void		*init_env(t_data *shell, char **envp);
@@ -97,7 +99,8 @@ void		delone_tokens(t_lexer *token);
 void		free_tokens(t_lexer **tokens);
 void		delone_commands(t_command *cmds);
 void		free_commands(t_command **cmds);
-void		free_commands(t_command **cmds);
+void		delone_redirs(t_redir *redirs);
+void		free_redirs(t_redir **redirs);
 void		delone_env_list(t_environ *env);
 void		free_env_list(t_environ **env);
 void		free_env(char **env);
@@ -125,6 +128,7 @@ t_command	*create_cmdlist(t_lexer *tokens);
 int			init_cmd_list(t_lexer *tokens, t_data *shell);
 void		cmd_list_add_back(t_command **lst, t_command *new);
 int			add_redir(t_lexer *tokens, t_command *toex);
+int			handle_redirs(t_command *toex);
 
 /*test*/
 void	test(t_data *shell);

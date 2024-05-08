@@ -4,7 +4,7 @@ static void	print_tokens(t_lexer *tokens)
 {
 	while (tokens)
 	{
-		printf("string: %s\ntype: %i\nquote: %i\n\n", tokens->str, tokens->type, tokens->quote);
+		printf("string: %s\ntype: %i\nquote: %i\nambig_redir: %s\n\n", tokens->str, tokens->type, tokens->quote, tokens->ambig_redir);
 		tokens = tokens->next;
 	}
 }
@@ -47,6 +47,7 @@ static void	print_cmds(t_command *cmds)
 		{
 			printf("file: %s\n", redirs->file);
 			printf("type: %d\n", redirs->type);
+			printf("ambig_redir: %s\n", redirs->ambig_redir);
 			redirs = redirs->next;
 		}
 		cmds = cmds->next;

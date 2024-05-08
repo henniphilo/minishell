@@ -7,11 +7,11 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 RFLAG = -lreadline
 
-MAIN = hard_shell
-EXEC = exec_env exec_env2 execution built_in built_in_env built_in_child built_in_export exec_shell
-UTILS = error init_env free_data check_line delete_lists utils
+MAIN = minishell
+#EXEC = exec_env exec_env2 execution built_in built_in_env built_in_child built_in_export exec_shell
+UTILS = error error2 init_env free_data check_line delete_lists delete_lists2 utils
 LEXER = lexer create_token_list lexer_utils expand_env expand_env_utils
-PARSER = parser create_toex_list redir create_redir_list
+PARSER = parser create_toex_list create_redir_list redir
 
 SRC =	$(addsuffix .c, $(addprefix srcs/, $(MAIN))) \
 		$(addsuffix .c, $(addprefix srcs/utils/, $(UTILS))) \
