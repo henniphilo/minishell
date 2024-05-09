@@ -48,7 +48,8 @@ int	main(int ac, char **av, char **envp)
 		test(shell);
 	//	hard_toex(shell);
 	//	print_toex(shell);
-		execute_shell(shell);
+	//	execute_shell(shell);
+		piping(shell);
 		clear_data(shell);
 	}
 

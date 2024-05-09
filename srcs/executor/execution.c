@@ -1,4 +1,95 @@
 #include "../../incl/minishell.h"
+
+void read_from_fd(int fd, const char *process)
+{
+    char c;
+
+    printf ("Process [%s] Reading from descriptor %d \n", process, fd);
+    while(read(fd, &c, 1) != 0)
+	{
+        printf("%c", c);
+    }
+}
+
+static void	execute_command(t_data *shell)
+{
+	char	*cmd;
+	char	*path;
+
+	//cmd_count = count_commands(shell->tokens);
+	cmd = shell->toex->cmd;
+	path = path_finder(cmd, shell);
+	if(!path)
+	{
+		free(cmd);
+		perror("Error in Path\n");
+		exit(1);
+	}
+	printf("will executen: %s\n", cmd);
+	if(execve(path, shell->toex->argv, shell->env) < 0)
+	{
+			perror("command couldnt be executed\n");
+			free(cmd);
+			exit(-1);
+	}
+	free(cmd);
+	free(path);
+}
+
+int		piping(t_data *shell)
+{
+	const char	*process;
+	int			fd[2];
+	int			pid;
+	int			i;
+	int			cmd_count;
+
+	i = 0;
+	cmd_count = count_commands(shell->tokens);
+	if(cmd_count > 0)
+	{
+		process = "PARENT";
+		//fd = ft_calloc(2, sizeof(int));
+		if (pipe(fd) != 0)
+		{
+			perror ("Error creating pipe.\n");
+			exit(-1);
+		}
+		pid = fork();
+		if (pid == -1)
+		{
+			perror ("Error creating pipe.\n");
+			exit(-1);
+    	}
+		else if (pid == 0)
+		{
+			process = "CHILD";
+			dup2(fd[RDEND], 0); /*Replace standard input of child process with read end of the pipe*/
+			close(fd[WREND]); /* Close the write end of the pipe in child process.It is not used */
+			close(fd[RDEND]); /* Close the read end of the pipe in child process.We have a copy of it in file descriptor 0*/
+			//create a new pipe for chaining the next two commands
+		//	fd = ft_calloc(2, sizeof(int));
+		//	pipe(fd);
+			execute_command(shell);
+		//	exit(0);
+		}
+		else
+		{
+			//parent
+			dup2(fd[WREND], 1); /*Replace standard output of parent process with write end of the pipe*/
+			close(fd[RDEND]); /* Close the read end of the pipe in parent process.It is not used */
+			close(fd[WREND]);/* Close the write end of the pipe in child process.We have a copy of it in file descriptor 1*/
+			close(RDEND); /* After writing all data, close the write end */
+			execute_command(shell);
+			waitpid(pid, 0, 0); /* Wait for the child to finish */
+		}
+			cmd_count--;
+		//i++;
+	}
+	return(1);
+}
+
+
 /*
 char	**split_input_at_pipe(const char *line)
 {

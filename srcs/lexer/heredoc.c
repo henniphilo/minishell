@@ -24,6 +24,7 @@ int	handle_heredoc(t_lexer *tokens) //unlink in clear data
 	char	*tmp_file;
 	int		fd;
 
+	printf("in here to open files\n");
 	fd = open(tmp_file, O_APPEND | O_RDWR, 0777);
 	if (fd < 0)
 		return (error_int(FILE_ERR));

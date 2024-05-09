@@ -37,6 +37,8 @@ void		execute_one_envcmd(t_data *shell, pid_t pid);
 void		execute_more_envcmd(t_data *shell, pid_t pid, int i);
 void		print_toex(t_data *shell);
 int			execute_shell(t_data *shell);
+void		read_from_fd(int fd, const char *process);
+int			piping(t_data *shell);
 
 
 /*built-ins*/
