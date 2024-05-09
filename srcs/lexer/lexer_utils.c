@@ -37,8 +37,8 @@ int	check_syntax_and_here(t_lexer *tokens)
 		{
 			if (!(tokens->next->type == WORD))
 				return (synt_error_int(tokens->next->type));
-			//if (tokens->type == HEREDOC && handle_heredoc())
-			//	return (1);
+			if (tokens->type == HEREDOC && handle_heredoc(tokens->next))
+				return (1);
 		}
 		tokens = tokens->next;
 	}

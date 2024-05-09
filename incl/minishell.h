@@ -113,6 +113,10 @@ t_lexer		*new_lex_list(t_type t, char *s, bool sq, bool dq);
 int			check_append(t_type *type, char *buf);
 int			check_here(t_type *type, char *buf);
 int			join_words(t_data *shell);
+int			parse_heredoc(t_lexer *tokens, int fd);
+int			handle_heredoc(t_lexer *tokens);
+
+/*expansions*/
 int			expand_env(t_lexer *tokens, t_data *shell);
 char		*expand(t_lexer *tokens, char *dollar, char *limit, char *value);
 int			ft_trim_last(t_lexer *tokens);
