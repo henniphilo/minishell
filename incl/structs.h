@@ -66,7 +66,7 @@ typedef struct s_data {
 	t_command	*toex; //hen: to execute as replacement for cmds arg confusion, toex is the input seperated by a pipe
 	int			estatus; //for exit status of last pipe to store for the next prompt
 	int			cmd_count; // wird von petra upgedatet in pipe count
-	int			*fd; // hen: zum directen der fd muss noch richtig init werde
+//	int			*fd; // hen: zum directen der fd muss noch richtig init werde
 	bool		bi_check; //hen: built_in check
 //	pid_t		*pid; //process id, evt als array fuer individuelle prozess? - doch nicht
 //	char		**arguments; // hen: to store all the input
