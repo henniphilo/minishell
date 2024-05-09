@@ -7,21 +7,21 @@ static int	open_file(t_command *toex, t_redir *redirs)
 		close(toex->fd_in);
 		toex->fd_in = open(redirs->file, O_RDONLY, 0777);
 		if (toex->fd_in == -1)
-			return (infile_err_int(redirs->file));
+			return (file_err_int(redirs->file));
 	}
 	if (redirs->type == OUTPUT)
 	{
 		close(toex->fd_out);
 		toex->fd_out = open(redirs->file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
 		if (toex->fd_out == -1)
-			return (error_int(FILE_ERR));
+			return (file_err_int(redirs->file));
 	}
 	if (redirs->type == APPEND)
 	{
 		close(toex->fd_out);
 		toex->fd_out = open(redirs->file, O_WRONLY | O_APPEND | O_CREAT, 0777);
 		if (toex->fd_out == -1)
-			return (error_int(FILE_ERR));
+			return (file_err_int(redirs->file));
 	}
 	return (0);
 }

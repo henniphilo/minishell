@@ -81,7 +81,7 @@ void		panic(char *str, void *ptr);
 int			error_int(char *str);
 void		*error_ptr(char *str);
 void		*cmd_error_ptr(char *str);
-int			infile_err_int(char *str);
+int			file_err_int(char *file);
 int			synt_error_int(t_type type);
 int			ambig_redir_err_int(char *str);
 
