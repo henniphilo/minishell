@@ -74,7 +74,7 @@ int			check_line(char *buf);
 int			array_len(char **ptr);
 char		**free_arr(char **arr1, char **arr2);
 char		**append_arr(char **arr, char *new_str);
-int			check_syntax_and_here(t_lexer *tokens);
+int			check_syntax_and_here(t_lexer *tokens, t_data *shell);
 
 /*error*/
 void		panic(char *str, void *ptr);
@@ -113,14 +113,15 @@ t_lexer		*new_lex_list(t_type t, char *s, bool sq, bool dq);
 int			check_append(t_type *type, char *buf);
 int			check_here(t_type *type, char *buf);
 int			join_words(t_data *shell);
-int			parse_heredoc(t_lexer *tokens, int fd);
-int			handle_heredoc(t_lexer *tokens);
+int			parse_heredoc(t_lexer *tokens, int fd, t_data *shell);
+int			handle_heredoc(t_lexer *tokens, t_data *shell);
 
 /*expansions*/
 int			expand_env(t_lexer *tokens, t_data *shell);
 char		*expand(t_lexer *tokens, char *dollar, char *limit, char *value);
 int			ft_trim_last(t_lexer *tokens);
 char		*find_limit(char *start);
+int			find_and_replace(t_lexer *tokens, t_data *shell);
 int			expand_tilde(t_lexer *tokens, t_environ *env);
 char		*expand_estatus(t_lexer *tokens, char *dollar, char *limit, int estatus);
 

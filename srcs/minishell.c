@@ -21,8 +21,8 @@ int	main(int ac, char **av, char **envp)
 	if (!shell)
 		panic(ALLOC_ERR, NULL);
 	init_env(shell, envp);
-	int i;
-	i = 0;
+	int i; //test
+	i = 0; //test
 	while (i < 1)
 	{
 		shell->buf = (char *)get_the_line(shell);
@@ -34,7 +34,7 @@ int	main(int ac, char **av, char **envp)
 		//execute_shell(shell);
 		test(shell);
 		clear_data(shell);
-		i++;
+		i++; //test
 	}
 	free_data(shell); //just temporarily in this part of the code
 	return (0);

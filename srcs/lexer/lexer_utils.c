@@ -1,7 +1,7 @@
 #include "../../incl/minishell.h"
 
 /*checks if token is <<*/
-int	check_here(t_type *type, char *buf) //missing: syntax error edge cases
+int	check_here(t_type *type, char *buf)
 {
 	if (buf[1] == '<')
 		*type = HEREDOC;
@@ -9,7 +9,7 @@ int	check_here(t_type *type, char *buf) //missing: syntax error edge cases
 }
 
 /*checks if token is >>*/
-int	check_append(t_type *type, char *buf) //missing: syntax error edge cases
+int	check_append(t_type *type, char *buf)
 {
 	if (buf[1] == '>')
 		*type = APPEND;
@@ -17,13 +17,13 @@ int	check_append(t_type *type, char *buf) //missing: syntax error edge cases
 }
 
 /*checks for syntax errors after lexing, e.g. echo hi ||| ls; >< file*/
-int	check_syntax_and_here(t_lexer *tokens)
+int	check_syntax_and_here(t_lexer *tokens, t_data *shell)
 {
 	if (tokens && tokens->type == PIPE)
-		return (synt_error_int(PIPE)); //error if first token is a pipe
+		return (synt_error_int(PIPE));
 	while (tokens)
 	{
-		if (tokens->type == INPUT || tokens->type == OUTPUT || tokens->type == HEREDOC || tokens->type == APPEND || tokens->type == PIPE)
+		if (!(tokens->type == WORD))
 		{
 			if (!tokens->next)
 				return (error_int(NL_ERR));
@@ -37,11 +37,32 @@ int	check_syntax_and_here(t_lexer *tokens)
 		{
 			if (!(tokens->next->type == WORD))
 				return (synt_error_int(tokens->next->type));
-			if (tokens->type == HEREDOC && handle_heredoc(tokens->next))
+			if (tokens->type == HEREDOC && handle_heredoc(tokens->next, shell))
 				return (1);
 		}
 		tokens = tokens->next;
 	}
+	return (0);
+}
+
+static int	join_helper(t_lexer *node, t_lexer **next)
+{
+	char	*s;
+
+	s = ft_strjoin(node->str, node->next->str);
+	if (!s)
+		return (error_int(ALLOC_ERR));
+	free(node->str);
+	node->str = s;
+	if (!(node->quote == NONE && node->next->quote == NONE))
+		node->quote = HERE;
+	if (node->next->space_after == 1)
+		node->space_after = 1;
+	(*next) = node->next->next;
+	delone_tokens(node->next);
+	if (*next)
+		(*next)->previous = node;
+	node->next = (*next);
 	return (0);
 }
 
@@ -50,31 +71,16 @@ int	join_words(t_data *data)
 {
 	t_lexer	*node;
 	t_lexer	*next;
-	char	*s;
 
 	node = data->tokens;
 	next = NULL;
 	while (node)
 	{
-		while (node->next && node->type == WORD && node->next->type == WORD && node->space_after == 0)
+		while (node->next && node->type == WORD
+			&& node->next->type == WORD && node->space_after == 0)
 		{
-			s = ft_strjoin(node->str, node->next->str);
-			if (!s)
-			{
-				free(s);
-				return (error_int(ALLOC_ERR));
-			}
-			free(node->str);
-			node->str = s;
-			if (!(node->quote == NONE && node->next->quote == NONE))
-				node->quote = HERE; //for heredocs
-			if (node->next->space_after == 1)
-				node->space_after = 1;
-			next = node->next->next;
-			delone_tokens(node->next);
-			if (next)
-				next->previous = node;
-			node->next = next;
+			if (join_helper(node, &next))
+				return (1);
 		}
 		node = node->next;
 	}
