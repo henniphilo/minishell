@@ -12,14 +12,11 @@ int	main(int ac, char **av, char **envp)
 	if (!shell)
 		panic(ALLOC_ERR, NULL, 1);
 	init_env(shell, envp);
-	//handle_signal();
 	int i = 0; //test
-	while (i < 1)
+	while (1)
 	{
+		handle_signals(shell);
 		shell->buf = (char *)get_the_line(shell);
-		//if (g_estatus)
-		//	shell->estatus = g_estatus;
-		//g_estatus = 0;
 		if (check_line(shell->buf) || lexer(shell) || parser(shell))
 		{
 			clear_data(shell);

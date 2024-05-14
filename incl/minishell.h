@@ -24,6 +24,8 @@
 # include <stdlib.h>     // getenv
 # include <stddef.h>	 // Null
 
+extern int	g_estatus; //correct place?
+
 /*Henni*/
 
 char		*path_finder(char *cmd, t_data *shell);
@@ -84,6 +86,9 @@ void		*cmd_error_ptr(char *str);
 int			file_err_int(char *file);
 int			synt_error_int(t_type type);
 int			ambig_redir_err_int(char *str);
+
+/*signals*/
+void	handle_signals(t_data *shell);
 
 /*init*/
 void		*init_env(t_data *shell, char **envp);
