@@ -96,34 +96,64 @@ static int	execute_command(t_data *shell, char *cmd)
 // verstehen was process ist -> demzufolge forken (danach weil braucht ja zwei enden)
 // so oft pipe bilden wie pipes vorhanden
 // fd sind zahlen, die normalerweise bei der 3 starten weil 0, 1, 2(?) besondere fd sind die fuer anderes reserviert sind wie write(1, ...)
-
+/*
 int		*creating_pipes(t_data *shell)
 {
 //a. Erstelle eine Pipe mit pipe() (falls nicht der erste oder letzte Befehl)
 	int		*piped_fd;
 	int		i;
 
-	i = 1;
-	piped_fd = (int*) ft_calloc((shell->cmd_count * 2) + 3, sizeof(int));
+	i = 0;
+	if (shell->cmd_count > 1)
+	{
+		piped_fd = (int*) ft_calloc((shell->cmd_count * 2) + 3, sizeof(int));
+		if(!piped_fd)
+		{
+			perror("could not create pipe\n");
+			return (NULL);
+		}
+		piped_fd[0] = STDIN_FILENO; //erstes Element auf 0
+		piped_fd[1] = -1; //markiert dass es nicht mehr gebraucht wird
+		piped_fd[(shell->cmd_count * 2)] = -1; //vorletztes Element der Pipe auf -1
+		piped_fd[(shell->cmd_count * 2) + 1] = STDOUT_FILENO; // letztes Element auf 1
+		while(piped_fd && i < shell->cmd_count)
+		{
+			if (pipe(&piped_fd[i * 2]) < 0)
+			{
+				perror("Piping Error\n");
+				free (piped_fd);
+			}
+			printf("pipe %d wird erstellt\n", i);
+			i++;
+		}
+		return (piped_fd);
+	}
+	return (NULL);
+} */
+
+int		**creating_pipes(t_data *shell)
+{
+	int		**piped_fd;
+	int		i;
+
+	i = 0;
+	piped_fd = (int**) ft_calloc(shell->cmd_count - 1, sizeof(int[2]));
 	if(!piped_fd)
 	{
 		perror("could not create pipe\n");
 		return (NULL);
 	}
-	piped_fd[RDEND] = STDIN_FILENO; //erstes Element auf 0
-	piped_fd[WREND] = -1; //markiert dass es nicht mehr gebraucht wird
-	piped_fd[(shell->cmd_count * 2)] = -1; //vorletztes Element der Pipe auf -1
-	piped_fd[(shell->cmd_count * 2) + 1] = STDOUT_FILENO; // letztes Element auf 1
-	while(piped_fd && i < shell->cmd_count)
+	while(i < shell->cmd_count)
 	{
-		if (pipe(&piped_fd[i * 2]) < 0)
-		{
-			perror("Piping Error\n");
-			free (piped_fd);
-		}
+		pipe(piped_fd[i]);
 		i++;
 	}
-	return (piped_fd);
+	return(piped_fd);
+}
+
+static void	init_fd(t_data *shell)
+{
+	shell->fd = NULL;
 }
 
 int		pipeline_exe(t_data *shell)
@@ -131,7 +161,10 @@ int		pipeline_exe(t_data *shell)
 	pid_t		*pids;
 	t_command	*toex;
 	int			i;
+	//int			j = 0;
 
+	printf("wir sind in der pipline exe \n");
+	printf("command count %d \n", shell->cmd_count);
 	i = 0;
 	toex = shell->toex;
 	pids = (pid_t*) ft_calloc(shell->cmd_count, sizeof(pid_t));
@@ -140,61 +173,73 @@ int		pipeline_exe(t_data *shell)
 		perror("Error pid \n");
 		return (1);
 	}
-	shell->fd = creating_pipes(shell);
-	if (!shell->fd)
+	init_fd(shell);
+	if(shell->cmd_count > 1)
+		shell->fd = creating_pipes(shell);
+	// while(shell->fd && (j < (shell->cmd_count)))
+	// {
+	// 	printf("shell fd %d\n", shell->fd[j][RDEND]);
+	// 	printf("shell fd %d\n", shell->fd[j][WREND]);
+	// 	j++;
+	// }
+	// if (!shell->fd)
+	// {
+	// 	perror("Error didnt create the pipes correct\n");
+	// 	return (1);
+	// }
+	while(toex)
 	{
-		perror("Error didnt create the pipes correct\n");
-		return (1);
-	}
-	while(shell->toex)
-	{
-		if (builtin_check(shell->toex->cmd) == 0)
-			which_builtin_parent(shell, shell->toex->cmd);
+		printf("sind im toex loop\n");
+		if (builtin_check(toex->cmd) == 1)
+			which_builtin_parent(shell, toex->cmd);
 		else
 		{
-			if ((which_builtin_child(shell, shell->toex->cmd))== 1)
+			if ((which_builtin_child(shell, toex->cmd))== 1)
 			{
 				if (exe_env(shell, pids, i) == 1)
-					exit(1);
+				{
+					perror("exe Error\n");
+					return (1);
+				}
+				ft_putstr_fd("TESTER\n", 2);
 			}
 		}
-		toex = shell->toex->next;
+		toex = toex->next;
 		i++;
 	}
-	free (shell->fd);
+	free (shell->fd); //problematic double free if its null
 	free (pids);
 	return(0);
 }
 
 int		exe_env(t_data *shell, pid_t *pids, int i)
 {
-	int		file_out;
-	int		file_in;
+	pids[i] = fork();
 
-	*pids =fork();
-	file_in = 0;
-	file_out = 0;
-	if (*pids < 0)
+	if (pids[i] < 0)
 	{
 		perror("fork error \n");
 		return (1);
 	}
-	if (pids == 0)
+	if (pids[i] == 0)
 	{
-		file_in  = dup2(shell->fd[i], STDIN_FILENO);
-		file_out = dup2(shell->fd[i], STDOUT_FILENO);
-		if (file_in == -1 || file_out == -1)
+		printf("parent: PID = %d, child-PID = %d\n", getpid(), pids[i]);
+		if (shell->cmd_count > 1)
 		{
-			perror("dup error im child\n");
-			exit(1);
+			dup2(shell->fd[i][RDEND], STDIN_FILENO);
+			dup2(shell->fd[i][WREND], STDOUT_FILENO);
+			//maybe use protection
+		//	close(shell->fd[i][RDEND] or [WREND]);
 		}
-		close(shell->fd[i]);
 		if (execute_command(shell, shell->toex->cmd) == 0)
-			exit (0);
+			return (0);
 	}
-	waitpid(*pids, 0, 0);
-	close(file_in);
-	close(file_out);
+	else
+	{
+		waitpid(pids[i], 0, 0);
+		close(file_in);
+		close(file_out);
+	}
 	return (0);
 }
 

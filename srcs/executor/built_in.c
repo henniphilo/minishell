@@ -161,7 +161,7 @@ t_environ	*find_name_in_envlist(t_data *shell, char *name)
 
 void	bi_exit(t_data *shell)
 {
-	free_data(shell); //hier noch memory leaks bei space_toex
+	free_data(shell);
 	exit(0);
 }
 
