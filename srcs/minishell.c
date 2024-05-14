@@ -17,6 +17,9 @@ int	main(int ac, char **av, char **envp)
 	while (i < 1)
 	{
 		shell->buf = (char *)get_the_line(shell);
+		//if (g_estatus)
+		//	shell->estatus = g_estatus;
+		//g_estatus = 0;
 		if (check_line(shell->buf) || lexer(shell) || parser(shell))
 		{
 			clear_data(shell);
