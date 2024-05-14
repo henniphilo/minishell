@@ -230,12 +230,12 @@ int		exe_env(t_data *shell, pid_t *pids, int i, t_command *toex)
 			if(i + 1 < shell->cmd_count)
 			{
 				dup2(shell->fd[i][WREND], STDOUT_FILENO);
-				// close(shell->fd[i][RDEND]);
+				close(shell->fd[i][RDEND]);
 			}
 			if(i > 0)
 			{
 				dup2(shell->fd[i - 1][RDEND], STDIN_FILENO);
-				// close(shell->fd[i - 1][WREND]);
+				close(shell->fd[i - 1][WREND]);
 			}
 			//maybe use protection
 		//	close(shell->fd[i][RDEND] or [WREND]);
@@ -251,7 +251,7 @@ int		exe_env(t_data *shell, pid_t *pids, int i, t_command *toex)
 			close(shell->fd[i -1][WREND]);
 			close(shell->fd[i - 1][RDEND]);
 		}
-		else
+		else if(shell->fd)
 			close(shell->fd[0][WREND]);
 		//	close(shell->fd[0][RDEND]);
 		}
