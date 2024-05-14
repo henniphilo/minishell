@@ -77,7 +77,7 @@ char		**append_arr(char **arr, char *new_str);
 int			check_syntax_and_here(t_lexer *tokens, t_data *shell);
 
 /*error*/
-void		panic(char *str, void *ptr);
+void		panic(char *str, void *ptr, int status);
 int			error_int(char *str);
 void		*error_ptr(char *str);
 void		*cmd_error_ptr(char *str);
@@ -136,6 +136,6 @@ int			add_redir(t_lexer *tokens, t_command *toex);
 int			handle_redirs(t_command *toex);
 
 /*test*/
-void	test(t_data *shell);
+void		test(t_data *shell);
 
 #endif

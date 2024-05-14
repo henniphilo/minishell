@@ -1,28 +1,19 @@
 #include "../incl/minishell.h"
 
-const char	*get_the_line(t_data *shell)
-{
-	const char	*line;
-
-	line = readline("our minishell 🌺: ");
-	if (!line)
-		panic(RL_ERR, shell);
-	add_history(line);
-	return (line);
-}
+int	g_estatus;
 
 int	main(int ac, char **av, char **envp)
 {
 	t_data		*shell;
 
 	if (ac != 1 || !av[0])
-		panic(ARG_ERR, NULL);
+		panic(ARG_ERR, NULL, 1);
 	shell = ft_calloc(1, sizeof(t_data));
 	if (!shell)
-		panic(ALLOC_ERR, NULL);
+		panic(ALLOC_ERR, NULL, 1);
 	init_env(shell, envp);
-	int i; //test
-	i = 0; //test
+	//handle_signal();
+	int i = 0; //test
 	while (i < 1)
 	{
 		shell->buf = (char *)get_the_line(shell);

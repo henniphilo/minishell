@@ -84,3 +84,14 @@ int	count_commands(t_lexer *tokens)
 	}
 	return (count);
 }
+
+const char	*get_the_line(t_data *shell)
+{
+	const char	*line;
+
+	line = readline("our minishell 🌺: ");
+	if (!line) //handling Ctrl + D ??
+		panic("exit", shell, 0);
+	add_history(line);
+	return (line);
+}
