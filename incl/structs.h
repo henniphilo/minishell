@@ -67,11 +67,9 @@ typedef struct s_data {
 	int			estatus; //for exit status of last pipe to store for the next prompt
 	int			cmd_count; // wird von petra upgedatet in pipe count
 	int			*fd; // hen: zum directen der fd muss noch richtig init werde
-	bool		bi_check; //hen: built_in check
+	bool		bi_check; //hen: built_in check - brauch ich nicht
+	
 //	pid_t		*pid; //process id, evt als array fuer individuelle prozess? - doch nicht
-//	char		**arguments; // hen: to store all the input
-//	char		***pipeline; //hen: 3d array was auf die auszufuehrenden toex zeigt
-//	char		***pipeline; //hen: 3d array was auf die auszufuehrenden toex zeigt
 }	t_data;
 
 #endif
