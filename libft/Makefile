@@ -6,7 +6,7 @@
 #    By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/02 15:58:16 by hwiemann          #+#    #+#              #
-#    Updated: 2024/05/02 18:37:06 by pbencze          ###   ########.fr        #
+#    Updated: 2024/05/15 13:41:09 by pbencze          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,6 +58,8 @@ ft_putendl_fd.c \
 ft_putnbr_fd.c \
 ft_printf.c \
 ft_printf_helper.c \
+get_next_line.c \
+get_next_line_utils.c
 
 BONUSFILES = ft_lstnew.c \
 ft_lstadd_front.c \

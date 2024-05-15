@@ -13,14 +13,14 @@ int	main(int ac, char **av, char **envp)
 		panic(ALLOC_ERR, NULL, 1);
 	init_env(shell, envp);
 	int i = 0; //test
+	handle_signals();
 	while (1)
 	{
-		handle_signals();
 		shell->buf = (char *)get_the_line(shell);
 		if (check_line(shell->buf) || lexer(shell) || parser(shell))
 		{
 			clear_data(shell);
-			continue ; //if lexing, parsing, or input are wrong, returns the prompt
+			continue ;
 		}
 		//execute_shell(shell);
 		test(shell);

@@ -2,6 +2,7 @@
 # define MINISHELL_H
 
 # include "../libft/libft.h"
+# include "../libft/get_next_line.h"
 # include "structs.h"
 # include "messages.h"
 # include <readline/readline.h>

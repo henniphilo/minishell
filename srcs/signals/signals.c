@@ -5,7 +5,7 @@ static void	ctrl_c_handler(int signum)
 	if (signum == SIGINT)
 	{
 		g_estatus = 130;
-		ft_putstr_fd("\n", 0);
+		ft_putstr_fd("\n", 1);
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
