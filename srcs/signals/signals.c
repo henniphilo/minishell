@@ -20,11 +20,23 @@ void	handle_signals(void)
 		signal(SIGINT, ctrl_c_handler);
 	}
 }
-//treat heredocs differently
-/* pbencze@c4a10c10:~/Documents/42cursus/Minishell/Minishell_Github$ cat << h | echo hi
-> hello
->
-bash: warning: here-document at line 5 delimited by end-of-file (wanted `h')
-hi */
+
+void	here_sig_handler(int signum)
+{
+	if (signum == SIGINT)
+	{
+		g_estatus = 148;
+		ioctl(0, TIOCSTI, "\n");
+	}
+}
+
+/* void	cat_sig_handler(int signum)
+{
+	if (signum == SIGINT)
+	{
+		g_estatus = 130;
+		write(1, "\n", 1);
+	}
+} */
 
 

@@ -23,6 +23,11 @@ void	clear_data(t_data *shell)
 		shell->buf = NULL;
 	}
 	unlink("tmp_file");
+	if (g_estatus)
+	{
+		shell->estatus = g_estatus;
+		g_estatus = 0;
+	}
 	free_tokens(&(shell->tokens));
 	free_commands(&(shell->toex));
 }

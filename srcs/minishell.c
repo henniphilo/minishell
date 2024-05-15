@@ -4,7 +4,7 @@ int	g_estatus;
 
 int	main(int ac, char **av, char **envp)
 {
-	t_data		*shell;
+	t_data	*shell;
 
 	if (ac != 1 || !av[0])
 		panic(ARG_ERR, NULL, 1);
@@ -23,7 +23,7 @@ int	main(int ac, char **av, char **envp)
 			continue ;
 		}
 		//execute_shell(shell);
-		test(shell);
+		//test(shell);
 		clear_data(shell);
 		i++; //test
 	}

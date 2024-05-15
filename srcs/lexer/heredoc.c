@@ -23,19 +23,6 @@ static int	return_and_free( char *str)
 	return (0);
 }
 
-static void	here_sig_handler(int signum)
-{
-	if (signum == SIGINT)
-	{
-		g_estatus = 148;
-/* 		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay(); */
-		ioctl(0, TIOCSTI, "\n");
-		//write(0, "\0", 1);
-	}
-}
-
 int	parse_heredoc(t_lexer *tokens, int fd, t_data *shell)
 {
 	char	*delimiter;
@@ -47,13 +34,11 @@ int	parse_heredoc(t_lexer *tokens, int fd, t_data *shell)
 	free(tokens->str);
 	linenum = 0;
 	signal(SIGINT, here_sig_handler);
-	while (1)
+	while (g_estatus != 148)
 	{
-		if (g_estatus == 148)
-			return (1);
 		//write(0, "> ", 2);
 		//tokens->str = get_next_line(0);
-		tokens->str = readline("> "); //replace vlt. with get_next_line!!
+		tokens->str = readline("> ");
 		if (!tokens->str)
 			return (eof_error(delimiter, linenum));
 		linenum++;
@@ -70,7 +55,6 @@ int	parse_heredoc(t_lexer *tokens, int fd, t_data *shell)
 	}
 	return (return_and_free(delimiter));
 }
-
 
 int	handle_heredoc(t_lexer *tokens, t_data *shell)
 {
