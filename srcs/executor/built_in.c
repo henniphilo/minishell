@@ -22,6 +22,9 @@ int	builtin_check(char *arg)
 	return (0);
 }
 // alles was path verwendet muss protectet werden, checken ob path exists
+// 15.5: unset und export updaten gerade nicht mehr env_list
+// aber export list wird upgedatet
+// nur export segfaulted
 
 void	which_builtin_parent(t_data *shell, char *arg)
 {
@@ -59,9 +62,6 @@ static int	bi_cd_check(t_data *shell, char *home_path)
 
 	up = "..";
 	tilde = "~";
-	// printf("Home path in cd check ");
-	// print_path(home_path);
-
 	if (shell->toex && shell->toex->argv)
 	{
 		if(shell->toex->argv[1] != NULL && (ft_strncmp(shell->toex->argv[1], up, 3))== 0)
@@ -71,8 +71,9 @@ static int	bi_cd_check(t_data *shell, char *home_path)
 			update_old_pwd(shell);
 			return (0);
 		}
-		if(shell->toex->argv[1] != NULL && (ft_strncmp(shell->toex->argv[1], tilde, 2)) == 0)
+		else if(shell->toex->argv[1] != NULL && (ft_strncmp(shell->toex->argv[1], tilde, 2)) == 0)
 		{
+			printf("tilds\n");
 			chdir(home_path);
 			update_old_pwd(shell);
 			return (0);
@@ -81,8 +82,6 @@ static int	bi_cd_check(t_data *shell, char *home_path)
 	return (1);
 }
 
-
-//here toex[1] als placeholder
 //noch path protecten
 int	change_directory(t_data *shell)
 {

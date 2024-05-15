@@ -1,12 +1,5 @@
 #include "../../incl/minishell.h"
 
-//nur export:
-//liste duplizieren, wenn nur export henni ohne value soll auf diese liste
-//dann sortieren
-// dann ausdrucken wenn nur export
-
-//drickt jetzt die neue liste - aber an falscher stelle
-
 t_environ	*list_duplicate(t_environ *lst_ptr)
 {
 	t_environ	*new_lst;
@@ -102,7 +95,6 @@ static void	only_export(t_data *shell)
 }
 
 //wie umgehen mit istgleich ??? -> petra schreibt funktion
-// noch etwas buggy beim hinzufuegen von node mit name und value muss man zweimmal ausfuehren ehe es in der export liste erscheint
 void		export_env(t_data *shell)
 {
 	t_environ	*new_node;
@@ -112,7 +104,6 @@ void		export_env(t_data *shell)
 
 	name = ft_strdup(shell->toex->args[0]);
 	value = ft_strdup(shell->toex->args[1]);
-	init_export_list(shell);
 	head = find_name_in_envlist(shell, name);
 	if (!head)
 	{
@@ -131,6 +122,7 @@ void		export_env(t_data *shell)
 		free(name);
 		free(value);
 	}
+	print_env(shell->env_list);
 }
 
 void	to_export_list(t_data *shell)
