@@ -33,12 +33,12 @@ int	ft_trim_last(t_lexer *tokens)
 	return (0);
 }
 
-char	*expand_estatus(t_lexer *tokens, char *dollar, char *limit, int estatus)
+char	*expand_estatus(t_lexer *tokens, char *dollar, char *limit)
 {
 	char	*value;
 	char	*ret;
 
-	value = ft_itoa(estatus);
+	value = ft_itoa(g_estatus);
 	if (!value)
 		return (error_ptr(ALLOC_ERR));
 	ret = expand(tokens, dollar, limit, value);

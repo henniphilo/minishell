@@ -64,7 +64,7 @@ typedef struct s_data {
 	t_environ	*export_list; //hen: Liste von Umgebungsvariablen die auch nicht deklarierte Export Variablen enhalten
 	t_lexer		*tokens; //linked list of lexed tokens
 	t_command	*toex; //hen: to execute as replacement for cmds arg confusion, toex is the input seperated by a pipe
-	int			estatus; //for exit status of last pipe to store for the next prompt
+//	int			estatus; //for exit status of last pipe to store for the next prompt
 	int			cmd_count; // wird von petra upgedatet in pipe count
 //	int			*fd; // hen: zum directen der fd muss noch richtig init werde
 	bool		bi_check; //hen: built_in check

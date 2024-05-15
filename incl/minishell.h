@@ -86,9 +86,10 @@ void		*cmd_error_ptr(char *str);
 int			file_err_int(char *file);
 int			synt_error_int(t_type type);
 int			ambig_redir_err_int(char *str);
+int			eof_error(char *delimiter, int linenum);
 
 /*signals*/
-void	handle_signals(t_data *shell);
+void	handle_signals(void);
 
 /*init*/
 void		*init_env(t_data *shell, char **envp);
@@ -128,7 +129,7 @@ int			ft_trim_last(t_lexer *tokens);
 char		*find_limit(char *start);
 int			find_and_replace(t_lexer *tokens, t_data *shell);
 int			expand_tilde(t_lexer *tokens, t_environ *env);
-char		*expand_estatus(t_lexer *tokens, char *dollar, char *limit, int estatus);
+char		*expand_estatus(t_lexer *tokens, char *dollar, char *limit);
 
 /*parser*/
 int			parser(t_data *shell);

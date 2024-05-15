@@ -17,29 +17,41 @@ static int	expand_heredoc(t_lexer *tokens, t_data *shell)
 	return (0);
 }
 
+static int	return_and_free( char *str)
+{
+	free(str);
+	return (0);
+}
+
 int	parse_heredoc(t_lexer *tokens, int fd, t_data *shell)
 {
 	char	*delimiter;
+	int		linenum;
 
 	delimiter = ft_strdup(tokens->str);
 	if (!delimiter)
 		return (error_int(ALLOC_ERR));
 	free(tokens->str);
+	linenum = 0;
 	while (1)
 	{
-		tokens->str = NULL;
 		tokens->str = readline("> "); //replace vlt. with get_next_line!!
 		if (!tokens->str)
-			return (error_int(ALLOC_ERR));
+			return (eof_error(delimiter, linenum));
+		linenum++;
 		if (ft_strcmp(tokens->str, delimiter) == 0)
-			return (0);
+			return (return_and_free(delimiter));
 		if (expand_heredoc(tokens, shell))
-			return (error_int(ALLOC_ERR));
+		{
+			free(delimiter);
+			error_int(ALLOC_ERR);
+		}
 		write(fd, tokens->str, ft_strlen(tokens->str));
 		free(tokens->str);
 	}
-	return (0);
+	return_and_free(delimiter);
 }
+
 
 int	handle_heredoc(t_lexer *tokens, t_data *shell)
 {

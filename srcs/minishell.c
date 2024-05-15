@@ -15,7 +15,7 @@ int	main(int ac, char **av, char **envp)
 	int i = 0; //test
 	while (1)
 	{
-		handle_signals(shell);
+		handle_signals();
 		shell->buf = (char *)get_the_line(shell);
 		if (check_line(shell->buf) || lexer(shell) || parser(shell))
 		{
