@@ -74,17 +74,17 @@ void	*init_env(t_data *shell, char **envp)
 
 	shell->env = ft_calloc((array_len(envp) + 1), sizeof(char *));
 	if (!shell->env)
-		panic(ALLOC_ERR, shell);
+		panic(ALLOC_ERR, shell, 1);
 	i = -1;
 	while (envp[++i])
 	{
 		shell->env[i] = ft_strdup(envp[i]);
 		if (!shell->env[i])
-			panic(ALLOC_ERR, shell);
+			panic(ALLOC_ERR, shell, 1);
 	}
 	shell->env_list = init_env_list(envp);
 	if (!shell->env_list)
-		panic(ALLOC_ERR, shell);
+		panic(ALLOC_ERR, shell, 1);
 	//init_export_list(shell);
 	return (NULL);
 }

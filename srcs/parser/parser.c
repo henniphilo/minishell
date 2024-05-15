@@ -6,7 +6,7 @@ static int	init_argv(t_data *shell)
 	t_command	*node;
 
 	node = shell->toex;
-	while(node)
+	while (node)
 	{
 		if (node->cmd)
 		{

@@ -2,7 +2,7 @@
 
 static int	open_file(t_command *toex, t_redir *redirs)
 {
-	if (redirs->type == INPUT) // || (redirs->type == HEREDOC))
+	if ((redirs->type == INPUT) || (redirs->type == HEREDOC))
 	{
 		close(toex->fd_in);
 		toex->fd_in = open(redirs->file, O_RDONLY, 0777);
@@ -28,7 +28,7 @@ static int	open_file(t_command *toex, t_redir *redirs)
 
 int	handle_redirs(t_command *toex)
 {
-	t_redir *redirs;
+	t_redir	*redirs;
 
 	redirs = NULL;
 	while (toex)

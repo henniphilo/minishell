@@ -1,7 +1,8 @@
 #include "../../incl/minishell.h"
 
-/*finds the delimiter of the expansion, being a different character than capital letters,*/
-char *find_limit(char *start)
+/*finds the delimiter of the expansion,
+being a different character than capital letters, digits or '?'*/
+char	*find_limit(char *start)
 {
 	if (*start && *start >= 48 && *start <= 57)
 		return (start);
@@ -16,7 +17,7 @@ char *find_limit(char *start)
 	return (start);
 }
 
-/*if $ is the last character before a quote, it gets removed*/
+/*if $ is the last character before a quote, it will be removed*/
 int	ft_trim_last(t_lexer *tokens)
 {
 	char	*str;

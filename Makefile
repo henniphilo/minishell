@@ -12,11 +12,13 @@ MAIN = minishell
 UTILS = error error2 init_env free_data check_line delete_lists delete_lists2 utils
 LEXER = lexer create_token_list lexer_utils expand_env expand_env_utils heredoc
 PARSER = parser create_toex_list create_redir_list redir
+SIGNALS = signals
 
 SRC =	$(addsuffix .c, $(addprefix srcs/, $(MAIN))) \
 		$(addsuffix .c, $(addprefix srcs/utils/, $(UTILS))) \
 		$(addsuffix .c, $(addprefix srcs/lexer/, $(LEXER))) \
 		$(addsuffix .c, $(addprefix srcs/parser/, $(PARSER))) \
+		$(addsuffix .c, $(addprefix srcs/signals/, $(SIGNALS))) \
 		#$(addsuffix .c, $(addprefix srcs/executor/, $(EXEC))) \
 
 TEST_SRC = srcs/testfiles.c
