@@ -145,12 +145,19 @@ int		**creating_pipes(t_data *shell)
 	}
 	while(i < shell->cmd_count - 1)
 	{
-		printf("creating pipe %i\n", i);
+	//	printf("creating pipe %i\n", i);
 		piped_fd[i] = (int *) ft_calloc(2, sizeof(int));
-		pipe(piped_fd[i]);
+		if (pipe(piped_fd[i]) == -1)
+		{
+			perror("pipe error");
+			while (i >= 0)
+				free(piped_fd[i--]);
+			free(piped_fd);
+			return (NULL);
+		}
 		i++;
 	}
-	return(piped_fd);
+	return (piped_fd);
 }
 
 static void	init_fd(t_data *shell)
@@ -184,11 +191,6 @@ int		pipeline_exe(t_data *shell)
 		printf("shell fd %d\n", shell->fd[j][WREND]);
 		j++;
 	}
-	// if (!shell->fd)
-	// {
-	// 	perror("Error didnt create the pipes correct\n");
-	// 	return (1);
-	// }
 	while(toex)
 	{
 		printf("sind im toex loop %i\n", i);
@@ -196,14 +198,14 @@ int		pipeline_exe(t_data *shell)
 			which_builtin_parent(shell, toex->cmd);
 		else
 		{
-			if ((which_builtin_child(shell, toex->cmd))== 1)
-			{
+			// if ((which_builtin_child(shell, toex->cmd))== 1)
+			// {
 				if (exe_env(shell, pids, i, toex) == 1)
 				{
 					perror("exe Error\n");
 					return (1);
 				}
-			}
+			// }
 		}
 		toex = toex->next;
 		i++;
@@ -213,6 +215,7 @@ int		pipeline_exe(t_data *shell)
 	return(0);
 }
 
+//wc macht immer eins mehr als es ist
 int		exe_env(t_data *shell, pid_t *pids, int i, t_command *toex)
 {
 	pids[i] = fork();
@@ -224,12 +227,15 @@ int		exe_env(t_data *shell, pid_t *pids, int i, t_command *toex)
 	}
 	if (pids[i] == 0)
 	{
-		// printf("parent: PID = %d, child-PID = %d\n", getpid(), pids[i]);
 		if (shell->cmd_count > 1)
 		{
 			if(i + 1 < shell->cmd_count)
 			{
-				dup2(shell->fd[i][WREND], STDOUT_FILENO);
+				if(dup2(shell->fd[i][WREND], STDOUT_FILENO) == -1)
+				{
+					perror("dup2 WREND\n");
+					exit(EXIT_FAILURE);
+				}
 				// ft_putnbr_fd(i, 2);
 				// ft_putstr_fd("   dup2 is happening WREND\n", 2);
 				close(shell->fd[i][WREND]);
@@ -241,7 +247,11 @@ int		exe_env(t_data *shell, pid_t *pids, int i, t_command *toex)
 			}
 			if(i > 0)
 			{
-				dup2(shell->fd[i - 1][RDEND], STDIN_FILENO);
+				if(dup2(shell->fd[i - 1][RDEND], STDIN_FILENO) == -1)
+				{
+					perror("dup2 RDEND");
+					exit(EXIT_FAILURE);
+				}
 				// ft_putnbr_fd(i - 1, 2);
 				// ft_putstr_fd("     dup2 is happening RDEND\n", 2);
 
@@ -254,11 +264,22 @@ int		exe_env(t_data *shell, pid_t *pids, int i, t_command *toex)
 			}
 			close_pipes(shell);
 		}
-		if (execute_command(shell, toex) == 0)
-			return (0);
+		if (builtin_check(toex->cmd) == 1)
+			which_builtin_child(shell, toex->cmd);
+		else
+		{
+			if (execute_command(shell, toex) != 0)
+			{
+				perror("Error executing command\n");
+				exit(EXIT_FAILURE);
+			}
+		}
+		exit(EXIT_SUCCESS);
 	}
 	else
 	{
+		//parent
+
 		if(i > 0) //wenn mehrere dann muss immer vom vorhergehenden geschlossen werden
 		{
 			close(shell->fd[i -1][WREND]);
