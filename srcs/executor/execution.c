@@ -208,7 +208,7 @@ int		pipeline_exe(t_data *shell)
 		toex = toex->next;
 		i++;
 	}
-	free (shell->fd); //problematic double free if its null
+	free (shell->fd); //problematic double free if its null noch protecten
 	free (pids);
 	return(0);
 }
@@ -230,35 +230,59 @@ int		exe_env(t_data *shell, pid_t *pids, int i, t_command *toex)
 			if(i + 1 < shell->cmd_count)
 			{
 				dup2(shell->fd[i][WREND], STDOUT_FILENO);
+				// ft_putnbr_fd(i, 2);
+				// ft_putstr_fd("   dup2 is happening WREND\n", 2);
+				close(shell->fd[i][WREND]);
+				// ft_putnbr_fd(i, 2);
+				// ft_putstr_fd("   closing WREND\n", 2);
 				close(shell->fd[i][RDEND]);
+				// ft_putnbr_fd(i, 2);
+				// ft_putstr_fd("   closing RDEND\n", 2);
 			}
 			if(i > 0)
 			{
 				dup2(shell->fd[i - 1][RDEND], STDIN_FILENO);
+				// ft_putnbr_fd(i - 1, 2);
+				// ft_putstr_fd("     dup2 is happening RDEND\n", 2);
+
 				close(shell->fd[i - 1][WREND]);
+				// ft_putnbr_fd(i - 1, 2);
+				// ft_putstr_fd("   closing WDEND\n", 2);
+				close(shell->fd[i - 1][RDEND]);
+				// ft_putnbr_fd(i - 1, 2);
+				// ft_putstr_fd("   closing RDEND\n", 2);
 			}
-			//maybe use protection
-		//	close(shell->fd[i][RDEND] or [WREND]);
+			close_pipes(shell);
 		}
 		if (execute_command(shell, toex) == 0)
 			return (0);
 	}
 	else
 	{
-		waitpid(pids[i], 0, 0);
-		if(i > 0)
+		if(i > 0) //wenn mehrere dann muss immer vom vorhergehenden geschlossen werden
 		{
 			close(shell->fd[i -1][WREND]);
 			close(shell->fd[i - 1][RDEND]);
 		}
-		else if(shell->fd)
+		else if(shell->fd) //wenn es nur eine pipe gibt
 			close(shell->fd[0][WREND]);
-		//	close(shell->fd[0][RDEND]);
-		}
-
+		waitpid(pids[i], 0, 0);
+	}
 	return (0);
 }
 
+void	close_pipes(t_data *shell)
+{
+	int		i;
+
+	i = 0;
+	while(i + 1 < shell->cmd_count)
+	{
+		close(shell->fd[i][WREND]);
+		close(shell->fd[i][RDEND]);
+		i++;
+	}
+}
 
 
 /*

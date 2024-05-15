@@ -5,7 +5,7 @@ const char	*get_the_line(t_data *data)
 	const char	*line;
 	// (void)data;
 	line = readline("our minishell 🌺: ");
-	printf("LINE = '%s'\n",line);
+	//printf("LINE = '%s'\n",line);
 	if (!line)
 		panic(RL_ERR, data);
 	add_history(line);
@@ -46,7 +46,7 @@ int	main(int ac, char **av, char **envp)
 			clear_data(shell);
 			continue ; //if lexing, parsing or line are wrong returns the prompt
 		}
-		test(shell);
+	//	test(shell);
 	//	execute_shell(shell);
 	//	piping(shell);
 		if ((pipeline_exe(shell) != 0))

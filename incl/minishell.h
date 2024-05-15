@@ -42,6 +42,7 @@ void		read_from_fd(int fd, const char *process);
 int			**creating_pipes(t_data *shell);
 int			exe_env(t_data *shell, pid_t *pids, int i, t_command *toex);
 int			pipeline_exe(t_data *shell);
+void		close_pipes(t_data *shell);
 
 
 
