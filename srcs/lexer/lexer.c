@@ -112,6 +112,7 @@ int	lexer(t_data *shell)
 	}
 	if (expand_env(shell->tokens, shell) || join_words(shell) || check_syntax_and_here(shell->tokens)) //in check_syntax function when it finds a heredoc -> it should do the piping
 		return (1);
+	shell->cmd_count = count_commands(shell->tokens);
 	return (0);
 }
 

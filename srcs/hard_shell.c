@@ -3,7 +3,6 @@
 const char	*get_the_line(t_data *data)
 {
 	const char	*line;
-
 	line = readline("our minishell 🌺: ");
 	if (!line)
 		panic(RL_ERR, data);
@@ -45,50 +44,12 @@ int	main(int ac, char **av, char **envp)
 			clear_data(shell);
 			continue ; //if lexing, parsing or line are wrong returns the prompt
 		}
-		test(shell);
-	//	hard_toex(shell);
-	//	print_toex(shell);
-		execute_shell(shell);
+	//	test(shell);
+	//	execute_shell(shell);
+	//	piping(shell);
+		if ((pipeline_exe(shell) != 0))
+			perror("Error in Execution\n");
 		clear_data(shell);
 	}
 
 }
-/*
-void	hard_pipeline(t_data *shell)
-{
-//	space_pipeline(shell, (char***)shell->buf);
-	shell->pipeline = (char***)(ft_split(shell->toex, '|'));
-	if(!shell->pipeline)
-		shell->pipeline = (char***)shell->buf;
-//	print_pipeline(shell);
-}
-*/
-
-
-
-
-
-//hier ersetzen von petra -----> hab ich von char **toex in t_command *toex geaendert
-/*
-void	hard_toex(t_data *shell)
-{
-	space_toex(shell, &shell->buf);
-	shell->toex = ft_split(shell->buf, ' ');
-	if(!shell->toex)
-		shell->toex = &shell->buf;
-} */
-/*
-void	hard_toex(t_data *shell) //wenn ***pipeline funktioniert
-{
-	int		i;
-
-	i = 0;
-	while(shell->pipeline[i] != NULL)
-	{
-		space_toex(shell, shell->pipeline[i]);
-		shell->toex = ft_split(*(shell->pipeline[i]), ' ');
-		i++;
-	}
-	if(!shell->toex)
-		shell->toex = &shell->buf;
-}*/

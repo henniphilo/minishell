@@ -3,7 +3,6 @@
 
 void	print_path(char *path)
 {
-//	printf("hi in print_path\n");
 	if(path != NULL)
 		printf("path: %s\n", path);
 }
@@ -27,9 +26,7 @@ char	*path_finder(char *cmd, t_data *shell)
 		full_path = ft_strjoin(current_path, cmd);
 		free(current_path);
 		if (access(full_path, F_OK) == 0)
-		{
 			return (full_path);
-		}
 		free (full_path);
 		i++;
 	}
@@ -40,7 +37,6 @@ char	*path_finder(char *cmd, t_data *shell)
 	return (cmd);
 }
 
-//to execute while iterating cmd
 
 void	env_execute(t_data *shell, char *toex)
 {
@@ -55,10 +51,7 @@ void	env_execute(t_data *shell, char *toex)
 			perror("Error in Path\n");
 			exit(1);
 		}
-		printf("will executen: %s\n", toex);
-		// printf("path in execute:");
-		// print_path(path);
-		if(execve(path, shell->toex->argv, shell->env) < 0)  //warum nur moeglich mir shell->arguments und nicht args?
+		if(execve(path, shell->toex->argv, shell->env) < 0)
 		{
 			perror("command couldnt be executed\n");
 			free(toex);
