@@ -21,7 +21,7 @@ int	main(int ac, char **av, char **envp)
 			clear_data(shell);
 			continue ;
 		}
-		//execute_shell(shell);
+		execute_shell(shell);
 		test(shell);
 		clear_data(shell);
 	}
