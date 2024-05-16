@@ -1,14 +1,6 @@
 #include "../incl/minishell.h"
 
-const char	*get_the_line(t_data *data)
-{
-	const char	*line;
-	line = readline("our minishell 🌺: ");
-	if (!line)
-		panic(RL_ERR, data);
-	add_history(line);
-	return (line);
-}
+int	g_estatus;
 
 void	print_toex(t_data *shell)
 {
@@ -31,10 +23,10 @@ int	main(int ac, char **av, char **envp)
 	t_data		*shell;
 
 	if (ac != 1 || !av[0])
-		panic(ARG_ERR, NULL);
+		panic(ARG_ERR, NULL, 1);
 	shell = ft_calloc(1, sizeof(t_data));
 	if (!shell)
-		panic(ALLOC_ERR, NULL);
+		panic(ALLOC_ERR, NULL, 1);
 	init_env(shell, envp); //make init function
 	while(1)
 	{

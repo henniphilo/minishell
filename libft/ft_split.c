@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hwiemann <hwiemann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 16:34:47 by hwiemann          #+#    #+#             */
-/*   Updated: 2024/04/09 12:06:44 by hwiemann         ###   ########.fr       */
+/*   Updated: 2024/05/16 11:45:22 by pbencze          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ char	**ft_split(char const *s, char c)
 	i = 0;
 	while (*s)
 	{
-	//	ft_printf("in split\n");
 		while (*s == c && *s)
 			s++;
 		if (*s)

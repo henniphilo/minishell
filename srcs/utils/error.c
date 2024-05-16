@@ -6,21 +6,21 @@
 /*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:47:45 by pbencze           #+#    #+#             */
-/*   Updated: 2024/05/08 15:15:51 by pbencze          ###   ########.fr       */
+/*   Updated: 2024/05/14 16:32:22 by pbencze          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
 /*puts an error message, frees data and exits the program*/
-void	panic(char *str, void *ptr)
+void	panic(char *str, void *ptr, int status)
 {
 	if (str)
 		ft_putendl_fd(str, 2);
 	//optional: perror() or strerror() instead of putendl()
 	if (ptr)
 		free_data((t_data *)ptr);
-	exit(1);
+	exit(status);
 }
 
 /*puts an error message and returns int 1*/

@@ -2,6 +2,7 @@
 # define MINISHELL_H
 
 # include "../libft/libft.h"
+# include "../libft/get_next_line.h"
 # include "structs.h"
 # include "messages.h"
 # include <readline/readline.h>
@@ -23,6 +24,8 @@
 # include <unistd.h>     // isatty, ttyname, ttyslot
 # include <stdlib.h>     // getenv
 # include <stddef.h>	 // Null
+
+extern int	g_estatus; //correct place?
 
 /*Henni*/
 
@@ -82,16 +85,21 @@ int			check_line(char *buf);
 int			array_len(char **ptr);
 char		**free_arr(char **arr1, char **arr2);
 char		**append_arr(char **arr, char *new_str);
-int			check_syntax_and_here(t_lexer *tokens);
+int			check_syntax_and_here(t_lexer *tokens, t_data *shell);
 
 /*error*/
-void		panic(char *str, void *ptr);
+void		panic(char *str, void *ptr, int status);
 int			error_int(char *str);
 void		*error_ptr(char *str);
 void		*cmd_error_ptr(char *str);
-int			infile_err_int(char *str);
+int			file_err_int(char *file);
 int			synt_error_int(t_type type);
 int			ambig_redir_err_int(char *str);
+int			eof_error(char *delimiter, int linenum);
+
+/*signals*/
+void		handle_signals(void);
+void		here_sig_handler(int signum);
 
 /*init*/
 void		*init_env(t_data *shell, char **envp);
@@ -121,10 +129,15 @@ t_lexer		*new_lex_list(t_type t, char *s, bool sq, bool dq);
 int			check_append(t_type *type, char *buf);
 int			check_here(t_type *type, char *buf);
 int			join_words(t_data *shell);
+int			parse_heredoc(t_lexer *tokens, int fd, t_data *shell);
+int			handle_heredoc(t_lexer *tokens, t_data *shell);
+
+/*expansions*/
 int			expand_env(t_lexer *tokens, t_data *shell);
 char		*expand(t_lexer *tokens, char *dollar, char *limit, char *value);
 int			ft_trim_last(t_lexer *tokens);
 char		*find_limit(char *start);
+int			find_and_replace(t_lexer *tokens, t_data *shell);
 int			expand_tilde(t_lexer *tokens, t_environ *env);
 char		*expand_estatus(t_lexer *tokens, char *dollar, char *limit, int estatus);
 
@@ -139,6 +152,6 @@ int			add_redir(t_lexer *tokens, t_command *toex);
 int			handle_redirs(t_command *toex);
 
 /*test*/
-void	test(t_data *shell);
+void		test(t_data *shell);
 
 #endif

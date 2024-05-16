@@ -20,6 +20,10 @@ void	delone_commands(t_command *cmds)
 			free(cmds->cmd);
 		free_arr(cmds->args, cmds->argv);
 		free_redirs(&(cmds->redirs));
+		if (cmds->fd_in > 0)
+			close(cmds->fd_in);
+		if (cmds->fd_out > 0)
+			close(cmds->fd_out);
 		free(cmds);
 	}
 }

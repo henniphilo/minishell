@@ -1,42 +1,77 @@
 #include "../../incl/minishell.h"
 
-int	parse_heredoc(t_lexer *tokens, int fd)
+static int	expand_heredoc(t_lexer *tokens, t_data *shell)
 {
-	char	*buf;
+	char	*line;
 
-	buf = NULL;
-	while (ft_strcmp(buf, tokens->str) != 0)
+	line = ft_strjoin(tokens->str, "\n");
+	free(tokens->str);
+	tokens->str = line;
+	if (!tokens->str)
+		return (1);
+	if (!(tokens->quote == HERE))
 	{
-		write(1, "> ", 2);
-		buf = get_next_line(buf, 0);
-		if (buf)
-		{
-			write(fd, buf, ft_strlen(buf));
-			write(fd, "\n", 1);
-			free(buf);
-		}
+		if (find_and_replace(tokens, shell))
+			return (1);
 	}
 	return (0);
 }
 
-int	handle_heredoc(t_lexer *tokens) //unlink in clear data
+static int	return_and_free( char *str)
 {
-	char	*tmp_file;
+	free(str);
+	return (0);
+}
+
+int	parse_heredoc(t_lexer *tokens, int fd, t_data *shell)
+{
+	char	*delimiter;
+	int		linenum;
+
+	delimiter = ft_strdup(tokens->str);
+	if (!delimiter)
+		return (error_int(ALLOC_ERR));
+	free(tokens->str);
+	linenum = 0;
+	signal(SIGINT, here_sig_handler);
+	while (g_estatus != 148)
+	{
+		//write(0, "> ", 2);
+		//tokens->str = get_next_line(0);
+		tokens->str = readline("> ");
+		if (!tokens->str)
+			return (eof_error(delimiter, linenum));
+		linenum++;
+		if (ft_strcmp(tokens->str, delimiter) == 0)
+			return (return_and_free(delimiter));
+		if (expand_heredoc(tokens, shell))
+		{
+			free(delimiter);
+			return (error_int(ALLOC_ERR));
+		}
+		write(fd, tokens->str, ft_strlen(tokens->str));
+		free(tokens->str);
+		tokens->str = NULL;
+	}
+	return (return_and_free(delimiter));
+}
+
+int	handle_heredoc(t_lexer *tokens, t_data *shell)
+{
 	int		fd;
 
-	printf("in here to open files\n");
-	fd = open(tmp_file, O_APPEND | O_RDWR, 0777);
+	fd = open("tmp_file", O_RDWR | O_TRUNC | O_APPEND | O_CREAT, 0777);
 	if (fd < 0)
-		return (error_int(FILE_ERR));
-	free(tokens->str);
-	tokens->str = ft_strdup("tmp_file");
-	if (!tokens->str)
-		return (error_int(ALLOC_ERR));
-	if (!parse_heredoc(tokens, fd));
+		return (error_int(PARSE_ERR));
+	if (parse_heredoc(tokens, fd, shell))
 	{
 		close(fd);
 		return (1);
 	}
 	close(fd);
+	free(tokens->str);
+	tokens->str = ft_strdup("tmp_file");
+	if (!tokens->str)
+		return (error_int(ALLOC_ERR));
 	return (0);
 }

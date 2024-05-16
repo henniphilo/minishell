@@ -2,7 +2,7 @@
 
 int	init_cmd_list(t_lexer *tokens, t_data *shell)
 {
-	t_command *node;
+	t_command	*node;
 
 	node = shell->toex;
 	while (tokens)
@@ -11,14 +11,16 @@ int	init_cmd_list(t_lexer *tokens, t_data *shell)
 			node = node->next;
 		else
 		{
-			if (!(tokens->type == WORD)) //later tbd: handling of redirections
+			if (!(tokens->type == WORD))
 			{
 				if (add_redir(tokens, node))
 					return (1);
-				tokens = tokens->next; //later tbd: handling of redirections
+				tokens = tokens->next;
 			}
 			else
 			{
+				//if (init_cmd_list_helper(node, tokens))
+				//	return (1)
 				if (!node->cmd)
 				{
 					node->cmd = ft_strdup(tokens->str);
@@ -27,7 +29,7 @@ int	init_cmd_list(t_lexer *tokens, t_data *shell)
 				}
 				else
 				{
-					node->args = append_arr(node->args, tokens->str); //temporary
+					node->args = append_arr(node->args, tokens->str);
 					if (!node->args)
 						return (1);
 				}

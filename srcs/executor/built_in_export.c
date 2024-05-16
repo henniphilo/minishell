@@ -30,7 +30,7 @@ void	init_export_list(t_data *shell)
 {
 	shell->export_list = list_duplicate(shell->env_list);
 	if (!shell->export_list)
-		panic(ALLOC_ERR, shell);
+		panic(ALLOC_ERR, shell, 1);
 }
 
 

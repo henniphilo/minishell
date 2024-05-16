@@ -22,6 +22,12 @@ void	clear_data(t_data *shell)
 		free(shell->buf);
 		shell->buf = NULL;
 	}
+	unlink("tmp_file");
+	if (g_estatus)
+	{
+		shell->estatus = g_estatus;
+		g_estatus = 0;
+	}
 	free_tokens(&(shell->tokens));
 	free_commands(&(shell->toex));
 }
@@ -32,8 +38,6 @@ void	*free_data(t_data *shell)
 	if (shell)
 	{
 		clear_data(shell);
-		if (shell->fd)
-			free(shell->fd);
 		free_env_list(&(shell->env_list));
 		free_env(shell->env);
 		free(shell);

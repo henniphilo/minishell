@@ -110,12 +110,10 @@ int	lexer(t_data *shell)
 		if (!tmp_buf)
 			return (error_int(LEX_ERR));
 	}
-	if (expand_env(shell->tokens, shell) || join_words(shell) || check_syntax_and_here(shell->tokens)) //in check_syntax function when it finds a heredoc -> it should do the piping
+	if (expand_env(shell->tokens, shell))
+		return (1);
+	if (join_words(shell) || check_syntax_and_here(shell->tokens, shell))
 		return (1);
 	shell->cmd_count = count_commands(shell->tokens);
 	return (0);
 }
-
-//if quote -> find end of quote -> create a substring -> append -> return start of bufferrest
-//if not quote -> go until space or quote or special character or end of string -> create substring -> append -> return start of bufferrest
-//next: expand environmental vars and join chains of WORDs

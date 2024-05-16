@@ -17,6 +17,8 @@ static void	print_cmds(t_command *cmds)
 	{
 		printf("\n");
 		printf("command: %s\n", cmds->cmd);
+		printf("fd_in: %i\n", cmds->fd_in);
+		printf("fd_out: %i\n", cmds->fd_out);
 		i = 0;
 		if (cmds->args)
 		{
@@ -43,13 +45,13 @@ static void	print_cmds(t_command *cmds)
 			(printf("argv: %p\n", cmds->argv));
 		printf("redirs: \n");
 		redirs = cmds->redirs;
-		while (redirs)
+/* 		while (redirs)
 		{
-			printf("file: %s\n", redirs->file);
+			printf("filename: %s\n", redirs->file);
 			printf("type: %d\n", redirs->type);
 			printf("ambig_redir: %s\n", redirs->ambig_redir);
 			redirs = redirs->next;
-		}
+		} */
 		cmds = cmds->next;
 	}
 }
