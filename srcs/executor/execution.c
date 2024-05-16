@@ -152,9 +152,7 @@ void	child_process(t_data *shell, int i, t_command *toex)
 
 void	execution(t_data *shell, t_command *toex)
 {
-	if (builtin_check(toex->cmd) == 1)
-			which_builtin_child(shell, toex->cmd);
-	else
+	if (which_builtin_child(shell, toex->cmd) != 0)
 	{
 		if (execute_command(shell, toex) != 0)
 		{

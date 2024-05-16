@@ -32,6 +32,12 @@ void	which_builtin_parent(t_data *shell, char *arg)
 
 	n = 7;
 	shell->bi_check = 1;
+	// if(ft_strncmp((const char *)arg, "env", n) == 0)
+	// {
+	// 	ft_putstr_fd("unser env------\n", 2);
+	// 	print_env(shell->env_list);
+	// 	//return(0);
+	// }
 	if(ft_strncmp((const char *)arg, "cd", n) == 0)
 	{
 		if(change_directory(shell) != 0)
