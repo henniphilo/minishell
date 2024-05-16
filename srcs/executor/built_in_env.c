@@ -61,6 +61,8 @@ t_environ	*replace_value(t_environ *list_ptr, char *replace)
 
 	printf("jetzt wird gleich was replacet\n");
 	new_value = ft_strdup(replace);
+	if (!new_value)
+		return (NULL);
 	free(list_ptr->value);
 	list_ptr->value = new_value;
 	return(list_ptr);
