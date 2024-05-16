@@ -95,12 +95,14 @@ static void	only_export(t_data *shell)
 }
 
 //wie umgehen mit istgleich ??? -> petra schreibt funktion
+// in while loop damit mehrere argumente hinzugefuegt werden jeweils beim ersten = trennen in name und value
 void		export_env(t_data *shell)
 {
 	t_environ	*new_node;
 	t_environ	*head;
 	char		*name;
 	char		*value;
+	char		*limit;
 
 	name = ft_strdup(shell->toex->args[0]);
 	value = ft_strdup(shell->toex->args[1]);
@@ -122,9 +124,9 @@ void		export_env(t_data *shell)
 		free(name);
 		free(value);
 	}
-	print_env(shell->env_list);
 }
 
+// hier noch loop fuer mehrere argumente mit space getrennt ist jeweils ein neuer node im export list
 void	to_export_list(t_data *shell)
 {
 	t_environ	*new_node;
@@ -134,7 +136,6 @@ void	to_export_list(t_data *shell)
 	name = ft_strdup(shell->toex->args[0]);
 	value = " ";
 	new_node = new_env_node(name, value);
-	printf("ist in to export list drin\n");
 	if (!new_node)
 	{
 		perror("no new node in export list\n");

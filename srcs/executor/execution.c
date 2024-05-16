@@ -22,7 +22,7 @@ static int	execute_command(t_data *shell, t_command *toex)
 		perror("Error in Path\n");
 		exit(1);
 	}
-//	printf("will executen: %s\n", toex->cmd);
+	printf("executet: %s\n", toex->cmd);
 	if(execve(path, toex->argv, shell->env) < 0)
 	{
 		perror("command couldnt be executed\n");
@@ -79,6 +79,7 @@ static void	init_fd(t_data *shell)
 // 		j++;
 // 	}
 // }
+
 void	init_pipeline(t_data *shell)
 {
 	shell->pids = (pid_t*) ft_calloc(shell->cmd_count, sizeof(pid_t));
@@ -90,7 +91,7 @@ void	init_pipeline(t_data *shell)
 	init_fd(shell);
 	if(shell->cmd_count > 1)
 		shell->fd = creating_pipes(shell);
-	//print_fd(shell);
+//	print_fd(shell);
 }
 
 
@@ -147,6 +148,7 @@ void	child_process(t_data *shell, int i, t_command *toex)
 			}
 			close_pipes(shell);
 		}
+		ft_putnbr_fd(i, 2);
 		execution(shell, toex);
 }
 

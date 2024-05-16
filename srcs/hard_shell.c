@@ -27,18 +27,16 @@ int	main(int ac, char **av, char **envp)
 	shell = ft_calloc(1, sizeof(t_data));
 	if (!shell)
 		panic(ALLOC_ERR, NULL, 1);
-	init_env(shell, envp); //make init function
+	init_env(shell, envp);
 	while(1)
 	{
 		shell->buf = (char *)get_the_line(shell);
 		if (check_line(shell->buf) || lexer(shell) || parser(shell))
 		{
 			clear_data(shell);
-			continue ; //if lexing, parsing or line are wrong returns the prompt
+			continue ;
 		}
 	//	test(shell);
-	//	execute_shell(shell);
-	//	piping(shell);
 		if ((pipeline_exe(shell) != 0))
 			perror("Error in Execution\n");
 		clear_data(shell);

@@ -15,10 +15,7 @@ int	builtin_check(char *arg)
 		|| (ft_strncmp((const char *)arg, "unset", n) == 0)
 		|| (ft_strncmp((const char *)arg, "pwd", n) == 0)
 		|| (ft_strncmp((const char *)arg, "export", n) == 0))
-	{
-		printf("is a builtin in parent \n");
 		return(1);
-	}
 	return (0);
 }
 // alles was path verwendet muss protectet werden, checken ob path exists
@@ -40,7 +37,7 @@ void	which_builtin_parent(t_data *shell, char *arg)
 	// }
 	if(ft_strncmp((const char *)arg, "cd", n) == 0)
 	{
-		if(change_directory(shell) != 0)
+		if(bi_cd(shell) != 0)
 			perror("error in \n");
 	}
 	if(ft_strncmp((const char *)arg, "export", n) == 0)
@@ -73,13 +70,12 @@ static int	bi_cd_check(t_data *shell, char *home_path)
 		if(shell->toex->argv[1] != NULL && (ft_strncmp(shell->toex->argv[1], up, 3))== 0)
 		{
 			if(chdir("..") == 0)
-				printf("goes up\n");
 			update_old_pwd(shell);
 			return (0);
 		}
 		else if(shell->toex->argv[1] != NULL && (ft_strncmp(shell->toex->argv[1], tilde, 2)) == 0)
 		{
-			printf("tilds\n");
+			printf("tilde\n");
 			chdir(home_path);
 			update_old_pwd(shell);
 			return (0);
@@ -89,7 +85,7 @@ static int	bi_cd_check(t_data *shell, char *home_path)
 }
 
 //noch path protecten
-int	change_directory(t_data *shell)
+int	bi_cd(t_data *shell)
 {
 	char	*new_path;
 	char	*home_path;

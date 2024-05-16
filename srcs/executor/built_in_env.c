@@ -24,7 +24,7 @@ void		bi_unset(t_data *shell)
 	begin = shell->env_list;
 	head = begin;
 	prev = NULL;
-	if (shell->toex->args[0] != NULL)
+	if (shell->toex->argv[1] != NULL)
 	{
 		while(head != NULL)
 		{
@@ -33,12 +33,10 @@ void		bi_unset(t_data *shell)
 				if(shell->toex->args[1] == NULL)
 				{
 					remove = head;
-					ft_printf(">this to remove: %s=%s < \n", remove->name, remove->value);
 					if (prev)
 						prev->next = head->next;
 					else
 						begin = head->next;
-			//		printf(">this is begin: %s=%s < \n", head->name, head->value);
 					delone_env_list(remove);
 					break ;
 				}
@@ -51,7 +49,6 @@ void		bi_unset(t_data *shell)
 			prev = head;
 			head = head->next;
 		}
-			print_env(shell->env_list);
 	}
 }
 
@@ -59,7 +56,6 @@ t_environ	*replace_value(t_environ *list_ptr, char *replace)
 {
 	char		*new_value;
 
-	printf("jetzt wird gleich was replacet\n");
 	new_value = ft_strdup(replace);
 	free(list_ptr->value);
 	list_ptr->value = new_value;

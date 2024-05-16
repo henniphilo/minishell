@@ -30,18 +30,11 @@ extern int	g_estatus; //correct place?
 /*Henni*/
 
 char		*path_finder(char *cmd, t_data *shell);
-void		child_process_env(char *toex, t_data *shell, int i);
-
 void		env_execute(t_data *shell, char *arg);
 int			count_commands(t_lexer *tokens);
 void		print_path(char *path);
-
-void		execute_one_envcmd(t_data *shell, pid_t pid);
-void		execute_more_envcmd(t_data *shell, pid_t pid, int i);
 void		print_toex(t_data *shell);
-int			execute_shell(t_data *shell);
 void		read_from_fd(int fd, const char *process);
-//int			piping(t_data *shell);
 int			**creating_pipes(t_data *shell);
 int			exe_env(t_data *shell, pid_t *pids, int i, t_command *toex);
 int			pipeline_exe(t_data *shell);
@@ -51,21 +44,22 @@ void		execution(t_data *shell, t_command *toex);
 
 
 /*built-ins*/
-void		which_builtin_parent(t_data *shell, char *arg);
-void		print_env(t_environ *env_ptr);
-int			builtin_check(char *arg);
-int			which_builtin_child(t_data *shell, char *arg);
-int			change_directory(t_data *shell);
+int			bi_cd(t_data *shell);
 void		bi_pwd(t_data *shell);
-char		*find_in_env(char *to_find);
 void		bi_exit(t_data *shell);
 void		bi_unset(t_data *shell);
 void		bi_export(t_data *shell);
 void		bi_echo(t_data *shell);
+void		print_env(t_environ *env_ptr);
+
+int			builtin_check(char *arg);
+int			which_builtin_child(t_data *shell, char *arg);
+void		which_builtin_parent(t_data *shell, char *arg);
+char		*find_in_env(char *to_find);
 void		export_env(t_data *shell);
 void		echo_env(t_data *shell, char *str);
-void		update_old_pwd(t_data *shell);
 void		update_envlist(t_data *shell, char *to_up, char *new);
+void		update_old_pwd(t_data *shell);
 void		print_export_list(t_data *shell);
 void		init_export_list(t_data *shell);
 void		sort_export_list(t_data *shell);
@@ -73,7 +67,6 @@ void		to_export_list(t_data *shell);
 t_environ	*list_duplicate(t_environ *lst_ptr);
 t_environ	*replace_value(t_environ *list_ptr, char *replace);
 t_environ	*find_name_in_envlist(t_data *shell, char *name);
-
 
 /*Petra*/
 
