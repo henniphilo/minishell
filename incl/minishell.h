@@ -34,13 +34,17 @@ void		env_execute(t_data *shell, char *arg);
 int			count_commands(t_lexer *tokens);
 void		print_path(char *path);
 void		print_toex(t_data *shell);
-void		read_from_fd(int fd, const char *process);
 int			**creating_pipes(t_data *shell);
 int			exe_env(t_data *shell, pid_t *pids, int i, t_command *toex);
 int			pipeline_exe(t_data *shell);
 void		close_pipes(t_data *shell);
 void		init_pipeline(t_data *shell);
 void		execution(t_data *shell, t_command *toex);
+int			execute_command(t_data *shell, t_command *toex);
+void		wait_for_children(t_data *shell);
+void		free_pipes(t_data *shell);
+void		child_process(t_data *shell, int i, t_command *toex);
+
 
 
 /*built-ins*/

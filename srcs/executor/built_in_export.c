@@ -102,7 +102,6 @@ void		export_env(t_data *shell)
 	t_environ	*head;
 	char		*name;
 	char		*value;
-	char		*limit;
 
 	name = ft_strdup(shell->toex->args[0]);
 	value = ft_strdup(shell->toex->args[1]);

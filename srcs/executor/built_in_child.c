@@ -46,7 +46,6 @@ void		echo_env(t_data *shell, char *str)
 		name[j - 1] = str[j];
 		j++;
 	}
-	printf("name is: %s\n", name);
 	while(head != NULL)
 	{
 		if(ft_strncmp(name, head->name, n - 1) == 0)
