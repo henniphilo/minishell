@@ -52,6 +52,7 @@ void	free_tokens(t_lexer **tokens)
 }
 
 /*frees one element of the token list used for lexing*/
+// muss noch vorheriges mit naechstem verknuepfen
 void	delone_env_list(t_environ *env)
 {
 	if (env)

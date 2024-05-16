@@ -114,5 +114,6 @@ int	lexer(t_data *shell)
 		return (1);
 	if (join_words(shell) || check_syntax_and_here(shell->tokens, shell))
 		return (1);
+	shell->cmd_count = count_commands(shell->tokens);
 	return (0);
 }
