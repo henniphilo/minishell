@@ -43,8 +43,8 @@ typedef struct s_command {
 	char				*cmd; //e.g. "ls", "echo", "cat", "pwd"
 	char				**args; //things that come after the command e.g. pathname or string
 	char				**argv; //command + args together of execve()
-	int					fd_in; //fd for infiles (and maybe heredoc tmpfiles)
-	int					fd_out; //fd for outfiles and append
+	int					fd_in; //fd for infiles (and maybe heredoc tmpfiles) (-2 default)
+	int					fd_out; //fd for outfiles and append (-2)
 	t_redir				*redirs; //only used for parsing, not for execution
 	struct s_command	*next;
 }	t_command;
