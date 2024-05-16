@@ -55,7 +55,7 @@ int	expand_tilde(t_lexer *tokens, t_environ *env)
 		tokens->str = NULL;
 		while (env)
 		{
-			if (ft_strcmp("HOME", env->name))
+			if (ft_strcmp("HOME", env->name) == 0)
 			{
 				tokens->str = ft_strdup(env->value);
 				if (!tokens->str)
