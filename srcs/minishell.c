@@ -1,6 +1,6 @@
 #include "../incl/minishell.h"
 
-int	g_estatus;
+int	g_estatus; 
 
 int	main(int ac, char **av, char **envp)
 {
@@ -21,8 +21,9 @@ int	main(int ac, char **av, char **envp)
 			clear_data(shell);
 			continue ;
 		}
-		//execute_shell(shell);
-		test(shell);
+	//	test(shell);
+		if ((pipeline_exe(shell) != 0))
+			perror("Error in Execution\n");
 		clear_data(shell);
 	}
 	free_data(shell); //just temporarily in this part of the code
