@@ -12,7 +12,6 @@ int	main(int ac, char **av, char **envp)
 	if (!shell)
 		panic(ALLOC_ERR, NULL, 1);
 	init_env(shell, envp);
-	int i = 0; //test
 	handle_signals();
 	while (1)
 	{
@@ -23,9 +22,8 @@ int	main(int ac, char **av, char **envp)
 			continue ;
 		}
 		//execute_shell(shell);
-		//test(shell);
+		test(shell);
 		clear_data(shell);
-		i++; //test
 	}
 	free_data(shell); //just temporarily in this part of the code
 	return (0);
