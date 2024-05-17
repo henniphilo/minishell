@@ -36,7 +36,9 @@ int	main(int ac, char **av, char **envp)
 			clear_data(shell);
 			continue ;
 		}
-	//	test(shell);
+		test(shell);
+	//	execute_shell(shell);
+	//	piping(shell);
 		if ((pipeline_exe(shell) != 0))
 			perror("Error in Execution\n");
 		clear_data(shell);

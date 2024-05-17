@@ -1,6 +1,6 @@
 #include "../incl/minishell.h"
 
-int	g_estatus; 
+int	g_estatus;
 
 int	main(int ac, char **av, char **envp)
 {

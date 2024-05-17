@@ -102,9 +102,12 @@ void		export_env(t_data *shell)
 	t_environ	*head;
 	char		*name;
 	char		*value;
+	char		*limit;
 
-	name = ft_strdup(shell->toex->args[0]);
-	value = ft_strdup(shell->toex->args[1]);
+	limit = ft_strchr(arg, '=');
+
+	name = ft_substr(arg, 0, limit - arg);
+	value = ft_substr(arg, limit - arg + 1, ft_strlen(arg));
 	head = find_name_in_envlist(shell, name);
 	if (!head)
 	{
@@ -116,10 +119,11 @@ void		export_env(t_data *shell)
 			free(value);
 		}
 		add_env_back(&shell->env_list, new_node);
+		//add_env_back(&shell->export_list, new_node); //?
 	}
 	else
 	{
-		head = replace_value(head, value);
+		head = replace_value(head, value); //muss auch im export list replacet werden
 		free(name);
 		free(value);
 	}
@@ -132,27 +136,39 @@ void	to_export_list(t_data *shell)
 	char		*name;
 	char		*value;
 
-	name = ft_strdup(shell->toex->args[0]);
-	value = " ";
+	name = ft_strdup(arg);
+	value = ft_strdup("");
 	new_node = new_env_node(name, value);
-	if (!new_node)
+	printf("ist in to export list drin\n");
+	if (!name || !value || !new_node)
 	{
 		perror("no new node in export list\n");
-		free(name);
-//		free(value);
+		if (name)
+			free(name);
+		if (value)
+			free(value);
+		if (new_node)
+			free(new_node);
 	}
 	add_env_back(&shell->export_list, new_node);
 }
 
 void	bi_export(t_data *shell)
 {
-	if(shell->toex->args != NULL)
-	{
-		if(shell->toex->args[1] == NULL)
-			to_export_list(shell);
-		else
-			export_env(shell);
-	}
-	else
+	int	i;
+
+	i = 0;
+	if (shell->toex->args == NULL)
 		only_export(shell);
+	else
+	{
+		while (shell->toex->args[i] != NULL)
+		{
+			if (!(ft_strchr(shell->toex->args[i], '=')))
+				to_export_list(shell->toex->args[i], shell);
+			else
+				export_env(shell->toex->args[i], shell);
+			i++;
+		}
+	}
 }
