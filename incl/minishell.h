@@ -30,6 +30,7 @@ extern int	g_estatus; //correct place?
 /*Henni*/
 
 char		*path_finder(char *cmd, t_data *shell);
+char		**get_path_components(t_data *shell);
 int			var_check(t_data *shell, char *to_check);
 void		env_execute(t_data *shell, char *arg);
 int			count_commands(t_lexer *tokens);
@@ -45,7 +46,7 @@ int			execute_command(t_data *shell, t_command *toex);
 void		wait_for_children(t_data *shell);
 void		free_pipes(t_data *shell);
 void		child_process(t_data *shell, int i, t_command *toex);
-
+void		free_split(char **split_components);
 
 
 /*built-ins*/

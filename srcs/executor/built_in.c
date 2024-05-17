@@ -38,7 +38,7 @@ void	which_builtin_parent(t_data *shell, char *arg)
 	if(ft_strncmp((const char *)arg, "cd", n) == 0)
 	{
 		if(bi_cd(shell) != 0)
-			perror("error in \n");
+			ft_putstr_fd("cd Error \n", 2);
 	}
 	if(ft_strncmp((const char *)arg, "export", n) == 0)
 	{
@@ -105,9 +105,11 @@ int	bi_cd(t_data *shell)
 			new_path = shell->toex->args[0];
 			if(new_path != NULL)
 			{
-				chdir(new_path);
-				update_old_pwd(shell);
-				return(0);
+				if	(chdir(new_path) == 0)
+				{
+					update_old_pwd(shell);
+					return(0);
+				}
 			}
 		}
 	}

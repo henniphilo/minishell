@@ -94,8 +94,6 @@ static void	only_export(t_data *shell)
 	print_export_list(shell);
 }
 
-//wie umgehen mit istgleich ??? -> petra schreibt funktion
-// in while loop damit mehrere argumente hinzugefuegt werden jeweils beim ersten = trennen in name und value
 void		export_env(t_data *shell, char *arg)
 {
 	t_environ	*new_node;
