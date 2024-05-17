@@ -38,7 +38,10 @@ void	*free_data(t_data *shell)
 	if (shell)
 	{
 		clear_data(shell);
+		if(shell->pids != NULL)
+			free(shell->pids);
 		free_env_list(&(shell->env_list));
+		free_env_list(&(shell->export_list));
 		free_env(shell->env);
 		free(shell);
 	}

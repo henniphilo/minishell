@@ -25,7 +25,8 @@ int		pipeline_exe(t_data *shell)
 	}
 	wait_for_children(shell);
 	free_pipes(shell);
-	free (shell->fd); //problematic double free if its null noch protecten
 	free (shell->pids);
+	shell->pids = NULL;
+	free (shell->fd); //problematic double free if its null noch protecten
 	return(0);
 }

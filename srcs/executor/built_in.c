@@ -84,29 +84,31 @@ static int	bi_cd_check(t_data *shell, char *home_path)
 	return (1);
 }
 
-//noch path protecten
 int	bi_cd(t_data *shell)
 {
 	char	*new_path;
 	char	*home_path;
 
-	home_path = find_in_env("HOME");
-	if (shell->toex->args == NULL)
+	if(var_check(shell, "HOME") == 0)
 	{
-		chdir(home_path);
-		update_old_pwd(shell);
-		return(0);
-	}
-	if (bi_cd_check(shell, home_path) == 0)
-		return(0);
-	if (array_len(shell->toex->args) == 1)
-	{
-		new_path = shell->toex->args[0];
-		if(new_path != NULL)
+		home_path = find_in_env("HOME");
+		if (shell->toex->args == NULL)
 		{
-			chdir(new_path);
+			chdir(home_path);
 			update_old_pwd(shell);
 			return(0);
+		}
+		if (bi_cd_check(shell, home_path) == 0)
+			return(0);
+		if (array_len(shell->toex->args) == 1)
+		{
+			new_path = shell->toex->args[0];
+			if(new_path != NULL)
+			{
+				chdir(new_path);
+				update_old_pwd(shell);
+				return(0);
+			}
 		}
 	}
 	return(1);
@@ -136,11 +138,15 @@ void	update_old_pwd(t_data *shell)
 	char	cwd[1024];
 	t_environ *old_path_ptr;
 
-	old_path_ptr = find_name_in_envlist(shell, "PWD");
-	old_path = old_path_ptr->value;
-	update_envlist(shell, "OLDPWD", old_path);
-	new_path = getcwd(cwd, sizeof(cwd));
-	update_envlist(shell, "PWD", new_path);
+	if(var_check(shell, "PWD") == 0)
+	{
+		old_path_ptr = find_name_in_envlist(shell, "PWD");
+		old_path = old_path_ptr->value;
+		if(var_check(shell, "OLDPWD") == 0)
+			update_envlist(shell, "OLDPWD", old_path);
+		new_path = getcwd(cwd, sizeof(cwd));
+		update_envlist(shell, "PWD", new_path);
+	}
 }
 
 t_environ	*find_name_in_envlist(t_data *shell, char *name)
@@ -174,12 +180,20 @@ void		bi_pwd(t_data *shell)
 	head = shell->env_list;
 	while (head != NULL)
 	{
-		if (ft_strncmp(head->name, "PWD", 4) == 0)
+		if(var_check(shell, "PWD") == 0)
 		{
-			current_path = head->value;
-			printf("%s\n", current_path);
-			break ;
+			if (ft_strncmp(head->name, "PWD", 4) == 0)
+			{
+				current_path = head->value;
+				printf("%s\n", current_path);
+				break ;
+			}
+			head = head->next;
 		}
-		head = head->next;
+		else
+		{
+			ft_putstr_fd("Error var doesn't exist\n", 2);
+			return ;
+		}
 	}
 }

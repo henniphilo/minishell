@@ -30,6 +30,7 @@ extern int	g_estatus; //correct place?
 /*Henni*/
 
 char		*path_finder(char *cmd, t_data *shell);
+int			var_check(t_data *shell, char *to_check);
 void		env_execute(t_data *shell, char *arg);
 int			count_commands(t_lexer *tokens);
 void		print_path(char *path);
@@ -48,20 +49,25 @@ void		child_process(t_data *shell, int i, t_command *toex);
 
 
 /*built-ins*/
+int			which_builtin_child(t_data *shell, char *arg);
+int			builtin_check(char *arg);
+char		*find_in_env(char *to_find);
+void		print_env(t_environ *env_ptr);
+void		which_builtin_parent(t_data *shell, char *arg);
 int			bi_cd(t_data *shell);
 void		bi_pwd(t_data *shell);
 void		bi_exit(t_data *shell);
 void		bi_unset(t_data *shell);
 void		bi_export(t_data *shell);
 void		bi_echo(t_data *shell);
-void		export_env(char *arg, t_data *shell);
+void		export_env(t_data *shell, char *arg);
 void		echo_env(t_data *shell, char *str);
 void		update_envlist(t_data *shell, char *to_up, char *new);
 void		update_old_pwd(t_data *shell);
 void		print_export_list(t_data *shell);
 void		init_export_list(t_data *shell);
 void		sort_export_list(t_data *shell);
-void		to_export_list(char *arg, t_data *shell);
+void		to_export_list(t_data *shell, char *arg);
 t_environ	*list_duplicate(t_environ *lst_ptr);
 t_environ	*replace_value(t_environ *list_ptr, char *replace);
 t_environ	*find_name_in_envlist(t_data *shell, char *name);

@@ -14,7 +14,6 @@ int		execute_command(t_data *shell, t_command *toex)
 	//printf("executet: %s\n", toex->cmd);
 	if(execve(path, toex->argv, shell->env) < 0)
 	{
-		perror("command couldnt be executed\n");
 		free(toex->cmd);
 		return (1);
 	}
