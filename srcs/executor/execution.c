@@ -1,5 +1,6 @@
 #include "../../incl/minishell.h"
 
+// darf zb bei unset USER | env nur env ausfuehren USER bleibt bestehen...
 int		pipeline_exe(t_data *shell)
 {
 	t_command	*toex;
@@ -11,7 +12,16 @@ int		pipeline_exe(t_data *shell)
 	while(toex)
 	{
 		if (builtin_check(toex->cmd) == 1)
-			which_builtin_parent(shell, toex->cmd);
+		{
+			if(which_builtin_parent(shell, toex->cmd) != 0)
+			{
+				free_pipes(shell);
+				free (shell->pids);
+				shell->pids = NULL;
+				free (shell->fd);
+				return (1);
+			}
+		}
 		else
 		{
 			if (exe_env(shell, shell->pids, i, toex) != 0)

@@ -94,6 +94,7 @@ static void	only_export(t_data *shell)
 	print_export_list(shell);
 }
 
+//soll bei env_list und export list hinzufuegen
 int		export_env(t_data *shell, char *arg)
 {
 	t_environ	*new_node;
@@ -129,6 +130,7 @@ int		export_env(t_data *shell, char *arg)
 }
 
 // hier noch loop fuer mehrere argumente mit space getrennt ist jeweils ein neuer node im export list
+// fuegt nur bei export list hinzu
 int		to_export_list(t_data *shell, char *arg)
 {
 	t_environ	*new_node;
@@ -138,9 +140,9 @@ int		to_export_list(t_data *shell, char *arg)
 	name = ft_strdup(arg);
 	value = ft_strdup("");
 	new_node = new_env_node(name, value);
-	if (!name || !value || !new_node)
+	if (!name || name[0] < 65 || !value || !new_node)
 	{
-		perror("no new node in export list\n");
+		ft_putstr_fd("no new node in export list\n", 2);
 		if (name)
 			free(name);
 		if (value)

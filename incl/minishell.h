@@ -53,7 +53,7 @@ void		free_split(char **split_components);
 int			which_builtin_child(t_data *shell, char *arg);
 int			builtin_check(char *arg);
 char		*find_in_env(char *to_find);
-void		which_builtin_parent(t_data *shell, char *arg);
+int			which_builtin_parent(t_data *shell, char *arg);
 int			print_env(t_environ *env_ptr);
 int			bi_cd(t_data *shell);
 int			bi_pwd(t_data *shell);

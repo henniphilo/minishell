@@ -32,7 +32,7 @@ char	**get_path_components(t_data *shell)
 	}
 	return (path_components);
 }
-
+//memory leak wenn program nicht ausfuehrbar bei ""
 char	*path_finder(char *cmd, t_data *shell)
 {
 	char	**path_components;
@@ -44,16 +44,35 @@ char	*path_finder(char *cmd, t_data *shell)
 	path_components = get_path_components(shell);
 	if(path_components == NULL)
 		return (NULL);
-
 	while (path_components[i] != NULL)
 	{
 		current_path = ft_strjoin(path_components[i], "/");
-		full_path = ft_strjoin(current_path, cmd);
-		free(current_path);
-		if (access(full_path, F_OK) == 0)
+		if (current_path == NULL)
 		{
 			free_split(path_components);
-			return (full_path);
+			free(current_path);
+			return (NULL);
+		}
+		full_path = ft_strjoin(current_path, cmd);
+		free(current_path);
+		if (full_path == NULL)
+		{
+			free_split(path_components);
+			return (NULL);
+		}
+		if (access(full_path, F_OK) == 0)
+		{
+			if (access(full_path, X_OK) == 0)
+			{
+				free_split(path_components);
+				return (full_path);
+			}
+			else
+			{
+				free(full_path);
+				free_split(path_components);
+				return (NULL);
+			}
 		}
 		free (full_path);
 		i++;
@@ -67,6 +86,8 @@ void	free_split(char **split_components)
 	int		i;
 
 	i = 0;
+	if (split_components == NULL)
+		return ;
 	while(split_components[i])
 	{
 		free(split_components[i]);

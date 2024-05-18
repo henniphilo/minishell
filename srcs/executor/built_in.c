@@ -19,7 +19,7 @@ int	builtin_check(char *arg)
 	return (0);
 }
 
-void	which_builtin_parent(t_data *shell, char *arg)
+int		which_builtin_parent(t_data *shell, char *arg)
 {
 	int	n;
 
@@ -36,6 +36,7 @@ void	which_builtin_parent(t_data *shell, char *arg)
 		g_estatus = bi_exit(shell);
 	else
 		g_estatus = 1;
+	return (g_estatus);
 }
 
 static int	bi_cd_check(t_data *shell, char *home_path)
@@ -147,11 +148,11 @@ t_environ	*find_name_in_envlist(t_data *shell, char *name)
 	return(NULL);
 }
 
-
+//hier muss noch das verhalten exit + zahl bedacht werden
 int		bi_exit(t_data *shell)
 {
 	free_data(shell);
-	exit(0);
+	exit(g_estatus);
 	return (0);
 }
 
