@@ -94,7 +94,7 @@ static void	only_export(t_data *shell)
 	print_export_list(shell);
 }
 
-void		export_env(t_data *shell, char *arg)
+int		export_env(t_data *shell, char *arg)
 {
 	t_environ	*new_node;
 	t_environ	*head;
@@ -103,7 +103,6 @@ void		export_env(t_data *shell, char *arg)
 	char		*limit;
 
 	limit = ft_strchr(arg, '=');
-
 	name = ft_substr(arg, 0, limit - arg);
 	value = ft_substr(arg, limit - arg + 1, ft_strlen(arg));
 	head = find_name_in_envlist(shell, name);
@@ -115,6 +114,7 @@ void		export_env(t_data *shell, char *arg)
 			perror("no new node durch export\n");
 			free(name);
 			free(value);
+			return (1);
 		}
 		add_env_back(&shell->env_list, new_node);
 		//add_env_back(&shell->export_list, new_node); //?
@@ -125,10 +125,11 @@ void		export_env(t_data *shell, char *arg)
 		free(name);
 		free(value);
 	}
+	return (0);
 }
 
 // hier noch loop fuer mehrere argumente mit space getrennt ist jeweils ein neuer node im export list
-void	to_export_list(t_data *shell, char *arg)
+int		to_export_list(t_data *shell, char *arg)
 {
 	t_environ	*new_node;
 	char		*name;
@@ -146,26 +147,33 @@ void	to_export_list(t_data *shell, char *arg)
 			free(value);
 		if (new_node)
 			free(new_node);
+		return (1);
 	}
 	add_env_back(&shell->export_list, new_node);
+	return (0);
 }
 
-void	bi_export(t_data *shell)
+int		bi_export(t_data *shell)
 {
-	int	i;
+	int		i;
+	int		result;
 
 	i = 0;
 	if (shell->toex->args == NULL)
+	{
 		only_export(shell);
+		return (0);
+	}
 	else
 	{
 		while (shell->toex->args[i] != NULL)
 		{
 			if (!(ft_strchr(shell->toex->args[i], '=')))
-				to_export_list(shell, shell->toex->args[i]);
+				result = to_export_list(shell, shell->toex->args[i]);
 			else
-				export_env(shell, shell->toex->args[i]);
+				result = export_env(shell, shell->toex->args[i]);
 			i++;
 		}
 	}
+	return (result);
 }

@@ -15,7 +15,7 @@ int		execute_command(t_data *shell, t_command *toex)
 	if(execve(path, toex->argv, shell->env) < 0)
 	{
 		free(toex->cmd);
-		return (1);
+		return (127);
 	}
 	free(toex->cmd);
 	free(path);
@@ -29,7 +29,7 @@ void	execution(t_data *shell, t_command *toex)
 		if (execute_command(shell, toex) != 0)
 		{
 			perror("Error executing command\n");
-			exit(EXIT_FAILURE);
+			exit(127);
 		}
 	}
 	exit(EXIT_SUCCESS);

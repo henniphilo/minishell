@@ -69,7 +69,7 @@ typedef struct s_data {
 	int			**fd; //= pipes structure [[0,1],[0,1]...] hen: zum directen der fd muss noch richtig init werde
 	bool		bi_check; //hen: built_in check - brauch ich nicht
 	pid_t		*pids;
-
+	int			exit_status; //hen: letzter exit status
 //	pid_t		*pid; //process id, evt als array fuer individuelle prozess? - doch nicht
 }	t_data;
 

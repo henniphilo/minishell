@@ -18,44 +18,24 @@ int	builtin_check(char *arg)
 		return(1);
 	return (0);
 }
-// alles was path verwendet muss protectet werden, checken ob path exists
-// 15.5: unset und export updaten gerade nicht mehr env_list
-// aber export list wird upgedatet
-// nur export segfaulted
 
 void	which_builtin_parent(t_data *shell, char *arg)
 {
 	int	n;
 
 	n = 7;
-	shell->bi_check = 1;
-	// if(ft_strncmp((const char *)arg, "env", n) == 0)
-	// {
-	// 	ft_putstr_fd("unser env------\n", 2);
-	// 	print_env(shell->env_list);
-	// 	//return(0);
-	// }
 	if(ft_strncmp((const char *)arg, "cd", n) == 0)
-	{
-		if(bi_cd(shell) != 0)
-			ft_putstr_fd("cd Error \n", 2);
-	}
-	if(ft_strncmp((const char *)arg, "export", n) == 0)
-	{
-		bi_export(shell);
-	}
-	if(ft_strncmp((const char *)arg, "pwd", n) == 0)
-	{
-		bi_pwd(shell);
-	}
-	if(ft_strncmp((const char *)arg, "unset", n) == 0)
-	{
-		bi_unset(shell);
-	}
-	if(ft_strncmp((const char *)arg, "exit", n) == 0)
-	{
-		bi_exit(shell);
-	}
+		g_estatus = bi_cd(shell);
+	else if(ft_strncmp((const char *)arg, "export", n) == 0)
+		g_estatus = bi_export(shell);
+	else if(ft_strncmp((const char *)arg, "pwd", n) == 0)
+		g_estatus = bi_pwd(shell);
+	else if(ft_strncmp((const char *)arg, "unset", n) == 0)
+		g_estatus = bi_unset(shell);
+	else if(ft_strncmp((const char *)arg, "exit", n) == 0)
+		g_estatus = bi_exit(shell);
+	else
+		g_estatus = 1;
 }
 
 static int	bi_cd_check(t_data *shell, char *home_path)
@@ -168,13 +148,14 @@ t_environ	*find_name_in_envlist(t_data *shell, char *name)
 }
 
 
-void	bi_exit(t_data *shell)
+int		bi_exit(t_data *shell)
 {
 	free_data(shell);
 	exit(0);
+	return (0);
 }
 
-void		bi_pwd(t_data *shell)
+int		bi_pwd(t_data *shell)
 {
 	char		*current_path;
 	t_environ	*head;
@@ -195,7 +176,8 @@ void		bi_pwd(t_data *shell)
 		else
 		{
 			ft_putstr_fd("Error var doesn't exist\n", 2);
-			return ;
+			return (1);
 		}
 	}
+	return (0);
 }

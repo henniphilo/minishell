@@ -9,25 +9,28 @@ int	which_builtin_child(t_data *shell, char *arg)
 	if(ft_strncmp((const char *)arg, "env", n) == 0)
 	{
 	//	ft_putstr_fd("unser env---------\n", 2);
-		print_env(shell->env_list);
+		g_estatus = print_env(shell->env_list);
 		return(0);
 	}
 	if(ft_strncmp((const char *)arg, "echo", n) == 0)
 	{
-		bi_echo(shell);
+		g_estatus = bi_echo(shell);
 		return(0);
 	}
 	return(1);
 }
 
-void		print_env(t_environ *env_ptr)
+int		print_env(t_environ *env_ptr)
 {
+	if (!env_ptr)
+		return (1);
 	while(env_ptr != NULL)
 	{
 		printf("%s=", env_ptr->name);
 		printf("%s\n", env_ptr->value);
 		env_ptr = env_ptr->next;
 	}
+	return (0);
 }
 
 void		echo_env(t_data *shell, char *str)
@@ -84,8 +87,7 @@ static int	set_flag(t_data *shell)
 	return(flag);
 }
 
-//echo ~ noch home
-void		bi_echo(t_data *shell)
+int		bi_echo(t_data *shell)
 {
 	int		i;
 	int		flag;
@@ -99,7 +101,9 @@ void		bi_echo(t_data *shell)
 			i++;
 		while(shell->toex->argv[i])
 		{
-			if(shell->toex->argv[i][0]== '$')
+			// if (ft_strcmp(shell->toex->argv[i], "$?") == 0)
+			// 	printf("%d", g_estatus);
+			if (shell->toex->argv[i][0]== '$')
 			{
 				echo_env(shell, shell->toex->argv[i]);
 				break ;
@@ -115,7 +119,6 @@ void		bi_echo(t_data *shell)
 	}
 	if(flag == 0)
 		printf("\n");
+	return (0);
 }
-
-// macht bei -n $HOME noch new line
 

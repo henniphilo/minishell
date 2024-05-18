@@ -14,7 +14,7 @@ char	*find_in_env(char *to_find)
 }
 //noch beachten dass es unset USER="Henrike" ist also nicht mit weiteren toex[..]
 
-void		bi_unset(t_data *shell)
+int		bi_unset(t_data *shell)
 {
 	t_environ	*prev;
 	t_environ	*begin;
@@ -49,7 +49,9 @@ void		bi_unset(t_data *shell)
 			prev = head;
 			head = head->next;
 		}
+		return (0);
 	}
+	return (1);
 }
 
 t_environ	*replace_value(t_environ *list_ptr, char *replace)

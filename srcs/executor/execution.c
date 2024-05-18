@@ -14,9 +14,10 @@ int		pipeline_exe(t_data *shell)
 			which_builtin_parent(shell, toex->cmd);
 		else
 		{
-			if (exe_env(shell, shell->pids, i, toex) == 1)
+			if (exe_env(shell, shell->pids, i, toex) != 0)
 			{
 				perror("exe Error\n");
+				g_estatus = 1;
 				return (1);
 			}
 		}

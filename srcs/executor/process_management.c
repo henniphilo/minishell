@@ -29,11 +29,16 @@ int		exe_env(t_data *shell, pid_t *pids, int i, t_command *toex)
 void	wait_for_children(t_data *shell)
 {
 	int		i;
+	int		estatus;
 
 	i = 0;
 	while(i < shell->cmd_count)
 	{
-		waitpid(shell->pids[i], NULL, 0);
+		waitpid(shell->pids[i], &estatus, 0);
+		if (WIFEXITED(estatus))
+			g_estatus = WEXITSTATUS(estatus);
+		else
+			g_estatus = 1;
 		i++;
 	}
 }
