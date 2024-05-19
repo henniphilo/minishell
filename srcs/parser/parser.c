@@ -24,6 +24,12 @@ static int	init_argv(t_data *shell)
 					return (error_int(ALLOC_ERR));
 			}
 		}
+		// else // alles muss ins argv
+		// {
+		// 	printf("das ist gerade buffer : %s\n", shell->buf);
+		// 	node->argv[0] = ft_strdup(shell->buf);
+		// 	break ;
+		// }
 		node = node->next;
 	}
 	return (0);

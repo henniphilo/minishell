@@ -24,7 +24,9 @@ int		bi_unset(t_data *shell)
 	begin = shell->env_list;
 	head = begin;
 	prev = NULL;
-	if (shell->toex->argv[1] != NULL)
+	if (shell->toex->argv[1] == NULL)
+		return (0);
+	else if (shell->toex->argv[1] != NULL)
 	{
 		while(head != NULL)
 		{

@@ -61,6 +61,7 @@ int			bi_exit(t_data *shell);
 int			bi_unset(t_data *shell);
 int			bi_export(t_data *shell);
 int			bi_echo(t_data *shell);
+int			identifier_check(char *arg);
 int			export_env(t_data *shell, char *arg);
 int			to_export_list(t_data *shell, char *arg);
 void		echo_env(t_data *shell, char *str);

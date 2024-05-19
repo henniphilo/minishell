@@ -101,8 +101,6 @@ int		bi_echo(t_data *shell)
 			i++;
 		while(shell->toex->argv[i])
 		{
-			// if (ft_strcmp(shell->toex->argv[i], "$?") == 0)
-			// 	printf("%d", g_estatus);
 			if (shell->toex->argv[i][0]== '$')
 			{
 				echo_env(shell, shell->toex->argv[i]);

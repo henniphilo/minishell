@@ -11,7 +11,7 @@ int		execute_command(t_data *shell, t_command *toex)
 		perror("Error in Path\n");
 		exit(1);
 	}
-	//printf("executet: %s\n", toex->cmd);
+//	printf("executet: %s\n", toex->cmd);
 	if(execve(path, toex->argv, shell->env) < 0)
 	{
 		free(toex->cmd);

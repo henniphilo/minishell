@@ -170,6 +170,8 @@ int		bi_export(t_data *shell)
 	{
 		while (shell->toex->args[i] != NULL)
 		{
+			if (identifier_check(shell->toex->args[i]) == 1) // checken nur bei erstem vor =
+				return (1);
 			if (!(ft_strchr(shell->toex->args[i], '=')))
 				result = to_export_list(shell, shell->toex->args[i]);
 			else
@@ -178,4 +180,19 @@ int		bi_export(t_data *shell)
 		}
 	}
 	return (result);
+}
+
+int		identifier_check(char *arg)
+{
+	int		i;
+
+	i = 0;
+	while(arg[i] != '\0')
+	{
+		if(!((arg[i] >= 48 && arg[i] <= 57) || (arg[i] >= 65 && arg[i] <= 90)
+			|| (arg[i] >= 97 && arg[i] <= 122) || arg[i] == '='))
+			return (1);
+		i++;
+	}
+	return (0);
 }
