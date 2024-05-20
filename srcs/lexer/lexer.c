@@ -89,6 +89,28 @@ static char	*handle_words(char *tmp_buf, t_lexer **tokens)
 	return (tmp_buf + i);
 }
 
+/*checks for empty expansions or tokens that were
+not between quotes and deletes them from the list*/
+static void	check_empty_tokens(t_data *shell)
+{
+	t_lexer	*tokens;
+
+	tokens = shell->tokens;
+	if (tokens->type == WORD)
+	{
+		if (tokens->str && tokens->str[0] == '\0' && tokens->quote == NONE)
+		{
+			if (tokens->previous)
+				tokens->previous->next = tokens->next->next;
+			else
+				shell->tokens = tokens->next;
+			if (tokens->next)
+				tokens->next->previous = tokens->previous;
+			delone_tokens(tokens);
+		}
+	}
+}
+
 /*where the lexing happens, returns 1 on error,
 processes quotes first, then the special characters
 like pipes or redirections and then the rest*/
@@ -114,6 +136,8 @@ int	lexer(t_data *shell)
 		return (1);
 	if (join_words(shell) || check_syntax_and_here(shell->tokens, shell))
 		return (1);
+	check_empty_tokens(shell);
 	shell->cmd_count = count_commands(shell->tokens);
 	return (0);
 }
+

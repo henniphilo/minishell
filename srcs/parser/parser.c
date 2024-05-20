@@ -37,6 +37,8 @@ static int	init_argv(t_data *shell)
 
 int	parser(t_data *shell)
 {
+	if (!shell->tokens)
+		return (1);
 	shell->toex = create_cmdlist(shell->tokens);
 	if (!shell->toex)
 		return (error_int(PARSE_ERR));
@@ -45,6 +47,6 @@ int	parser(t_data *shell)
 	if (init_argv(shell) == 1)
 		return (error_int(PARSE_ERR));
 	if (handle_redirs(shell->toex))
-		return (1);
+		return (0);
 	return (0);
 }
