@@ -126,6 +126,12 @@ int		export_env(t_data *shell, char *arg)
 		free(name);
 		free(value);
 	}
+	// printf("-----das ist env---\n");
+	// print_env(shell->env_list);
+	// free_env_list(&shell->export_list);
+	// init_export_list(shell);
+	// printf("-----das ist export---\n");
+	// print_export_list(shell);
 	return (0);
 }
 
@@ -171,7 +177,7 @@ int		bi_export(t_data *shell)
 		while (shell->toex->args[i] != NULL)
 		{
 			if (identifier_check(shell->toex->args[i]) == 1) // checken nur bei erstem vor =
-				return (1);
+				return (ident_error_int(shell->toex->args[i]));
 			if (!(ft_strchr(shell->toex->args[i], '=')))
 				result = to_export_list(shell, shell->toex->args[i]);
 			else
@@ -182,7 +188,7 @@ int		bi_export(t_data *shell)
 	return (result);
 }
 
-int		identifier_check(char *arg)
+int		identifier_check(char *arg) //darf nur anschauen was vor = ist also A-=hallo darf nicht moeglich sein aber dafuer A=hallo-
 {
 	int		i;
 

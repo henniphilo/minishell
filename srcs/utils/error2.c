@@ -35,4 +35,12 @@ int	eof_error(char *delimiter, int linenum)
 	return (0);
 }
 
+int	ident_error_int(char *ident)
+{
+	ft_putstr_fd("minishell: export: '", 2);
+	ft_putstr_fd(ident, 2);
+	ft_putendl_fd("': not a valid identifier", 2);
+	return (1); //exit code 1
+}
+
 

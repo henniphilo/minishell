@@ -73,7 +73,7 @@ int	find_and_replace(t_lexer *tokens, t_data *shell)
 		if (limit == ft_strchr(tmp, '$') + 1)
 		{
 			if (*limit == '?')
-				tmp = expand_estatus(tokens, ft_strchr(tmp, '$'), limit + 1, shell->estatus);
+				tmp = expand_estatus(tokens, ft_strchr(tmp, '$'), limit + 1, shell->exit_status);
 			else if (*limit == '\0' && tokens->space_after == 0 && tokens->next)
 				return (ft_trim_last(tokens));
 			else
