@@ -9,13 +9,15 @@ int	ambig_redir_err_int(char *str)
 	return (1);
 }
 
-int	file_err_int(char *str)
+int	file_err_int(t_data *shell, char *str)
 {
 	ft_putstr_fd("minishell: ", 2);
 	if (str)
 		ft_putstr_fd(str, 2);
 	ft_putstr_fd(": ", 2);
 	perror(NULL);
+	g_estatus = 1;
+	shell->bi_check = 1;
 	return (1);
 }
 

@@ -95,7 +95,7 @@ void		panic(char *str, void *ptr, int status);
 int			error_int(char *str);
 void		*error_ptr(char *str);
 void		*cmd_error_ptr(char *str);
-int			file_err_int(char *file);
+int			file_err_int(t_data *shell, char *file);
 int			synt_error_int(t_type type);
 int			ambig_redir_err_int(char *str);
 int			eof_error(char *delimiter, int linenum);
@@ -144,7 +144,7 @@ int			ft_trim_last(t_lexer *tokens);
 char		*find_limit(char *start);
 int			find_and_replace(t_lexer *tokens, t_data *shell);
 int			expand_tilde(t_lexer *tokens, t_environ *env);
-char		*expand_estatus(t_lexer *tokens, char *dollar, char *limit, int estatus);
+char		*expand_estatus(t_lexer *tokens, char *dollar, char *limit);
 
 /*parser*/
 int			parser(t_data *shell);
@@ -154,7 +154,7 @@ t_command	*create_cmdlist(t_lexer *tokens);
 int			init_cmd_list(t_lexer *tokens, t_data *shell);
 void		cmd_list_add_back(t_command **lst, t_command *new);
 int			add_redir(t_lexer *tokens, t_command *toex);
-int			handle_redirs(t_command *toex);
+int			handle_redirs(t_data *shell, t_command *toex);
 
 /*test*/
 void		test(t_data *shell);

@@ -46,7 +46,7 @@ int	parser(t_data *shell)
 		return (error_int(PARSE_ERR));
 	if (init_argv(shell) == 1)
 		return (error_int(PARSE_ERR));
-	if (handle_redirs(shell->toex))
+	if (handle_redirs(shell, shell->toex))
 		return (0);
 	return (0);
 }

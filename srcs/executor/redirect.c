@@ -3,6 +3,7 @@
 
 void	redirect_pipes(t_command *toex)
 {
+//	printf("fd_out %d\nfd_in %d\n", toex->fd_out, toex->fd_in);
 	if(toex->fd_in != -2) // <
 	{
 		if (dup2(toex->fd_in, STDIN_FILENO) == -1)

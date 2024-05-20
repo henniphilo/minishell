@@ -34,13 +34,24 @@ void	wait_for_children(t_data *shell)
 	i = 0;
 	while(i < shell->cmd_count)
 	{
+	//	printf("in wait i %d und cmd count %d \n", i, shell->cmd_count);
 		waitpid(shell->pids[i], &estatus, 0);
+		// ft_putstr_fd("\ng_estatus in wait davor\n", 2);
+		// ft_putnbr_fd(g_estatus, 2);
 		if (WIFEXITED(estatus))
-			g_estatus = WEXITSTATUS(estatus);
+		{
+			if(shell->bi_check == 1)
+				g_estatus = 1;
+			else
+				g_estatus =  WEXITSTATUS(estatus); // hier wird es mit ergebnis der letzten pipe ueberschrieben
+		}
 		else
 			g_estatus = 1;
+		// ft_putstr_fd("\ng_estatus in wait danach\n", 2);
+		// ft_putnbr_fd(g_estatus, 2);
 		i++;
 	}
+//	printf("\n%i\n", g_estatus);
 }
 
 void	child_process(t_data *shell, int i, t_command *toex)
