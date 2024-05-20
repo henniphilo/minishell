@@ -1,27 +1,17 @@
 #include "../../incl/minishell.h"
 
-int	which_builtin_child(t_data *shell, char *arg)
+int	which_builtin_child(t_data *shell, t_command *toex)
 {
-	if(ft_strcmp((const char *)arg, "env") == 0)
+	if(ft_strcmp(toex->cmd, "env") == 0)
 	{
 		g_estatus = print_env(shell->env_list);
 		return (0);
 	}
-	else if(ft_strcmp((const char *)arg, "echo") == 0)
+	else if(ft_strcmp(toex->cmd, "echo") == 0)
 	{
-		g_estatus = bi_echo(shell);
+		g_estatus = bi_echo(toex);
 		return (0);
 	}
-	// else if(ft_strcmp((const char *)arg, "export") == 0)
-	// {
-	// 	g_estatus = bi_export(shell);
-	// 	return (0);
-	// }
-	// else if(ft_strcmp((const char *)arg, "unset") == 0)
-	// {
-	// 	g_estatus = bi_unset(shell);
-	// 	return (0);
-	// }
 	else
 		g_estatus = 1;
 	return(g_estatus);
@@ -68,18 +58,18 @@ void		echo_env(t_data *shell, char *str)
 	free(name);
 }
 
-static int	set_flag(t_data *shell)
+static int	set_flag(t_command *toex)
 {
 	int		j;
 	int		flag;
 
 	flag = 0;
-	if(shell->toex->args[0][0] == '-' && shell->toex->args[0][1] == 'n')
+	if(toex->args[0][0] == '-' && toex->args[0][1] == 'n')
 	{
 		j = 1;
-		while(shell->toex->args[0][j] != '\0')
+		while(toex->args[0][j] != '\0')
 		{
-			if(shell->toex->args[0][j] == 'n')
+			if(toex->args[0][j] == 'n')
 			{
 				flag = 1;
 				j++;
@@ -94,22 +84,23 @@ static int	set_flag(t_data *shell)
 	return(flag);
 }
 
-int		bi_echo(t_data *shell)
+int		bi_echo(t_command *toex)
 {
 	int		i;
 	int		flag;
 
-	i = 1;
+	i = 0;
 	flag = 0;
-	if(shell->toex->args)
+	if(toex->args)
 	{
-		flag = set_flag(shell);
+		flag = set_flag(toex);
 		if(flag == 1)
 			i++;
-		while(shell->toex->argv[i])
+		while(toex->args[i])
 		{
-			printf("%s", shell->toex->argv[i]);
-			if(shell->toex->argv[i + 1] != NULL)
+		//	ft_putstr_fd("wir sind in bi echo printen\n", 2);
+			printf("%s", toex->args[i]);
+			if(toex->args[i + 1] != NULL)
 				printf(" ");
 			i++;
 		}

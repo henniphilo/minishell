@@ -20,7 +20,7 @@ int		execute_command(t_data *shell, t_command *toex)
 void	execution(t_data *shell, t_command *toex)
 {
 	redirect_pipes(toex);
-	if (which_builtin_child(shell, toex->cmd) != 0)
+	if (which_builtin_child(shell, toex) != 0)
 	{
 		if (execute_command(shell, toex) != 0)
 		{

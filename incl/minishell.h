@@ -53,7 +53,7 @@ int			valid_fd_in_out_check(t_command *toex);
 
 
 /*built-ins*/
-int			which_builtin_child(t_data *shell, char *arg);
+int			which_builtin_child(t_data *shell, t_command *toex);
 int			builtin_check(char *arg);
 char		*find_in_env(char *to_find);
 int			which_builtin_parent(t_data *shell, char *arg, char **argv);
@@ -63,7 +63,7 @@ int			bi_pwd(t_data *shell);
 int			bi_exit(t_data *shell, char **argv);
 int			bi_unset(t_data *shell);
 int			bi_export(t_data *shell);
-int			bi_echo(t_data *shell);
+int			bi_echo(t_command *toex);
 int			identifier_check(char *arg);
 int			export_env(t_data *shell, char *arg);
 int			to_export_list(t_data *shell, char *arg);
