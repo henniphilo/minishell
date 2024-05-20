@@ -26,7 +26,7 @@ void	clear_data(t_data *shell)
 	if (g_estatus)
 	{
 		shell->exit_status = g_estatus; ///???
-		g_estatus = 0;
+		//g_estatus = 0;
 	}
 	else
 		shell->exit_status = 0;
