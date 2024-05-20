@@ -54,11 +54,11 @@ void		redirect_pipes(t_data *shell);
 int			which_builtin_child(t_data *shell, char *arg);
 int			builtin_check(char *arg);
 char		*find_in_env(char *to_find);
-int			which_builtin_parent(t_data *shell, char *arg);
+int			which_builtin_parent(t_data *shell, char *arg, char **argv);
 int			print_env(t_environ *env_ptr);
 int			bi_cd(t_data *shell);
 int			bi_pwd(t_data *shell);
-int			bi_exit(t_data *shell);
+int			bi_exit(t_data *shell, char **argv);
 int			bi_unset(t_data *shell);
 int			bi_export(t_data *shell);
 int			bi_echo(t_data *shell);
@@ -86,6 +86,7 @@ int			array_len(char **ptr);
 char		**free_arr(char **arr1, char **arr2);
 char		**append_arr(char **arr, char *new_str);
 int			check_syntax_and_here(t_lexer *tokens, t_data *shell);
+int			ft_isnum(char *str);
 
 /*error*/
 void		panic(char *str, void *ptr, int status);
@@ -97,6 +98,7 @@ int			synt_error_int(t_type type);
 int			ambig_redir_err_int(char *str);
 int			eof_error(char *delimiter, int linenum);
 int			ident_error_int(char *ident);
+int			command_err(char *cmd);
 
 /*signals*/
 void		handle_signals(void);

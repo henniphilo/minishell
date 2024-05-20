@@ -19,7 +19,7 @@ int	builtin_check(char *arg)
 	return (0);
 }
 
-int		which_builtin_parent(t_data *shell, char *arg)
+int		which_builtin_parent(t_data *shell, char *arg, char **argv)
 {
 	if(ft_strcmp((const char *)arg, "cd") == 0)
 		g_estatus = bi_cd(shell);
@@ -29,8 +29,13 @@ int		which_builtin_parent(t_data *shell, char *arg)
 		g_estatus = bi_pwd(shell);
 	else if(ft_strcmp((const char *)arg, "unset") == 0)
 		g_estatus = bi_unset(shell);
-	else if(ft_strcmp((const char *)arg, "exit") == 0)
-		g_estatus = bi_exit(shell);
+	else if(ft_strncmp((const char *)arg, "exit", n) == 0)
+	{
+		g_estatus = bi_exit(shell, argv);
+		ft_putendl_fd("exit", 2);
+		free_data(shell);
+		exit(g_estatus);
+	}
 	else
 		g_estatus = 1;
 	return (g_estatus);
@@ -146,12 +151,29 @@ t_environ	*find_name_in_envlist(t_data *shell, char *name)
 }
 
 //hier muss noch das verhalten exit + zahl bedacht werden
-int		bi_exit(t_data *shell)
+int		bi_exit(t_data *shell, char **argv)
 {
-	free_data(shell);
-	exit(g_estatus);
+	int	i;
+
+	i = 0;
+	(void)shell;
+	if (argv[1])
+	{
+		if (argv[2])
+		{
+			ft_putendl_fd("minishell: exit: too many arguments", 2);
+			return (2);
+		}
+		if (ft_isnum(argv[1]))
+			return (2);
+		i = ft_atoi(argv[1]);
+		return(i);
+	}
+	else
+		return(g_estatus);
 	return (0);
 }
+
 
 int		bi_pwd(t_data *shell)
 {
