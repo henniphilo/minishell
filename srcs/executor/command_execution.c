@@ -7,24 +7,30 @@ int		execute_command(t_data *shell, t_command *toex)
 	path = path_finder(toex->cmd, shell);
 	if(!path)
 	{
-		perror("Error in Path\n");
-		exit(1);
+		free(path);
+		panic("error in path", shell, 1);
 	}
-//	printf("executet: %s\n", toex->cmd);
-	if(execve(path, toex->argv, shell->env) < 0)
+	if (execve(path, toex->argv, shell->env) < 0)
+	{
+		free(path);
 		return (127);
+	}
 	free(path);
 	return (0);
 }
 
 void	execution(t_data *shell, t_command *toex)
 {
+	int	e_code;
+
+	e_code = 0;
 	if (which_builtin_child(shell, toex->cmd) != 0)
 	{
-		if (execute_command(shell, toex) != 0)
+		e_code = execute_command(shell, toex);
+		if (e_code != 0)
 		{
 			command_err(toex->cmd);
-			exit(127);
+			exit(e_code);
 		}
 	}
 	exit(EXIT_SUCCESS);
