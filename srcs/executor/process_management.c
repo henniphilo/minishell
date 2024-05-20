@@ -68,6 +68,6 @@ void	child_process(t_data *shell, int i, t_command *toex)
 			}
 			close_pipes(shell);
 		}
-	//	ft_putnbr_fd(i, 2);
+		redirect_pipes(shell);
 		execution(shell, toex);
 }
