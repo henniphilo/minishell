@@ -28,7 +28,7 @@ void	execution(t_data *shell, t_command *toex)
 	{
 		if (execute_command(shell, toex) != 0)
 		{
-			perror("Error executing command\n");
+			command_err(toex->cmd);
 			exit(127);
 		}
 	}
