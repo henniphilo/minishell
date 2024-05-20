@@ -25,7 +25,7 @@ void	clear_data(t_data *shell)
 	unlink("tmp_file");
 	if (g_estatus)
 	{
-		shell->estatus = g_estatus;
+		shell->exit_status = g_estatus; ///???
 		g_estatus = 0;
 	}
 	free_tokens(&(shell->tokens));
