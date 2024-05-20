@@ -185,20 +185,33 @@ int		bi_export(t_data *shell)
 			i++;
 		}
 	}
+	//printf("result ist gerade %d\n", result);
 	return (result);
 }
 
 int		identifier_check(char *arg) //darf nur anschauen was vor = ist also A-=hallo darf nicht moeglich sein aber dafuer A=hallo-
 {
 	int		i;
+	char	*limit;
+	char	*name;
 
 	i = 0;
-	while(arg[i] != '\0')
+	limit = ft_strchr(arg, '=');
+	if(!limit)
+		name = ft_strdup(arg);
+	else
+		name = ft_substr(arg, 0, limit - arg);
+	while(name[i] != '\0')
 	{
-		if(!((arg[i] >= 48 && arg[i] <= 57) || (arg[i] >= 65 && arg[i] <= 90)
-			|| (arg[i] >= 97 && arg[i] <= 122) || arg[i] == '='))
+	//	if (name[0] == '=')
+		if (!((name[i] >= 48 && name[i] <= 57) || (name[i] >= 65 && name[i] <= 90)
+			|| (name[i] >= 97 && name[i] <= 122) || name[i] == '='))
+		{
+			free (name);
 			return (1);
+		}
 		i++;
 	}
+	free(name);
 	return (0);
 }

@@ -28,6 +28,8 @@ void	clear_data(t_data *shell)
 		shell->exit_status = g_estatus; ///???
 		g_estatus = 0;
 	}
+	else
+		shell->exit_status = 0;
 	free_tokens(&(shell->tokens));
 	free_commands(&(shell->toex));
 }

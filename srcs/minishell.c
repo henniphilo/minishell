@@ -21,7 +21,7 @@ int	main(int ac, char **av, char **envp)
 			clear_data(shell);
 			continue ;
 		}
-		//test(shell);
+	//	test(shell);
 		if ((pipeline_exe(shell) != 0))
 			error_int(EXEC_ERR); //brauchen wir es?
 		clear_data(shell);
