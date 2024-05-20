@@ -51,6 +51,9 @@ t_command	*new_cmd_list(void)
 		return (error_ptr(ALLOC_ERR));
 	new_node->fd_in = -2;
 	new_node->fd_out = -2;
+	new_node->args = NULL;
+	new_node->argv = NULL;
+	new_node->cmd = NULL;
 	return (new_node);
 }
 
