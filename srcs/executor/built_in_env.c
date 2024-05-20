@@ -24,7 +24,7 @@ int		bi_unset(t_data *shell)
 	begin = shell->env_list;
 	head = begin;
 	prev = NULL;
-	if (shell->toex->argv[1] == NULL)
+	if (shell->toex->argv[1] == NULL) // irgendwo im tester gehen nach dieser aenderung punkte verloren
 		return (0);
 	else if (shell->toex->argv[1] != NULL)
 	{
