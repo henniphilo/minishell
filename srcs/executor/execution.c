@@ -11,6 +11,12 @@ int		pipeline_exe(t_data *shell)
 	init_pipeline(shell);
 	while(toex)
 	{
+		if (!toex->cmd) //added by petra
+		{ //added by petra
+			toex = toex->next; //added by petra
+			i++; //added by petra
+			continue ; //added by petra
+		} //added by petra
 		if (builtin_check(toex->cmd) == 1)
 		{
 			if (which_builtin_parent(shell, toex->cmd) != 0)
@@ -26,7 +32,7 @@ int		pipeline_exe(t_data *shell)
 		{
 			if (exe_env(shell, shell->pids, i, toex) != 0)
 			{
-				perror("exe Error\n");
+				perror("exe error\n");
 				g_estatus = 1;
 				return (1);
 			}
