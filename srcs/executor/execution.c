@@ -12,6 +12,11 @@ int		pipeline_exe(t_data *shell)
 	init_pipeline(shell);
 	while(toex)
 	{
+		if(valid_fd_in_out_check(toex) == 1)
+		{
+			toex = toex->next;
+			break ;
+		}
 		if (!toex->cmd) //added by petra
 		{ //added by petra
 			toex = toex->next; //added by petra
@@ -47,4 +52,15 @@ int		pipeline_exe(t_data *shell)
 	shell->pids = NULL;
 	free (shell->fd); //problematic double free if its null noch protecten
 	return(0);
+}
+
+int		valid_fd_in_out_check(t_command *toex)
+{
+	if(toex->fd_in == -1 || toex->fd_out == -1)
+	{
+		perror("Error in pipe"); //checken Exit code
+		g_estatus = 1;
+		return (1);
+	}
+	return (0);
 }
