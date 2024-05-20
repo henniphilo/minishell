@@ -21,9 +21,9 @@ int	main(int ac, char **av, char **envp)
 			clear_data(shell);
 			continue ;
 		}
-		test(shell);
+		//test(shell);
 		if ((pipeline_exe(shell) != 0))
-			perror("Error in Execution\n");
+			error_int(EXEC_ERR); //brauchen wir es?
 		clear_data(shell);
 	}
 	free_data(shell); //just temporarily in this part of the code

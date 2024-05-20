@@ -13,7 +13,7 @@ int		pipeline_exe(t_data *shell)
 	{
 		if (builtin_check(toex->cmd) == 1)
 		{
-			if(which_builtin_parent(shell, toex->cmd) != 0)
+			if (which_builtin_parent(shell, toex->cmd) != 0)
 			{
 				free_pipes(shell);
 				free (shell->pids);

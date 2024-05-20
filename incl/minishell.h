@@ -95,6 +95,7 @@ int			file_err_int(char *file);
 int			synt_error_int(t_type type);
 int			ambig_redir_err_int(char *str);
 int			eof_error(char *delimiter, int linenum);
+int			ident_error_int(char *ident);
 
 /*signals*/
 void		handle_signals(void);

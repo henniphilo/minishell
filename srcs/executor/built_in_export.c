@@ -177,7 +177,7 @@ int		bi_export(t_data *shell)
 		while (shell->toex->args[i] != NULL)
 		{
 			if (identifier_check(shell->toex->args[i]) == 1) // checken nur bei erstem vor =
-				return (1);
+				return (ident_error_int(shell->toex->args[i]));
 			if (!(ft_strchr(shell->toex->args[i], '=')))
 				result = to_export_list(shell, shell->toex->args[i]);
 			else
