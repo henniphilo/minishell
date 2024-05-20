@@ -47,6 +47,7 @@ void		wait_for_children(t_data *shell);
 void		free_pipes(t_data *shell);
 void		child_process(t_data *shell, int i, t_command *toex);
 void		free_split(char **split_components);
+void		redirect_pipes(t_data *shell);
 
 
 /*built-ins*/

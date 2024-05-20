@@ -8,6 +8,7 @@ int		pipeline_exe(t_data *shell)
 
 	i = 0;
 	toex = shell->toex;
+	
 	init_pipeline(shell);
 	while(toex)
 	{
