@@ -94,20 +94,26 @@ not between quotes and deletes them from the list*/
 static void	check_empty_tokens(t_data *shell)
 {
 	t_lexer	*tokens;
+	t_lexer	*next;
 
 	tokens = shell->tokens;
-	if (tokens->type == WORD)
+	while (tokens)
 	{
-		if (tokens->str && tokens->str[0] == '\0' && tokens->quote == NONE)
+		next = tokens->next;
+		if (tokens->type == WORD
+			&& tokens->str
+			&& tokens->str[0] == '\0'
+			&& tokens->quote == NONE)
 		{
 			if (tokens->previous)
-				tokens->previous->next = tokens->next->next;
+				tokens->previous->next = next;
 			else
-				shell->tokens = tokens->next;
-			if (tokens->next)
-				tokens->next->previous = tokens->previous;
+				shell->tokens = next;
+			if (next)
+				next->previous = tokens->previous;
 			delone_tokens(tokens);
 		}
+		tokens = next;
 	}
 }
 
