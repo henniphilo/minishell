@@ -12,9 +12,8 @@ char	*find_in_env(char *to_find)
 	}
 	return (value);
 }
-//noch beachten dass es unset USER="Henrike" ist also nicht mit weiteren toex[..]
 
-int		bi_unset(t_data *shell)
+int		bi_unset(t_data *shell) //looooop!
 {
 	t_environ	*prev;
 	t_environ	*begin;
@@ -24,29 +23,21 @@ int		bi_unset(t_data *shell)
 	begin = shell->env_list;
 	head = begin;
 	prev = NULL;
-	if (shell->toex->argv[1] == NULL) // irgendwo im tester gehen nach dieser aenderung punkte verloren
+	if (shell->toex->argv[1] == NULL)
 		return (0);
 	else if (shell->toex->argv[1] != NULL)
 	{
 		while(head != NULL)
 		{
-			if(ft_strncmp(head->name, shell->toex->args[0], 50) == 0)
+			if(ft_strcmp(head->name, shell->toex->args[0]) == 0)
 			{
-				if(shell->toex->args[1] == NULL)
-				{
-					remove = head;
-					if (prev)
-						prev->next = head->next;
-					else
-						begin = head->next;
-					delone_env_list(remove);
-					break ;
-				}
+				remove = head;
+				if (prev)
+					prev->next = head->next;
 				else
-				{
-					head = replace_value(head, shell->toex->args[1]);
-					break ;
-				}
+					begin = head->next;
+				delone_env_list(remove);
+				break ;
 			}
 			prev = head;
 			head = head->next;
