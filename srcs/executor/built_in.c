@@ -160,22 +160,15 @@ int		bi_exit(t_data *shell, char **argv)
 
 	i = 0;
 	(void)shell;
-	//free_data(shell); //warum hier?
 	if (argv[1])
 	{
 		if (argv[2])
 		{
 			ft_putendl_fd("minishell: exit: too many arguments", 2);
-			return (2); //oder exit(2)
+			return (2);
 		}
-		while (argv[1][i])
-		{
-			if (!ft_isdigit(argv[1][i++]))
-			{
-				ft_putendl_fd("minishell: exit: numeric argument required", 2);
-				return (2);
-			}
-		}
+		if (ft_isnum(argv[1]))
+			return (2);
 		i = ft_atoi(argv[1]);
 		return(i);
 	}
@@ -183,6 +176,7 @@ int		bi_exit(t_data *shell, char **argv)
 		return(g_estatus);
 	return (0);
 }
+
 
 int		bi_pwd(t_data *shell)
 {

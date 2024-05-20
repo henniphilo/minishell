@@ -9,7 +9,7 @@ RFLAG = -lreadline
 
 MAIN = minishell
 EXEC = redirect exec_env2 execution built_in built_in_env built_in_child built_in_export pipe_management process_management command_execution
-UTILS = error error2 init_env free_data check_line delete_lists delete_lists2 utils
+UTILS = error error2 init_env free_data check_line delete_lists delete_lists2 utils utils2
 LEXER = lexer create_token_list lexer_utils expand_env expand_env_utils heredoc
 PARSER = parser create_toex_list create_redir_list redir
 SIGNALS = signals

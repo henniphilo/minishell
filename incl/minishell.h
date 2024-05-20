@@ -86,6 +86,7 @@ int			array_len(char **ptr);
 char		**free_arr(char **arr1, char **arr2);
 char		**append_arr(char **arr, char *new_str);
 int			check_syntax_and_here(t_lexer *tokens, t_data *shell);
+int			ft_isnum(char *str);
 
 /*error*/
 void		panic(char *str, void *ptr, int status);
