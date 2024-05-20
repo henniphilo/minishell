@@ -29,7 +29,7 @@ int		which_builtin_parent(t_data *shell, char *arg, char **argv)
 		g_estatus = bi_pwd(shell);
 	else if(ft_strcmp((const char *)arg, "unset") == 0)
 		g_estatus = bi_unset(shell);
-	else if(ft_strncmp((const char *)arg, "exit", n) == 0)
+	else if(ft_strcmp((const char *)arg, "exit") == 0)
 	{
 		g_estatus = bi_exit(shell, argv);
 		ft_putendl_fd("exit", 2);
