@@ -13,7 +13,7 @@ char	*find_in_env(char *to_find)
 	return (value);
 }
 
-int		bi_unset(t_data *shell) //looooop!
+int		bi_unset(t_data *shell) //looooop! //unsetet nicht in der export liste den namen nur den value
 {
 	t_environ	*prev;
 	t_environ	*begin;

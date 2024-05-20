@@ -8,7 +8,7 @@ int		pipeline_exe(t_data *shell)
 
 	i = 0;
 	toex = shell->toex;
-	
+
 	init_pipeline(shell);
 	while(toex)
 	{
@@ -18,7 +18,7 @@ int		pipeline_exe(t_data *shell)
 			i++; //added by petra
 			continue ; //added by petra
 		} //added by petra
-		if (builtin_check(toex->cmd) == 1)
+		if (builtin_check(toex->cmd) == 1 && !toex->next)
 		{
 			if (which_builtin_parent(shell, toex->cmd) != 0)
 			{

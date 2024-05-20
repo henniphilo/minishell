@@ -2,21 +2,29 @@
 
 int	which_builtin_child(t_data *shell, char *arg)
 {
-	int	n;
-
-	n = 7;
-	shell->bi_check = 1;
-	if(ft_strncmp((const char *)arg, "env", n) == 0)
+	if(ft_strcmp((const char *)arg, "env") == 0)
 	{
 		g_estatus = print_env(shell->env_list);
-		return(0);
+		return (0);
 	}
-	if(ft_strncmp((const char *)arg, "echo", n) == 0)
+	else if(ft_strcmp((const char *)arg, "echo") == 0)
 	{
 		g_estatus = bi_echo(shell);
-		return(0);
+		return (0);
 	}
-	return(1);
+	// else if(ft_strcmp((const char *)arg, "export") == 0)
+	// {
+	// 	g_estatus = bi_export(shell);
+	// 	return (0);
+	// }
+	// else if(ft_strcmp((const char *)arg, "unset") == 0)
+	// {
+	// 	g_estatus = bi_unset(shell);
+	// 	return (0);
+	// }
+	else
+		g_estatus = 1;
+	return(g_estatus);
 }
 
 int		print_env(t_environ *env_ptr)

@@ -24,12 +24,15 @@ int		execute_command(t_data *shell, t_command *toex)
 
 void	execution(t_data *shell, t_command *toex)
 {
-	if (which_builtin_child(shell, toex->cmd) != 0)
+	if(which_builtin_parent(shell, toex->cmd) != 0)
 	{
-		if (execute_command(shell, toex) != 0)
+		if (which_builtin_child(shell, toex->cmd) != 0)
 		{
-			perror("Error executing command\n");
-			exit(127);
+			if (execute_command(shell, toex) != 0)
+			{
+				perror("Error executing command\n");
+				exit(127);
+			}
 		}
 	}
 	exit(EXIT_SUCCESS);

@@ -21,18 +21,15 @@ int	builtin_check(char *arg)
 
 int		which_builtin_parent(t_data *shell, char *arg)
 {
-	int	n;
-
-	n = 7;
-	if(ft_strncmp((const char *)arg, "cd", n) == 0)
+	if(ft_strcmp((const char *)arg, "cd") == 0)
 		g_estatus = bi_cd(shell);
-	else if(ft_strncmp((const char *)arg, "export", n) == 0)
+	else if(ft_strcmp((const char *)arg, "export") == 0)
 		g_estatus = bi_export(shell);
-	else if(ft_strncmp((const char *)arg, "pwd", n) == 0)
+	else if(ft_strcmp((const char *)arg, "pwd") == 0)
 		g_estatus = bi_pwd(shell);
-	else if(ft_strncmp((const char *)arg, "unset", n) == 0)
+	else if(ft_strcmp((const char *)arg, "unset") == 0)
 		g_estatus = bi_unset(shell);
-	else if(ft_strncmp((const char *)arg, "exit", n) == 0)
+	else if(ft_strcmp((const char *)arg, "exit") == 0)
 		g_estatus = bi_exit(shell);
 	else
 		g_estatus = 1;
