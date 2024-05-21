@@ -194,7 +194,7 @@ int		identifier_check(char *arg) //darf nur anschauen was vor = ist also A-=hall
 	int		i;
 
 	i = 0;
-	if (arg[0] == '=')
+	if (arg[0] == '=' || (arg[i] >= 48 && arg[i] <= 57))
 		return (1);
 	while(arg[i] != '\0' && arg[i] != '=')
 	{

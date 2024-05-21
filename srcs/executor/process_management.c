@@ -79,6 +79,6 @@ void	child_process(t_data *shell, int i, t_command *toex)
 			}
 			close_pipes(shell);
 		}
-	//	redirect_pipes(shell);
+		redirect_pipes(shell->toex);
 		execution(shell, toex);
 }

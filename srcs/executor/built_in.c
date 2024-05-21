@@ -72,29 +72,37 @@ int	bi_cd(t_data *shell)
 	char	*new_path;
 	char	*home_path;
 
-	if(var_check(shell, "HOME") == 0)
+	if (var_check(shell, "HOME") == 0)
 	{
 		home_path = find_in_env("HOME");
 		if (shell->toex->args == NULL)
 		{
 			chdir(home_path);
 			update_old_pwd(shell);
+			free(home_path);
 			return(0);
 		}
 		if (bi_cd_check(shell, home_path) == 0)
+		{
+			free (home_path);
 			return(0);
+		}
 		if (array_len(shell->toex->args) == 1)
 		{
 			new_path = shell->toex->args[0];
 			if(new_path != NULL)
 			{
-				if	(chdir(new_path) == 0)
+				if(chdir(new_path) == 0)
 				{
 					update_old_pwd(shell);
+					free(new_path);
+					free(home_path);
 					return(0);
 				}
+				free(new_path);
 			}
 		}
+		free(home_path);
 	}
 	return(1);
 }
