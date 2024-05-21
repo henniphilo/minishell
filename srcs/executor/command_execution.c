@@ -7,46 +7,29 @@ int		execute_command(t_data *shell, t_command *toex)
 
 	path = path_finder(toex->cmd, shell);
 	if(!path)
-	{
-		command_err(toex->cmd);
-		return (127);
-	}
+		return (command_err(toex->cmd, COMMAND_ERR, 127, NULL));
 	if (stat(path, &statbuf))
 	{
 		if (strncmp(toex->cmd, "/", 1) == 0 || strncmp(toex->cmd, "./", 2) == 0)
+		{
 			perror(toex->cmd);
+			return (command_err(NULL, NULL, 127, path));
+		}
 		else
-			command_err(toex->cmd);
-		free(path);
-		return (127); // Exit with 126 for directory error
+			return (command_err(toex->cmd, COMMAND_ERR, 127, path));
 	}
-    // Check if the path is a directory
-    if ((strncmp(toex->cmd, "/", 1) == 0 || strncmp(toex->cmd, "./", 2) == 0) && S_ISDIR(statbuf.st_mode))
-    {
-
-		fprintf(stderr, "%s: Is a directory\n", toex->cmd);
-		free(path);
-		return (126); // Exit with 126 for directory error
-    }
-	// Check for execute permissions
-    if (strncmp(toex->cmd, "./", 2) == 0)
+	if ((strncmp(toex->cmd, "/", 1) == 0 || strncmp(toex->cmd, "./", 2) == 0) && S_ISDIR(statbuf.st_mode))
+		return (command_err(toex->cmd, DIR_ERR, 126, path));
+	if (strncmp(toex->cmd, "./", 2) == 0)
 	{
 		if (access(path, X_OK) != 0)
 		{
 			if (errno == EACCES)
-			{
-				fprintf(stderr, "%s: Permission denied\n", toex->cmd);
-				free(path);
-				return (126); // Exit with 126 for permission error
-			}
+				return (command_err(toex->cmd, PER_ERR, 126, path));
 		}
 	}
 	if (execve(path, toex->argv, shell->env) < 0)
-	{
-		command_err(toex->cmd);
-		free(path);
-		return (127);
-	}
+		return (command_err(toex->cmd, COMMAND_ERR, 127, path));
 	free(path);
 	return (0);
 }

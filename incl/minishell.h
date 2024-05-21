@@ -100,7 +100,7 @@ int			synt_error_int(t_type type);
 int			ambig_redir_err_int(char *str);
 int			eof_error(char *delimiter, int linenum);
 int			ident_error_int(char *ident);
-int			command_err(char *cmd);
+int			command_err(char *cmd, char *s, int ret, char *path);
 int			direc_err(char *str);
 int			cd_error_int(char *s);
 

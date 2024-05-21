@@ -45,12 +45,15 @@ int	ident_error_int(char *ident)
 	return (1); //exit code 1
 }
 
-int	command_err(char *cmd)
+int	command_err(char *cmd, char *s, int ret, char *path)
 {
+	if (path)
+		free(path);
 	if (cmd)
 		ft_putstr_fd(cmd, 2);
-	ft_putendl_fd(": command not found", 2);
-	return (127);
+	if (s)
+		ft_putendl_fd(s, 2);
+	return (ret);
 }
 
 

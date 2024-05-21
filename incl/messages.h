@@ -15,6 +15,8 @@
 # define SYNTAX_ERR "minishell: syntax error near unexpected token "
 # define FILE_ERR "error creating file"
 # define IDENT_ERR "minishell: export: no valid identifier"
+# define DIR_ERR ": Is a directory"
+# define PER_ERR ": Permission denied"
 
 # define RDEND	0
 # define WREND	1
