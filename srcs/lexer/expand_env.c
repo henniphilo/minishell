@@ -107,7 +107,7 @@ int	expand_env(t_lexer *tokens, t_data *shell)
 			if (ft_strcmp("~", tokens->str) == 0
 				&& expand_tilde(tokens, shell->env_list))
 				return (error_int(EXPAN_ERR));
-			if (ft_strchr(tokens->str, '$'))
+			else if (tokens->str && ft_strchr(tokens->str, '$'))
 			{
 				if (find_and_replace(tokens, shell))
 					return (error_int(EXPAN_ERR));

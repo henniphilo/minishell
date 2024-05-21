@@ -7,9 +7,7 @@ char	*find_in_env(char *to_find)
 
 	value = getenv(to_find);
 	if(!value)
-	{
-		perror("env value not found\n");
-	}
+		return (NULL);
 	return (value);
 }
 

@@ -43,28 +43,27 @@ int		which_builtin_parent(t_data *shell, char *arg, char **argv)
 
 static int	bi_cd_check(t_data *shell, char *home_path)
 {
-	const char	*up;
-	const char	*tilde;
-
-	up = "..";
-	tilde = "~";
 	if (shell->toex && shell->toex->argv)
 	{
-		if(shell->toex->argv[1] != NULL && (ft_strncmp(shell->toex->argv[1], up, 3))== 0)
+		if(shell->toex->argv[1] != NULL && (ft_strncmp(shell->toex->argv[1], "..", 3))== 0)
 		{
-			if(chdir("..") == 0)
-			update_old_pwd(shell);
-			return (0);
+			if (chdir("..") == 0)
+			{
+				update_old_pwd(shell);
+				return (0);
+			}
 		}
-		else if(shell->toex->argv[1] != NULL && (ft_strncmp(shell->toex->argv[1], tilde, 2)) == 0)
+		else if(shell->toex->argv[1] != NULL && (ft_strncmp(shell->toex->argv[1], "~", 2)) == 0)
 		{
-			printf("tilde\n");
-			chdir(home_path);
-			update_old_pwd(shell);
-			return (0);
+			if (chdir(home_path))
+			{
+				update_old_pwd(shell);
+				return (0);
+			}
+			return (cd_error_int("HOME"));
 		}
 	}
-	return (1);
+	return (cd_error_int(shell->toex->argv[1]));
 }
 
 int	bi_cd(t_data *shell)
@@ -72,37 +71,31 @@ int	bi_cd(t_data *shell)
 	char	*new_path;
 	char	*home_path;
 
-	if (var_check(shell, "HOME") == 0)
+	if (shell->toex->args == NULL && (var_check(shell, "HOME") == 0))
 	{
 		home_path = find_in_env("HOME");
-		if (shell->toex->args == NULL)
+		chdir(home_path);
+		update_old_pwd(shell);
+		free(home_path);
+		return(0);
+	}
+	if (array_len(shell->toex->args) == 1)
+	{
+		new_path = shell->toex->args[0];
+		if (ft_strcmp(new_path, "..") == 0|| ft_strcmp(new_path, "~") == 0)
 		{
-			chdir(home_path);
-			update_old_pwd(shell);
-			free(home_path);
-			return(0);
-		}
-		if (bi_cd_check(shell, home_path) == 0)
-		{
+			if (ft_strcmp(new_path, "~") == 0 && var_check(shell, "HOME"))
+				return (1);
+			home_path = find_in_env("HOME");
+			bi_cd_check(shell, home_path);
 			free (home_path);
 			return(0);
 		}
-		if (array_len(shell->toex->args) == 1)
+		if (chdir(new_path) == 0)
 		{
-			new_path = shell->toex->args[0];
-			if(new_path != NULL)
-			{
-				if(chdir(new_path) == 0)
-				{
-					update_old_pwd(shell);
-					free(new_path);
-					free(home_path);
-					return(0);
-				}
-				free(new_path);
-			}
+			update_old_pwd(shell);
+			return(0);
 		}
-		free(home_path);
 	}
 	return(1);
 }
