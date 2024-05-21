@@ -162,7 +162,7 @@ int		bi_exit(t_data *shell, char **argv)
 		if (argv[2])
 		{
 			ft_putendl_fd("minishell: exit: too many arguments", 2);
-			return (2);
+			return (1);
 		}
 		if (ft_isnum(argv[1]))
 			return (2);

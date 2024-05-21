@@ -101,6 +101,7 @@ int			ambig_redir_err_int(char *str);
 int			eof_error(char *delimiter, int linenum);
 int			ident_error_int(char *ident);
 int			command_err(char *cmd);
+int			direc_err(char *str);
 
 /*signals*/
 void		handle_signals(void);
