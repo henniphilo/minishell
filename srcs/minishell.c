@@ -22,8 +22,9 @@ int	main(int ac, char **av, char **envp)
 			continue ;
 		}
 	//	test(shell);
-		if ((pipeline_exe(shell) != 0))
-			error_int(EXEC_ERR); //brauchen wir es?
+		//if ((pipeline_exe(shell) != 0))
+		//	error_int(EXEC_ERR); //brauchen wir es?
+		pipeline_exe(shell);
 		clear_data(shell);
 	}
 	free_data(shell); //just temporarily in this part of the code

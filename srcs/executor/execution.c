@@ -31,7 +31,7 @@ int		pipeline_exe(t_data *shell)
 				free_pipes(shell);
 				free (shell->pids);
 				shell->pids = NULL;
-				free (shell->fd);
+				//free (shell->fd);
 				return (1);
 			}
 		}
@@ -51,7 +51,7 @@ int		pipeline_exe(t_data *shell)
 	free_pipes(shell);
 	free (shell->pids);
 	shell->pids = NULL;
-	free (shell->fd); //problematic double free if its null noch protecten
+	//free (shell->fd); //problematic double free if its null noch protecten
 	// ft_putstr_fd("\ng_estatus ende pipeline exe\n", 2);
 	// 	ft_putnbr_fd(g_estatus, 2);
 	return(0);
