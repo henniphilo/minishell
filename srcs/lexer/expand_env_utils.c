@@ -47,23 +47,14 @@ char	*expand_estatus(t_lexer *tokens, char *dollar, char *limit)
 }
 
 /*expands special character ~ to HOME*/
-int	expand_tilde(t_lexer *tokens, t_environ *env)
+int	expand_tilde(t_lexer *tokens, char *home)
 {
-	if (tokens->quote == NONE && ft_strcmp("~", tokens->str) == 0)
+	if (tokens->quote == NONE)
 	{
 		free(tokens->str);
-		tokens->str = NULL;
-		while (env)
-		{
-			if (ft_strcmp("HOME", env->name) == 0)
-			{
-				tokens->str = ft_strdup(env->value);
-				if (!tokens->str)
-					return (error_int(ALLOC_ERR));
-				return (0);
-			}
-			env = env->next;
-		}
+		tokens->str = ft_strdup(home);
+		if (!tokens->str)
+			return (error_int(ALLOC_ERR));
 	}
 	return (0);
 }

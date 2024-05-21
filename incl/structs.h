@@ -59,6 +59,7 @@ typedef struct s_environ {
 //struct to store important data we need initially and at execution adn all other structs
 typedef struct s_data {
 	char		*buf; //buffer to store the line read
+	char		*home;
 	char		**env; //2Darray to store environmental variables
 	t_environ	*env_list;
 	t_environ	*export_list; //hen: Liste von Umgebungsvariablen die auch nicht deklarierte Export Variablen enhalten

@@ -145,7 +145,7 @@ char		*expand(t_lexer *tokens, char *dollar, char *limit, char *value);
 int			ft_trim_last(t_lexer *tokens);
 char		*find_limit(char *start);
 int			find_and_replace(t_lexer *tokens, t_data *shell);
-int			expand_tilde(t_lexer *tokens, t_environ *env);
+int			expand_tilde(t_lexer *tokens, char *home);
 char		*expand_estatus(t_lexer *tokens, char *dollar, char *limit);
 
 /*parser*/

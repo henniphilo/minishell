@@ -76,6 +76,9 @@ void	*init_env(t_data *shell, char **envp)
 	if (!shell->env)
 		panic(ALLOC_ERR, shell, 1);
 	i = -1;
+	shell->home = ft_strdup(getenv("HOME"));
+	if (!shell->home)
+		panic(ALLOC_ERR, shell, 1);
 	while (envp[++i])
 	{
 		shell->env[i] = ft_strdup(envp[i]);

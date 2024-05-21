@@ -105,7 +105,7 @@ int	expand_env(t_lexer *tokens, t_data *shell)
 			&& tokens->str)
 		{
 			if (ft_strcmp("~", tokens->str) == 0
-				&& expand_tilde(tokens, shell->env_list))
+				&& expand_tilde(tokens, shell->home))
 				return (error_int(EXPAN_ERR));
 			else if (tokens->str && ft_strchr(tokens->str, '$'))
 			{
