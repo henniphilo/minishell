@@ -32,6 +32,7 @@ void	wait_for_children(t_data *shell)
 	int		estatus;
 
 	i = 0;
+	estatus = 0;
 	while(i < shell->cmd_count)
 	{
 	//	printf("in wait i %d und cmd count %d \n", i, shell->cmd_count);

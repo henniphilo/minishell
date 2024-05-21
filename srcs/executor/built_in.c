@@ -41,38 +41,14 @@ int		which_builtin_parent(t_data *shell, char *arg, char **argv)
 	return (g_estatus);
 }
 
-static int	bi_cd_check(t_data *shell, char *home_path)
-{
-	if (shell->toex && shell->toex->argv)
-	{
-		if(shell->toex->argv[1] != NULL && (ft_strncmp(shell->toex->argv[1], "..", 3))== 0)
-		{
-			if (chdir("..") == 0)
-			{
-				update_old_pwd(shell);
-				return (0);
-			}
-		}
-		else if(shell->toex->argv[1] != NULL && (ft_strncmp(shell->toex->argv[1], "~", 2)) == 0)
-		{
-			if (chdir(home_path))
-			{
-				update_old_pwd(shell);
-				return (0);
-			}
-			return (cd_error_int("HOME"));
-		}
-	}
-	return (cd_error_int(shell->toex->argv[1]));
-}
-
 int	bi_cd(t_data *shell)
 {
-	char	*new_path;
 	char	*home_path;
 
-	if (shell->toex->args == NULL && (var_check(shell, "HOME") == 0))
+	if (shell->toex->args == NULL)
 	{
+		if (var_check(shell, "HOME"))
+			return (cd_error_int("HOME"));
 		home_path = find_in_env("HOME");
 		chdir(home_path);
 		update_old_pwd(shell);
@@ -81,23 +57,17 @@ int	bi_cd(t_data *shell)
 	}
 	if (array_len(shell->toex->args) == 1)
 	{
-		new_path = shell->toex->args[0];
-		if (ft_strcmp(new_path, "..") == 0|| ft_strcmp(new_path, "~") == 0)
-		{
-			if (ft_strcmp(new_path, "~") == 0 && var_check(shell, "HOME"))
-				return (1);
-			home_path = find_in_env("HOME");
-			bi_cd_check(shell, home_path);
-			free (home_path);
+		if (shell->toex->args[0][0] == '\0' && shell->toex->args[0][0] == '\0')
 			return(0);
-		}
-		if (chdir(new_path) == 0)
+		if (chdir(shell->toex->args[0]) == 0)
 		{
 			update_old_pwd(shell);
 			return(0);
 		}
 	}
-	return(1);
+	else
+		return (cd_error_int("MANY"));
+	return (cd_error_int(shell->toex->args[0]));
 }
 
 void		update_envlist(t_data *shell, char *to_up, char *new)
