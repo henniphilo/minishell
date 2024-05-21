@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/21 17:10:50 by pbencze           #+#    #+#             */
+/*   Updated: 2024/05/21 17:13:47 by pbencze          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../incl/minishell.h"
 
 static int	expand_heredoc(t_lexer *tokens, t_data *shell)
@@ -36,8 +48,6 @@ int	parse_heredoc(t_lexer *tokens, int fd, t_data *shell)
 	signal(SIGINT, here_sig_handler);
 	while (g_estatus != 148)
 	{
-		//write(0, "> ", 2);
-		//tokens->str = get_next_line(0);
 		tokens->str = readline("> ");
 		if (!tokens->str)
 			return (eof_error(delimiter, linenum));
@@ -45,10 +55,7 @@ int	parse_heredoc(t_lexer *tokens, int fd, t_data *shell)
 		if (ft_strcmp(tokens->str, delimiter) == 0)
 			return (return_and_free(delimiter));
 		if (expand_heredoc(tokens, shell))
-		{
-			free(delimiter);
-			return (error_int(ALLOC_ERR));
-		}
+			return (return_and_free(delimiter));
 		write(fd, tokens->str, ft_strlen(tokens->str));
 		free(tokens->str);
 		tokens->str = NULL;

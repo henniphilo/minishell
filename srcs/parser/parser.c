@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/21 17:14:48 by pbencze           #+#    #+#             */
+/*   Updated: 2024/05/21 17:14:54 by pbencze          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../incl/minishell.h"
 
 static int	init_argv(t_data *shell)
@@ -24,12 +36,6 @@ static int	init_argv(t_data *shell)
 					return (error_int(ALLOC_ERR));
 			}
 		}
-		// else // alles muss ins argv
-		// {
-		// 	printf("das ist gerade buffer : %s\n", shell->buf);
-		// 	node->argv[0] = ft_strdup(shell->buf);
-		// 	break ;
-		// }
 		node = node->next;
 	}
 	return (0);

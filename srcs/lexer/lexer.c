@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lexer.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/21 17:14:15 by pbencze           #+#    #+#             */
+/*   Updated: 2024/05/21 17:14:17 by pbencze          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../incl/minishell.h"
 
 /*stores redirections and pipes
@@ -146,4 +158,3 @@ int	lexer(t_data *shell)
 	shell->cmd_count = count_commands(shell->tokens);
 	return (0);
 }
-

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/21 16:52:47 by pbencze           #+#    #+#             */
+/*   Updated: 2024/05/21 16:55:59 by pbencze          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -9,7 +21,7 @@
 # include <readline/history.h>
 # include <stdio.h>      // printf
 # include <stdlib.h>     // malloc, free, exit
-# include <unistd.h>     // write, access, fork, execve, dup, dup2, pipe, close, unlink, getpid, getcwd, chdir
+# include <unistd.h>     // write, access, fork, execve, dup2, pipe, etc.
 # include <sys/wait.h>   // wait, waitpid, wait3, wait4
 # include <signal.h>     // signal, sigaction, sigemptyset, sigaddset, kill
 # include <errno.h>      // perror, strerror
@@ -25,10 +37,9 @@
 # include <stdlib.h>     // getenv
 # include <stddef.h>	 // Null
 
-extern int	g_estatus; //correct place?
+extern int	g_estatus;
 
-/*Henni*/
-
+/*execution*/
 char		*path_finder(char *cmd, t_data *shell);
 char		**get_path_components(t_data *shell);
 int			var_check(t_data *shell, char *to_check);
@@ -49,8 +60,6 @@ void		child_process(t_data *shell, int i, t_command *toex);
 void		free_split(char **split_components);
 void		redirect_pipes(t_command *toex);
 int			valid_fd_in_out_check(t_command *toex);
-
-
 
 /*built-ins*/
 int			which_builtin_child(t_data *shell, t_command *toex);
@@ -76,8 +85,6 @@ void		sort_export_list(t_data *shell);
 t_environ	*list_duplicate(t_environ *lst_ptr);
 t_environ	*replace_value(t_environ *list_ptr, char *replace);
 t_environ	*find_name_in_envlist(t_data *shell, char *name);
-
-/*Petra*/
 
 /*read line*/
 const char	*get_the_line(t_data *shell);
@@ -139,7 +146,7 @@ int			join_words(t_data *shell);
 int			parse_heredoc(t_lexer *tokens, int fd, t_data *shell);
 int			handle_heredoc(t_lexer *tokens, t_data *shell);
 
-/*expansions*/
+/*expansion*/
 int			expand_env(t_lexer *tokens, t_data *shell);
 char		*expand(t_lexer *tokens, char *dollar, char *limit, char *value);
 int			ft_trim_last(t_lexer *tokens);

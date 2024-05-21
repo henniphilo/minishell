@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   create_toex_list.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/21 17:14:41 by pbencze           #+#    #+#             */
+/*   Updated: 2024/05/21 17:15:37 by pbencze          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../incl/minishell.h"
 
 int	init_cmd_list(t_lexer *tokens, t_data *shell)
@@ -19,8 +31,6 @@ int	init_cmd_list(t_lexer *tokens, t_data *shell)
 			}
 			else
 			{
-				//if (init_cmd_list_helper(node, tokens))
-				//	return (1)
 				if (!node->cmd)
 				{
 					node->cmd = ft_strdup(tokens->str);

@@ -1,51 +1,63 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   structs.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/21 16:56:15 by pbencze           #+#    #+#             */
+/*   Updated: 2024/05/21 17:20:49 by pbencze          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
-# include <stdbool.h> //for booleans
+# include <stdbool.h>
 
-//token types for lexing and parsing
+/* token types for lexing and parsing */
 typedef enum e_type {
-	WORD,		// commands, words, flags
-	INPUT,		// <
-	OUTPUT,		// >
-	HEREDOC,	// <<
-	APPEND,		// >>
-	PIPE		// |
+	WORD,
+	INPUT,
+	OUTPUT,
+	HEREDOC,
+	APPEND,
+	PIPE
 }	t_type;
 
+/* types of quotes */
 typedef enum e_quote {
 	NONE,
-	SINGLE, //'ab'
-	DOUBLE, //"ab"
-	HERE // << a'b'
+	SINGLE,
+	DOUBLE,
+	HERE
 }	t_quote;
 
 typedef struct s_lexer {
 	t_type			type;
 	char			*str;
 	t_quote			quote;
-	bool			space_after; //to check if a space follows the quoted word e.g. 'l's vs. 'l' s
+	bool			space_after;
 	char			*ambig_redir;
 	struct s_lexer	*previous;
 	struct s_lexer	*next;
 }	t_lexer;
 
 typedef struct s_redir {
-	t_type			type; //HERE, APPEND, IN, OUT
-	char			*file; //or int fd;
+	t_type			type;
+	char			*file;
 	char			*ambig_redir;
 	struct s_redir	*next;
-	//char *heredoc;
-} t_redir;
+}	t_redir;
 
 //to store command nodes
 typedef struct s_command {
-	char				*cmd; //e.g. "ls", "echo", "cat", "pwd"
-	char				**args; //things that come after the command e.g. pathname or string
-	char				**argv; //command + args together of execve()
-	int					fd_in; //fd for infiles (and maybe heredoc tmpfiles) (-2 default)
-	int					fd_out; //fd for outfiles and append (-2)
-	t_redir				*redirs; //only used for parsing, not for execution
+	char				*cmd; // e.g. "ls", "echo", "cat", "pwd"
+	char				**args; // things that come after the command e.g. pathname or string
+	char				**argv; // command + args together of execve()
+	int					fd_in; // fd for infiles and heredoc tmpfiles (-2 default)
+	int					fd_out; // fd for outfiles and append (-2)
+	t_redir				*redirs; // only used for parsing, not for execution
 	struct s_command	*next;
 }	t_command;
 
@@ -56,21 +68,20 @@ typedef struct s_environ {
 	struct s_environ	*next;
 }	t_environ;
 
-//struct to store important data we need initially and at execution adn all other structs
+/* struct to store every data */
 typedef struct s_data {
-	char		*buf; //buffer to store the line read
+	char		*buf; // buffer to store the line read
 	char		*home;
-	char		**env; //2Darray to store environmental variables
-	t_environ	*env_list;
-	t_environ	*export_list; //hen: Liste von Umgebungsvariablen die auch nicht deklarierte Export Variablen enhalten
-	t_lexer		*tokens; //linked list of lexed tokens
-	t_command	*toex; //hen: to execute as replacement for cmds arg confusion, toex is the input seperated by a pipe
-	int			cmd_count; // wird von petra upgedatet in pipe count
-	int			**fd; //= pipes structure [[0,1],[0,1]...] hen: zum directen der fd muss noch richtig init werde
-	bool		bi_check; //hen: built_in check - brauch ich nicht
+	char		**env; // 2Darray to store environmental variables
+	t_environ	*env_list; // env variable list
+	t_environ	*export_list; // list of exported env variables
+	t_lexer		*tokens; // linked list of lexed tokens
+	t_command	*toex; // toex is the input seperated by a pipe
+	int			cmd_count;
+	int			**fd; // pipes structure [[0,1],[0,1]...]
+	bool		bi_check;
 	pid_t		*pids;
-	int			exit_status; //hen: letzter exit status
-//	pid_t		*pid; //process id, evt als array fuer individuelle prozess? - doch nicht
+	int			exit_status;
 }	t_data;
 
 #endif
