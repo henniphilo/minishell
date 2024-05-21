@@ -8,7 +8,7 @@ int		exe_env(t_data *shell, pid_t *pids, int i, t_command *toex)
 
 	if (pids[i] < 0)
 	{
-		perror("fork error \n");
+		perror("fork error\n");
 		return (1);
 	}
 	if (pids[i] == 0)

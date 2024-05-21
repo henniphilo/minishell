@@ -61,7 +61,6 @@ int		valid_fd_in_out_check(t_command *toex)
 {
 	if(toex->fd_in == -1 || toex->fd_out == -1)
 	{
-		perror("Error in pipe"); //checken Exit code
 		g_estatus = 1;
 		return (1);
 	}

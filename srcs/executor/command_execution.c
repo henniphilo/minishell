@@ -13,12 +13,44 @@ int		execute_command(t_data *shell, t_command *toex)
 		return (127);
 		//panic("error in path", shell, 1);
 	}
-	if (stat(path, &statbuf) == 0 && S_ISDIR(statbuf.st_mode))
+/*     if (stat(path, &statbuf) != 0)
+    {
+        perror(toex->cmd);
+        free(path);
+        exit(127); // Command not found
+    } */
+    // Check if the path is a directory
+    if ((stat(path, &statbuf) == 0) && (strncmp(toex->cmd, "/", 2) == 0 || strncmp(toex->cmd, "./", 2) == 0) && S_ISDIR(statbuf.st_mode))
+    {
+        fprintf(stderr, "%s: Is a directory\n", toex->cmd);
+        free(path);
+        exit(126); // Exit with 126 for directory error
+    }
+	// Check for execute permissions
+    if (strncmp(toex->cmd, "./", 2) == 0)
+	{
+		if (access(path, X_OK) != 0)
+		{
+			if (errno == EACCES)
+			{
+				fprintf(stderr, "%s: Permission denied\n", toex->cmd);
+				free(path);
+				exit(126); // Exit with 126 for permission error
+			}
+		}
+	}
+/* 	if (stat(path, &statbuf) == 0 && S_ISDIR(statbuf.st_mode))
 	{
 		direc_err(toex->cmd);
 		free(path);
 		return (126);
-	}
+	} */
+/* 	if (access(path, X_OK) != 0)
+	{
+		perror(toex->cmd); // Will print "Permission denied" if that's the case
+		free(path);
+		exit(126); // Exit with 126 for permission error
+	} */
 	if (execve(path, toex->argv, shell->env) < 0)
 	{
 		command_err(toex->cmd);
@@ -38,7 +70,7 @@ void	execution(t_data *shell, t_command *toex)
 	{
 		e_code = execute_command(shell, toex);
 		if (e_code != 0)
-			exit(e_code);
+			exit(e_code); //sollten wir nicht statt exit returnen?
 	}
-	exit(EXIT_SUCCESS);
+	exit(EXIT_SUCCESS); //sollten wir nicht statt exit returnen?
 }
