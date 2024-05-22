@@ -10,33 +10,25 @@ char	*find_in_env(char *to_find)
 	return (value);
 }
 
-int		bi_unset(t_data *shell)
+int		bi_unset(char **argv, t_environ *list)
 {
 	t_environ	*prev;
-	t_environ	*begin;
-	t_environ	*remove;
 	t_environ	*head;
 	int			i;
 
-	begin = shell->env_list;
-	head = begin;
-	prev = NULL;
-	if (shell->toex->argv[1] == NULL)
+	if (argv[1] == NULL)
 		return (0);
+	prev = NULL;
 	i = 1;
-	while (shell->toex->argv[i] != NULL)
+	while (argv[i] != NULL)
 	{
+		head = list;
 		while(head != NULL)
 		{
-			if(ft_strcmp(head->name, shell->toex->args[0]) == 0)
+			if(ft_strcmp(head->name, argv[i]) == 0)
 			{
-				remove = head;
-				if (prev)
-					prev->next = head->next;
-				else
-					begin = head->next;
-				delone_env_list(remove);
-				break ;
+				remove_node(head, head, &list, prev);
+				break;
 			}
 			prev = head;
 			head = head->next;
@@ -44,6 +36,15 @@ int		bi_unset(t_data *shell)
 		i++;
 	}
 	return (0);
+}
+
+void	remove_node(t_environ *remove, t_environ *head, t_environ **list, t_environ *prev)
+{
+	if (prev)
+		prev->next = head->next;
+	else
+		*list = head->next;
+	delone_env_list(remove);
 }
 
 t_environ	*replace_value(t_environ *list_ptr, char *replace)

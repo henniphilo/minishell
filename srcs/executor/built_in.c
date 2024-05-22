@@ -28,7 +28,11 @@ int		which_builtin_parent(t_data *shell, char *arg, char **argv)
 	else if(ft_strcmp((const char *)arg, "pwd") == 0)
 		g_estatus = bi_pwd(shell);
 	else if(ft_strcmp((const char *)arg, "unset") == 0)
-		g_estatus = bi_unset(shell);
+	{
+		bi_unset(argv, shell->env_list);
+		bi_unset(argv, shell->export_list);
+		g_estatus = 0;
+	}
 	else if(ft_strcmp((const char *)arg, "exit") == 0)
 	{
 		g_estatus = bi_exit(shell, argv);

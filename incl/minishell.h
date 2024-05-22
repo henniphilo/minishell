@@ -6,7 +6,7 @@
 /*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 16:52:47 by pbencze           #+#    #+#             */
-/*   Updated: 2024/05/22 11:35:52 by pbencze          ###   ########.fr       */
+/*   Updated: 2024/05/22 12:20:27 by pbencze          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int			print_env(t_environ *env_ptr);
 int			bi_cd(t_data *shell);
 int			bi_pwd(t_data *shell);
 int			bi_exit(t_data *shell, char **argv);
-int			bi_unset(t_data *shell);
+int			bi_unset(char **args, t_environ *list);
 int			bi_export(t_data *shell);
 int			bi_echo(t_command *toex);
 int			identifier_check(char *arg);
@@ -79,6 +79,7 @@ int			to_export_list(t_data *shell, char *arg);
 void		echo_env(t_data *shell, char *str);
 void		update_envlist(t_data *shell, char *to_up, char *new);
 void		update_old_pwd(t_data *shell);
+void		remove_node(t_environ *remove, t_environ *head, t_environ **list, t_environ *prev);
 void		print_export_list(t_data *shell);
 void		init_export_list(t_data *shell);
 void		sort_export_list(t_data *shell);
