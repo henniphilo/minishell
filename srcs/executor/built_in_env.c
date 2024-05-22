@@ -23,15 +23,16 @@ int		bi_unset(char **argv, t_environ *list)
 	while (argv[i] != NULL)
 	{
 		head = list;
-		while(head != NULL)
+		while (head != NULL)
 		{
 			if(ft_strcmp(head->name, argv[i]) == 0)
 			{
 				remove_node(head, head, &list, prev);
-				break;
+				head = NULL;
 			}
 			prev = head;
-			head = head->next;
+			if (head)
+				head = head->next;
 		}
 		i++;
 	}
