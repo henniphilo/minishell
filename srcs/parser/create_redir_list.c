@@ -6,7 +6,7 @@
 /*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 17:14:38 by pbencze           #+#    #+#             */
-/*   Updated: 2024/05/21 17:14:39 by pbencze          ###   ########.fr       */
+/*   Updated: 2024/05/22 09:56:40 by pbencze          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,14 @@ static void	redir_list_add_back(t_redir **lst, t_redir *new)
 }
 
 /*adds a redirection node to the redirection list*/
-int	add_redir(t_lexer *tokens, t_command *toex)
+int	add_redir(t_lexer **tokens, t_command *toex)
 {
 	t_redir	*node;
 
-	node = new_redir_list(tokens->next);
+	node = new_redir_list((*tokens)->next);
 	if (!node)
 		return (1);
 	redir_list_add_back(&(toex->redirs), node);
+	*tokens = (*tokens)->next;
 	return (0);
 }

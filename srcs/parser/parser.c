@@ -6,7 +6,7 @@
 /*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 17:14:48 by pbencze           #+#    #+#             */
-/*   Updated: 2024/05/21 17:14:54 by pbencze          ###   ########.fr       */
+/*   Updated: 2024/05/22 09:45:16 by pbencze          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	parser(t_data *shell)
 	shell->toex = create_cmdlist(shell->tokens);
 	if (!shell->toex)
 		return (error_int(PARSE_ERR));
-	if (init_cmd_list(shell->tokens, shell) == 1)
+	if (init_cmd_list(shell->tokens, shell->toex) == 1)
 		return (error_int(PARSE_ERR));
 	if (init_argv(shell) == 1)
 		return (error_int(PARSE_ERR));

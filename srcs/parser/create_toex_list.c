@@ -6,44 +6,34 @@
 /*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 17:14:41 by pbencze           #+#    #+#             */
-/*   Updated: 2024/05/21 17:15:37 by pbencze          ###   ########.fr       */
+/*   Updated: 2024/05/22 09:59:22 by pbencze          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-int	init_cmd_list(t_lexer *tokens, t_data *shell)
+int	init_cmd_list(t_lexer *tokens, t_command *node)
 {
-	t_command	*node;
-
-	node = shell->toex;
 	while (tokens)
 	{
 		if (tokens->type == PIPE)
 			node = node->next;
-		else
+		else if (!(tokens->type == WORD))
 		{
-			if (!(tokens->type == WORD))
-			{
-				if (add_redir(tokens, node))
-					return (1);
-				tokens = tokens->next;
-			}
-			else
-			{
-				if (!node->cmd)
-				{
-					node->cmd = ft_strdup(tokens->str);
-					if (!node->cmd)
-						return (1);
-				}
-				else
-				{
-					node->args = append_arr(node->args, tokens->str);
-					if (!node->args)
-						return (1);
-				}
-			}
+			if (add_redir(&tokens, node))
+				return (1);
+		}
+		else if (tokens->type == WORD && !node->cmd)
+		{
+			node->cmd = ft_strdup(tokens->str);
+			if (!node->cmd)
+				return (1);
+		}
+		else if (tokens->type == WORD && node->cmd)
+		{
+			node->args = append_arr(node->args, tokens->str);
+			if (!node->args)
+				return (1);
 		}
 		if (tokens)
 			tokens = tokens->next;

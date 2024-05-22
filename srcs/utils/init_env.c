@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_env.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/22 10:07:34 by pbencze           #+#    #+#             */
+/*   Updated: 2024/05/22 10:14:57 by pbencze          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../incl/minishell.h"
 
 /*creates a new env node*/
@@ -28,6 +40,7 @@ t_environ	*env_list_last(t_environ *list)
 void	add_env_back(t_environ **list, t_environ *node)
 {
 	t_environ	*tmp;
+
 	if (list)
 	{
 		tmp = env_list_last(*list);
@@ -36,7 +49,6 @@ void	add_env_back(t_environ **list, t_environ *node)
 		else
 			*list = node;
 	}
-
 }
 
 /*creates a linked list of environment variables; pros: easy to manipulate*/
@@ -53,7 +65,8 @@ t_environ	*init_env_list(char **envp)
 	while (*envp)
 	{
 		name = ft_substr(*envp, 0, ft_strchr(*envp, '=') - *envp);
-		value = ft_substr(*envp, (ft_strchr(*envp, '=') - *envp) + 1, ft_strlen((const char *)(*envp)));
+		value = ft_substr(*envp, (ft_strchr(*envp, '=') - *envp) + 1,
+				ft_strlen((const char *)(*envp)));
 		node = new_env_node(name, value);
 		if (!node)
 		{

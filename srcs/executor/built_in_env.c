@@ -1,58 +1,70 @@
-#include "../../incl/minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   built_in_env.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/22 15:23:53 by pbencze           #+#    #+#             */
+/*   Updated: 2024/05/22 15:24:16 by pbencze          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "../../incl/minishell.h"
 
 char	*find_in_env(char *to_find)
 {
 	char	*value;
 
 	value = getenv(to_find);
-	if(!value)
+	if (!value)
 		return (NULL);
 	return (value);
 }
 
-int		bi_unset(t_data *shell) //looooop! //unsetet nicht in der export liste den namen nur den value
+int	bi_unset(char **argv, t_environ *list)
 {
 	t_environ	*prev;
-	t_environ	*begin;
-	t_environ	*remove;
 	t_environ	*head;
+	int			i;
 
-	begin = shell->env_list;
-	head = begin;
-	prev = NULL;
-	if (shell->toex->argv[1] == NULL)
+	if (argv[1] == NULL)
 		return (0);
-	else if (shell->toex->argv[1] != NULL)
+	prev = NULL;
+	i = 1;
+	while (argv[i] != NULL)
 	{
-		while(head != NULL)
+		head = list;
+		while (head != NULL)
 		{
-			if(ft_strcmp(head->name, shell->toex->args[0]) == 0)
+			if (ft_strcmp(head->name, argv[i]) == 0)
 			{
-				remove = head;
-				if (prev)
-					prev->next = head->next;
-				else
-					begin = head->next;
-				delone_env_list(remove);
-				break ;
+				remove_node(head, head, &list, prev);
+				head = NULL;
 			}
 			prev = head;
-			head = head->next;
+			if (head)
+				head = head->next;
 		}
-		return (0);
+		i++;
 	}
-	return (1);
+	return (0);
+}
+
+void	remove_node(t_environ *remove, t_environ *head,
+	t_environ **list, t_environ *prev)
+{
+	if (prev)
+		prev->next = head->next;
+	else
+		*list = head->next;
+	delone_env_list(remove);
 }
 
 t_environ	*replace_value(t_environ *list_ptr, char *replace)
 {
-	char		*new_value;
-
-	new_value = ft_strdup(replace);
-	if (!new_value)
-		return (NULL);
-	free(list_ptr->value);
-	list_ptr->value = new_value;
-	return(list_ptr);
+	if (list_ptr->value)
+		free(list_ptr->value);
+	list_ptr->value = replace;
+	return (list_ptr);
 }

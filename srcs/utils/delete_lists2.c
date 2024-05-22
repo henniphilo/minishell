@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   delete_lists2.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/22 10:04:27 by pbencze           #+#    #+#             */
+/*   Updated: 2024/05/22 12:02:17 by pbencze          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../incl/minishell.h"
 
 /*frees one element of the command list used for parsing*/
@@ -23,5 +35,30 @@ void	free_redirs(t_redir **redirs)
 		free_redirs(&(*redirs)->next);
 		delone_redirs(*redirs);
 		*redirs = NULL;
+	}
+}
+
+/*frees one element of the token list used for lexing*/
+void	delone_env_list(t_environ *env)
+{
+	if (env)
+	{
+		if (env->value)
+			free(env->value);
+		if (env->name)
+			free(env->name);
+		free(env);
+		env = NULL;
+	}
+}
+
+/*frees the token list used for lexing*/
+void	free_env_list(t_environ **env)
+{
+	if (env && *env)
+	{
+		free_env_list(&(*env)->next);
+		delone_env_list(*env);
+		*env = NULL;
 	}
 }

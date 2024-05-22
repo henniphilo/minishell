@@ -6,7 +6,7 @@
 /*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 16:56:15 by pbencze           #+#    #+#             */
-/*   Updated: 2024/05/21 17:20:49 by pbencze          ###   ########.fr       */
+/*   Updated: 2024/05/22 10:07:14 by pbencze          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <stdbool.h>
 
-/* token types for lexing and parsing */
+/*token types for lexing and parsing*/
 typedef enum e_type {
 	WORD,
 	INPUT,
@@ -25,7 +25,7 @@ typedef enum e_type {
 	PIPE
 }	t_type;
 
-/* types of quotes */
+/*types of quotes*/
 typedef enum e_quote {
 	NONE,
 	SINGLE,
@@ -33,6 +33,7 @@ typedef enum e_quote {
 	HERE
 }	t_quote;
 
+/*the srtuct used during lexing*/
 typedef struct s_lexer {
 	t_type			type;
 	char			*str;
@@ -50,38 +51,43 @@ typedef struct s_redir {
 	struct s_redir	*next;
 }	t_redir;
 
-//to store command nodes
+/*struct to store the pipes split into commands, arguments,
+both together (argv) and filedescriptors for redirections
+- infiles and outfiles; the t_redir struct is only used during parsing*/
 typedef struct s_command {
-	char				*cmd; // e.g. "ls", "echo", "cat", "pwd"
-	char				**args; // things that come after the command e.g. pathname or string
-	char				**argv; // command + args together of execve()
-	int					fd_in; // fd for infiles and heredoc tmpfiles (-2 default)
-	int					fd_out; // fd for outfiles and append (-2)
-	t_redir				*redirs; // only used for parsing, not for execution
+	char				*cmd;
+	char				**args;
+	char				**argv;
+	int					fd_in;
+	int					fd_out;
+	t_redir				*redirs;
 	struct s_command	*next;
 }	t_command;
 
-/*linked list of env variables*/
+/*linked list of environment variables*/
 typedef struct s_environ {
-	char				*name; //e.g. USER
-	char				*value; //e.g. hwiemann
+	char				*name;
+	char				*value;
 	struct s_environ	*next;
 }	t_environ;
 
-/* struct to store every data */
+/*struct to store every data: buffer to store the line read,
+ 2D-array to store the environment variables and a linked list to
+ store them and allow more flexibility, a linked list of tokens,
+ a linked liost of pipes, the number of pipes, filedescriptors
+ for the pipes and process ids*/
 typedef struct s_data {
-	char		*buf; // buffer to store the line read
+	char		*buf;
 	char		*home;
-	char		**env; // 2Darray to store environmental variables
-	t_environ	*env_list; // env variable list
-	t_environ	*export_list; // list of exported env variables
-	t_lexer		*tokens; // linked list of lexed tokens
-	t_command	*toex; // toex is the input seperated by a pipe
+	char		**env;
+	t_environ	*env_list;
+	t_environ	*export_list;
+	t_lexer		*tokens;
+	t_command	*toex;
 	int			cmd_count;
-	int			**fd; // pipes structure [[0,1],[0,1]...]
+	int			**fd;
 	bool		bi_check;
 	pid_t		*pids;
-	int			exit_status;
 }	t_data;
 
 #endif

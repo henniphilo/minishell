@@ -28,7 +28,11 @@ int		which_builtin_parent(t_data *shell, char *arg, char **argv)
 	else if(ft_strcmp((const char *)arg, "pwd") == 0)
 		g_estatus = bi_pwd(shell);
 	else if(ft_strcmp((const char *)arg, "unset") == 0)
-		g_estatus = bi_unset(shell);
+	{
+		bi_unset(argv, shell->env_list);
+		bi_unset(argv, shell->export_list);
+		g_estatus = 0;
+	}
 	else if(ft_strcmp((const char *)arg, "exit") == 0)
 	{
 		g_estatus = bi_exit(shell, argv);
@@ -112,13 +116,22 @@ t_environ	*find_name_in_envlist(t_data *shell, char *name)
 	head = shell->env_list;
 	while (head != NULL)
 	{
-		if (ft_strncmp(name, head->name, 50) == 0)
-		{
+		if (ft_strcmp(name, head->name) == 0)
 			return (head);
-		}
 		head = head->next;
 	}
-	return(NULL);
+	return (NULL);
+}
+
+t_environ	*find_name_in_exportlist(t_environ *export_list, char *name)
+{
+	while (export_list != NULL)
+	{
+		if (ft_strcmp(name, export_list->name) == 0)
+			return (export_list);
+		export_list = export_list->next;
+	}
+	return (NULL);
 }
 
 //hier muss noch das verhalten exit + zahl bedacht werden

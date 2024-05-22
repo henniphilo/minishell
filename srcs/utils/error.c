@@ -6,7 +6,7 @@
 /*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 14:47:45 by pbencze           #+#    #+#             */
-/*   Updated: 2024/05/14 16:32:22 by pbencze          ###   ########.fr       */
+/*   Updated: 2024/05/22 10:14:26 by pbencze          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	panic(char *str, void *ptr, int status)
 {
 	if (str)
 		ft_putendl_fd(str, 2);
-	//optional: perror() or strerror() instead of putendl()
 	if (ptr)
 		free_data((t_data *)ptr);
 	exit(status);
@@ -51,7 +50,7 @@ void	*cmd_error_ptr(char *str)
 /*puts a specific syntax error message and returns int 1*/
 int	synt_error_int(t_type type)
 {
-	char *str;
+	char	*str;
 
 	str = SYNTAX_ERR;
 	if (str)
@@ -68,5 +67,3 @@ int	synt_error_int(t_type type)
 		ft_putendl_fd("'|'", 2);
 	return (1);
 }
-
-

@@ -6,7 +6,7 @@
 /*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 16:52:47 by pbencze           #+#    #+#             */
-/*   Updated: 2024/05/21 16:55:59 by pbencze          ###   ########.fr       */
+/*   Updated: 2024/05/22 14:37:07 by pbencze          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int			var_check(t_data *shell, char *to_check);
 void		env_execute(t_data *shell, char *arg);
 int			count_commands(t_lexer *tokens);
 void		print_path(char *path);
-void		print_toex(t_data *shell);
 int			**creating_pipes(t_data *shell);
 int			exe_env(t_data *shell, pid_t *pids, int i, t_command *toex);
 int			pipeline_exe(t_data *shell);
@@ -70,21 +69,24 @@ int			print_env(t_environ *env_ptr);
 int			bi_cd(t_data *shell);
 int			bi_pwd(t_data *shell);
 int			bi_exit(t_data *shell, char **argv);
-int			bi_unset(t_data *shell);
+int			bi_unset(char **args, t_environ *list);
 int			bi_export(t_data *shell);
 int			bi_echo(t_command *toex);
 int			identifier_check(char *arg);
 int			export_env(t_data *shell, char *arg);
+int			export_export(t_environ *export_list, char *arg);
 int			to_export_list(t_data *shell, char *arg);
 void		echo_env(t_data *shell, char *str);
 void		update_envlist(t_data *shell, char *to_up, char *new);
 void		update_old_pwd(t_data *shell);
+void		remove_node(t_environ *remove, t_environ *head, t_environ **list, t_environ *prev);
 void		print_export_list(t_data *shell);
 void		init_export_list(t_data *shell);
 void		sort_export_list(t_data *shell);
 t_environ	*list_duplicate(t_environ *lst_ptr);
 t_environ	*replace_value(t_environ *list_ptr, char *replace);
 t_environ	*find_name_in_envlist(t_data *shell, char *name);
+t_environ	*find_name_in_exportlist(t_environ *export_list, char *name);
 
 /*read line*/
 const char	*get_the_line(t_data *shell);
@@ -96,6 +98,8 @@ char		**free_arr(char **arr1, char **arr2);
 char		**append_arr(char **arr, char *new_str);
 int			check_syntax_and_here(t_lexer *tokens, t_data *shell);
 int			ft_isnum(char *str);
+int			free_strs(char *s1, char *s2);
+int			check_doubles(char **args, int i);
 
 /*error*/
 void		panic(char *str, void *ptr, int status);
@@ -114,6 +118,7 @@ int			cd_error_int(char *s);
 /*signals*/
 void		handle_signals(void);
 void		here_sig_handler(int signum);
+void		handle_signals_children(void);
 
 /*init*/
 void		*init_env(t_data *shell, char **envp);
@@ -160,9 +165,9 @@ int			parser(t_data *shell);
 t_command	*new_cmd_list(void);
 t_command	*cmd_list_last(t_command *lst);
 t_command	*create_cmdlist(t_lexer *tokens);
-int			init_cmd_list(t_lexer *tokens, t_data *shell);
+int			init_cmd_list(t_lexer *tokens, t_command *node);
 void		cmd_list_add_back(t_command **lst, t_command *new);
-int			add_redir(t_lexer *tokens, t_command *toex);
+int			add_redir(t_lexer **tokens, t_command *toex);
 int			handle_redirs(t_data *shell, t_command *toex);
 
 /*test*/
