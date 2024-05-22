@@ -6,7 +6,7 @@
 /*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 10:05:26 by pbencze           #+#    #+#             */
-/*   Updated: 2024/05/22 10:07:03 by pbencze          ###   ########.fr       */
+/*   Updated: 2024/05/22 10:44:42 by pbencze          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,28 @@ void	clear_data(t_data *shell)
 /*frees every element of the t_data *shell struct*/
 void	*free_data(t_data *shell)
 {
+	int	i;
+
+	i = 0;
 	if (shell)
 	{
 		clear_data(shell);
 		if (shell->home)
 			free(shell->home);
-		if (shell->pids != NULL)
+		if (shell->pids)
 			free(shell->pids);
 		free_env_list(&(shell->env_list));
 		free_env_list(&(shell->export_list));
 		free_env(shell->env);
+		if (shell->fd)
+		{
+			while (shell->fd[i])
+			{
+				free(shell->fd[i]);
+				i++;
+			}
+			free(shell->fd);
+		}
 		free(shell);
 	}
 	return (NULL);
