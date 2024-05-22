@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   built_in_env.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/22 15:23:53 by pbencze           #+#    #+#             */
+/*   Updated: 2024/05/22 15:24:16 by pbencze          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../incl/minishell.h"
 
 char	*find_in_env(char *to_find)
@@ -5,12 +17,12 @@ char	*find_in_env(char *to_find)
 	char	*value;
 
 	value = getenv(to_find);
-	if(!value)
+	if (!value)
 		return (NULL);
 	return (value);
 }
 
-int		bi_unset(char **argv, t_environ *list)
+int	bi_unset(char **argv, t_environ *list)
 {
 	t_environ	*prev;
 	t_environ	*head;
@@ -25,7 +37,7 @@ int		bi_unset(char **argv, t_environ *list)
 		head = list;
 		while (head != NULL)
 		{
-			if(ft_strcmp(head->name, argv[i]) == 0)
+			if (ft_strcmp(head->name, argv[i]) == 0)
 			{
 				remove_node(head, head, &list, prev);
 				head = NULL;
@@ -39,7 +51,8 @@ int		bi_unset(char **argv, t_environ *list)
 	return (0);
 }
 
-void	remove_node(t_environ *remove, t_environ *head, t_environ **list, t_environ *prev)
+void	remove_node(t_environ *remove, t_environ *head,
+	t_environ **list, t_environ *prev)
 {
 	if (prev)
 		prev->next = head->next;
@@ -53,5 +66,5 @@ t_environ	*replace_value(t_environ *list_ptr, char *replace)
 	if (list_ptr->value)
 		free(list_ptr->value);
 	list_ptr->value = replace;
-	return(list_ptr);
+	return (list_ptr);
 }

@@ -6,7 +6,7 @@
 /*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 10:12:10 by pbencze           #+#    #+#             */
-/*   Updated: 2024/05/22 11:35:53 by pbencze          ###   ########.fr       */
+/*   Updated: 2024/05/22 14:07:45 by pbencze          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,18 @@ int	free_strs(char *s1, char *s2)
 		free(s2);
 	s2 = NULL;
 	return (1);
+}
+
+int	check_doubles(char **args, int i)
+{
+	int	j;
+
+	j = 0;
+	while (i > 0 && j < i)
+	{
+		if (ft_strcmp(args[i], args[j]) == 0)
+			return (1);
+		j++;
+	}
+	return (0);
 }

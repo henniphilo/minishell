@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   built_in_export.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/22 15:24:31 by pbencze           #+#    #+#             */
+/*   Updated: 2024/05/22 15:27:10 by pbencze          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../incl/minishell.h"
 
 t_environ	*list_duplicate(t_environ *lst_ptr)
@@ -8,7 +20,7 @@ t_environ	*list_duplicate(t_environ *lst_ptr)
 	char		*name;
 
 	new_lst = NULL;
-	while(lst_ptr != NULL)
+	while (lst_ptr != NULL)
 	{
 		name = ft_strdup(lst_ptr->name);
 		value = ft_strdup(lst_ptr->value);
@@ -187,7 +199,7 @@ int		bi_export(t_data *shell)
 		only_export(shell);
 	else
 	{
-		while (shell->toex->args[++i] != NULL)
+		while (shell->toex->args[++i] != NULL && !check_doubles(shell->toex->args, i))
 		{
 			if (identifier_check(shell->toex->args[i]) == 1)
 				return (ident_error_int(shell->toex->args[i]));

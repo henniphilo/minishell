@@ -12,10 +12,11 @@ int	main(int ac, char **av, char **envp)
 	if (!shell)
 		panic(ALLOC_ERR, NULL, 1);
 	init_env(shell, envp);
-	handle_signals();
 	while (1)
 	{
+		handle_signals();
 		shell->buf = (char *)get_the_line(shell);
+		handle_signals_children();
 		if (check_line(shell->buf) || lexer(shell) || parser(shell))
 		{
 			clear_data(shell);
@@ -23,7 +24,7 @@ int	main(int ac, char **av, char **envp)
 		}
 		//test(shell);
 		if ((pipeline_exe(shell) != 0))
-			error_int(EXEC_ERR); //wir brauchen vlt kein error message hier
+			error_int(EXEC_ERR);
 		clear_data(shell);
 	}
 	return (0);

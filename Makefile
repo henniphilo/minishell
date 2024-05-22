@@ -31,6 +31,10 @@ all: $(NAME)
 $(NAME): $(OBJ) $(LIBFT)/$(LIBFA)
 	$(CC) $(CFLAGS) -L$(LIBFT) $(RFLAG) $(OBJ) -ldl -lft -o $(NAME)
 
+run: $(NAME)
+	@./intro.sh
+	@./$(NAME)
+
 test: $(OBJ) $(LIBFT)/$(LIBFA) $(TEST_OBJ)
 	$(CC) $(CFLAGS) -L$(LIBFT) $(RFLAG) $(OBJ) $(TEST_OBJ) -ldl -lft -o $(NAME)
 

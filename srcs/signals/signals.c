@@ -6,7 +6,7 @@
 /*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 17:19:55 by pbencze           #+#    #+#             */
-/*   Updated: 2024/05/21 17:19:56 by pbencze          ###   ########.fr       */
+/*   Updated: 2024/05/22 14:51:46 by pbencze          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,12 @@ void	handle_signals(void)
 	}
 }
 
+void	handle_signals_children(void)
+{
+	signal(SIGQUIT, SIG_DFL);
+	signal(SIGINT, SIG_DFL);
+}
+
 void	here_sig_handler(int signum)
 {
 	if (signum == SIGINT)
@@ -41,12 +47,3 @@ void	here_sig_handler(int signum)
 		ioctl(0, TIOCSTI, "\n");
 	}
 }
-
-/* void	cat_sig_handler(int signum)
-{
-	if (signum == SIGINT)
-	{
-		g_estatus = 130;
-		write(1, "\n", 1);
-	}
-} */

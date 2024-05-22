@@ -6,7 +6,7 @@
 /*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 16:52:47 by pbencze           #+#    #+#             */
-/*   Updated: 2024/05/22 12:20:27 by pbencze          ###   ########.fr       */
+/*   Updated: 2024/05/22 14:37:07 by pbencze          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ char		**append_arr(char **arr, char *new_str);
 int			check_syntax_and_here(t_lexer *tokens, t_data *shell);
 int			ft_isnum(char *str);
 int			free_strs(char *s1, char *s2);
+int			check_doubles(char **args, int i);
 
 /*error*/
 void		panic(char *str, void *ptr, int status);
@@ -117,6 +118,7 @@ int			cd_error_int(char *s);
 /*signals*/
 void		handle_signals(void);
 void		here_sig_handler(int signum);
+void		handle_signals_children(void);
 
 /*init*/
 void		*init_env(t_data *shell, char **envp);
