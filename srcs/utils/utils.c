@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/22 10:08:24 by pbencze           #+#    #+#             */
+/*   Updated: 2024/05/22 10:11:36 by pbencze          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../incl/minishell.h"
 
 /*calculates the size of a 2D-array*/
@@ -90,7 +102,7 @@ const char	*get_the_line(t_data *shell)
 	const char	*line;
 
 	line = readline("our minishell 🌺: ");
-	if (!line) //handling Ctrl + D ??
+	if (!line)
 		panic("exit", shell, 0);
 	add_history(line);
 	return (line);

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free_data.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/22 10:05:26 by pbencze           #+#    #+#             */
+/*   Updated: 2024/05/22 10:07:03 by pbencze          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../incl/minishell.h"
 
 /*frees the stored environmental variables*/
@@ -14,7 +26,8 @@ void	free_env(char **env)
 	}
 }
 
-/*function to free buffer and parsing + lexing structures before reentering the prompt loop*/
+/*function to free buffer and parsing + lexing
+structures before reentering the prompt loop*/
 void	clear_data(t_data *shell)
 {
 	if (shell->buf)
@@ -23,13 +36,6 @@ void	clear_data(t_data *shell)
 		shell->buf = NULL;
 	}
 	unlink("tmp_file");
-	if (g_estatus)
-	{
-		shell->exit_status = g_estatus; ///???
-		//g_estatus = 0;
-	}
-	else
-		shell->exit_status = 0;
 	free_tokens(&(shell->tokens));
 	free_commands(&(shell->toex));
 }
@@ -42,7 +48,7 @@ void	*free_data(t_data *shell)
 		clear_data(shell);
 		if (shell->home)
 			free(shell->home);
-		if(shell->pids != NULL)
+		if (shell->pids != NULL)
 			free(shell->pids);
 		free_env_list(&(shell->env_list));
 		free_env_list(&(shell->export_list));

@@ -6,7 +6,7 @@
 /*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 16:52:47 by pbencze           #+#    #+#             */
-/*   Updated: 2024/05/21 16:55:59 by pbencze          ###   ########.fr       */
+/*   Updated: 2024/05/22 09:57:44 by pbencze          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,9 +160,9 @@ int			parser(t_data *shell);
 t_command	*new_cmd_list(void);
 t_command	*cmd_list_last(t_command *lst);
 t_command	*create_cmdlist(t_lexer *tokens);
-int			init_cmd_list(t_lexer *tokens, t_data *shell);
+int			init_cmd_list(t_lexer *tokens, t_command *node);
 void		cmd_list_add_back(t_command **lst, t_command *new);
-int			add_redir(t_lexer *tokens, t_command *toex);
+int			add_redir(t_lexer **tokens, t_command *toex);
 int			handle_redirs(t_data *shell, t_command *toex);
 
 /*test*/

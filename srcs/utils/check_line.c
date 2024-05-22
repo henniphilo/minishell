@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_line.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/22 10:02:43 by pbencze           #+#    #+#             */
+/*   Updated: 2024/05/22 10:02:52 by pbencze          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../incl/minishell.h"
 
 static int	check_unclosed(char *buf)
@@ -36,7 +48,7 @@ int	check_line(char *buf)
 	if (check_unclosed(buf))
 		return (error_int(QUOTE_ERR));
 	i = 0;
-	while (buf[i] == 32 || buf[i] == 9) //check spaces
+	while (buf[i] == 32 || buf[i] == 9)
 		i++;
 	if (buf[i] == '\0')
 		return (1);
