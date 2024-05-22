@@ -6,7 +6,7 @@
 /*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 16:52:47 by pbencze           #+#    #+#             */
-/*   Updated: 2024/05/22 10:42:30 by pbencze          ###   ########.fr       */
+/*   Updated: 2024/05/22 11:35:52 by pbencze          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int			var_check(t_data *shell, char *to_check);
 void		env_execute(t_data *shell, char *arg);
 int			count_commands(t_lexer *tokens);
 void		print_path(char *path);
-void		print_toex(t_data *shell);
 int			**creating_pipes(t_data *shell);
 int			exe_env(t_data *shell, pid_t *pids, int i, t_command *toex);
 int			pipeline_exe(t_data *shell);
@@ -75,6 +74,7 @@ int			bi_export(t_data *shell);
 int			bi_echo(t_command *toex);
 int			identifier_check(char *arg);
 int			export_env(t_data *shell, char *arg);
+int			export_export(t_environ *export_list, char *arg);
 int			to_export_list(t_data *shell, char *arg);
 void		echo_env(t_data *shell, char *str);
 void		update_envlist(t_data *shell, char *to_up, char *new);
@@ -85,6 +85,7 @@ void		sort_export_list(t_data *shell);
 t_environ	*list_duplicate(t_environ *lst_ptr);
 t_environ	*replace_value(t_environ *list_ptr, char *replace);
 t_environ	*find_name_in_envlist(t_data *shell, char *name);
+t_environ	*find_name_in_exportlist(t_environ *export_list, char *name);
 
 /*read line*/
 const char	*get_the_line(t_data *shell);
@@ -96,6 +97,7 @@ char		**free_arr(char **arr1, char **arr2);
 char		**append_arr(char **arr, char *new_str);
 int			check_syntax_and_here(t_lexer *tokens, t_data *shell);
 int			ft_isnum(char *str);
+int			free_strs(char *s1, char *s2);
 
 /*error*/
 void		panic(char *str, void *ptr, int status);

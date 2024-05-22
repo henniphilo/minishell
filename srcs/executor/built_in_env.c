@@ -1,6 +1,5 @@
 #include "../../incl/minishell.h"
 
-
 char	*find_in_env(char *to_find)
 {
 	char	*value;
@@ -11,19 +10,21 @@ char	*find_in_env(char *to_find)
 	return (value);
 }
 
-int		bi_unset(t_data *shell) //looooop! //unsetet nicht in der export liste den namen nur den value
+int		bi_unset(t_data *shell)
 {
 	t_environ	*prev;
 	t_environ	*begin;
 	t_environ	*remove;
 	t_environ	*head;
+	int			i;
 
 	begin = shell->env_list;
 	head = begin;
 	prev = NULL;
 	if (shell->toex->argv[1] == NULL)
 		return (0);
-	else if (shell->toex->argv[1] != NULL)
+	i = 1;
+	while (shell->toex->argv[i] != NULL)
 	{
 		while(head != NULL)
 		{
@@ -40,19 +41,15 @@ int		bi_unset(t_data *shell) //looooop! //unsetet nicht in der export liste den 
 			prev = head;
 			head = head->next;
 		}
-		return (0);
+		i++;
 	}
-	return (1);
+	return (0);
 }
 
 t_environ	*replace_value(t_environ *list_ptr, char *replace)
 {
-	char		*new_value;
-
-	new_value = ft_strdup(replace);
-	if (!new_value)
-		return (NULL);
-	free(list_ptr->value);
-	list_ptr->value = new_value;
+	if (list_ptr->value)
+		free(list_ptr->value);
+	list_ptr->value = replace;
 	return(list_ptr);
 }

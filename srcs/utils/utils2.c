@@ -6,7 +6,7 @@
 /*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 10:12:10 by pbencze           #+#    #+#             */
-/*   Updated: 2024/05/22 10:12:11 by pbencze          ###   ########.fr       */
+/*   Updated: 2024/05/22 11:35:53 by pbencze          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,16 @@ int	ft_isnum(char *str)
 		}
 	}
 	return (0);
+}
+
+/*frees two strings and returns 1*/
+int	free_strs(char *s1, char *s2)
+{
+	if (s1)
+		free(s1);
+	s1 = NULL;
+	if (s2)
+		free(s2);
+	s2 = NULL;
+	return (1);
 }

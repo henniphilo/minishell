@@ -12,11 +12,15 @@ t_environ	*list_duplicate(t_environ *lst_ptr)
 	{
 		name = ft_strdup(lst_ptr->name);
 		value = ft_strdup(lst_ptr->value);
+		if (!name || !value)
+		{
+			free_strs(name, value);
+			return (NULL);
+		}
 		node = new_env_node(name, value);
 		if (!node)
 		{
-			free(name);
-			free(value);
+			free_strs(name, value);
 			return (NULL);
 		}
 		add_env_back(&new_lst, node);
@@ -32,7 +36,6 @@ void	init_export_list(t_data *shell)
 	if (!shell->export_list)
 		panic(ALLOC_ERR, shell, 1);
 }
-
 
 static void	swap(t_environ *a, t_environ *b)
 {
@@ -94,49 +97,63 @@ static void	only_export(t_data *shell)
 	print_export_list(shell);
 }
 
-//soll bei env_list und export list hinzufuegen
 int		export_env(t_data *shell, char *arg)
 {
 	t_environ	*new_node;
 	t_environ	*head;
 	char		*name;
 	char		*value;
-	char		*limit;
 
-	limit = ft_strchr(arg, '=');
-	name = ft_substr(arg, 0, limit - arg);
-	value = ft_substr(arg, limit - arg + 1, ft_strlen(arg));
+	name = ft_substr(arg, 0, ft_strchr(arg, '=') - arg);
+	value = ft_substr(arg, ft_strchr(arg, '=')- arg + 1, ft_strlen(arg));
+	if (!name || !value)
+		return (free_strs(name, value));
 	head = find_name_in_envlist(shell, name);
 	if (!head)
 	{
 		new_node = new_env_node(name, value);
 		if (!new_node)
 		{
-			perror("no new node durch export\n");
-			free(name);
-			free(value);
-			return (1);
+			error_int(ALLOC_ERR);
+			return (free_strs(name, value));
 		}
 		add_env_back(&shell->env_list, new_node);
-		//add_env_back(&shell->export_list, new_node); //?
 	}
 	else
 	{
-		head = replace_value(head, value); //muss auch im export list replacet werden
+		head = replace_value(head, value);
 		free(name);
-		free(value);
 	}
-	// printf("-----das ist env---\n");
-	// print_env(shell->env_list);
-	// free_env_list(&shell->export_list);
-	// init_export_list(shell);
-	// printf("-----das ist export---\n");
-	// print_export_list(shell);
 	return (0);
 }
 
-// hier noch loop fuer mehrere argumente mit space getrennt ist jeweils ein neuer node im export list
-// fuegt nur bei export list hinzu
+int		export_export(t_environ *export_list, char *arg)
+{
+	t_environ	*new_node;
+	t_environ	*head;
+	char		*name;
+	char		*value;
+
+	name = ft_substr(arg, 0, ft_strchr(arg, '=') - arg);
+	value = ft_substr(arg, ft_strchr(arg, '=')- arg + 1, ft_strlen(arg));
+	if (!name || !value)
+		return (free_strs(name, value));
+	head = find_name_in_exportlist(export_list, name);
+	if (!head)
+	{
+		new_node = new_env_node(name, value);
+		if (!new_node)
+			return (free_strs(name, value));
+		add_env_back(&export_list, new_node);
+	}
+	else
+	{
+		head = replace_value(head, value);
+		free(name);
+	}
+	return (0);
+}
+
 int		to_export_list(t_data *shell, char *arg)
 {
 	t_environ	*new_node;
@@ -164,42 +181,43 @@ int		to_export_list(t_data *shell, char *arg)
 int		bi_export(t_data *shell)
 {
 	int		i;
-	int		result;
 
-	i = 0;
+	i = -1;
 	if (shell->toex->args == NULL)
-	{
 		only_export(shell);
-		return (0);
-	}
 	else
 	{
-		while (shell->toex->args[i] != NULL)
+		while (shell->toex->args[++i] != NULL)
 		{
-			if (identifier_check(shell->toex->args[i]) == 1) // checken nur bei erstem vor =
+			if (identifier_check(shell->toex->args[i]) == 1)
 				return (ident_error_int(shell->toex->args[i]));
 			if (!(ft_strchr(shell->toex->args[i], '=')))
-				result = to_export_list(shell, shell->toex->args[i]);
+			{
+				if (to_export_list(shell, shell->toex->args[i]))
+					return (1);
+			}
 			else
-				result = export_env(shell, shell->toex->args[i]);
-			i++;
+			{
+				if (export_env(shell, shell->toex->args[i])
+					|| export_export(shell->export_list, shell->toex->args[i]))
+					return (1);
+			}
 		}
 	}
-	//printf("result ist gerade %d\n", result);
-	return (result);
+	return (0);
 }
 
-int		identifier_check(char *arg) //darf nur anschauen was vor = ist also A-=hallo darf nicht moeglich sein aber dafuer A=hallo-
+int		identifier_check(char *arg)
 {
 	int		i;
 
 	i = 0;
 	if (arg[0] == '=' || (arg[i] >= 48 && arg[i] <= 57))
 		return (1);
-	while(arg[i] != '\0' && arg[i] != '=')
+	while (arg[i] != '\0' && arg[i] != '=')
 	{
 		if (!((arg[i] >= 48 && arg[i] <= 57) || (arg[i] >= 65 && arg[i] <= 90)
-			|| (arg[i] >= 97 && arg[i] <= 122)))
+				|| (arg[i] >= 97 && arg[i] <= 122)))
 			return (1);
 		i++;
 	}

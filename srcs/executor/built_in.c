@@ -112,13 +112,22 @@ t_environ	*find_name_in_envlist(t_data *shell, char *name)
 	head = shell->env_list;
 	while (head != NULL)
 	{
-		if (ft_strncmp(name, head->name, 50) == 0)
-		{
+		if (ft_strcmp(name, head->name) == 0)
 			return (head);
-		}
 		head = head->next;
 	}
-	return(NULL);
+	return (NULL);
+}
+
+t_environ	*find_name_in_exportlist(t_environ *export_list, char *name)
+{
+	while (export_list != NULL)
+	{
+		if (ft_strcmp(name, export_list->name) == 0)
+			return (export_list);
+		export_list = export_list->next;
+	}
+	return (NULL);
 }
 
 //hier muss noch das verhalten exit + zahl bedacht werden
