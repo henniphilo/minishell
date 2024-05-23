@@ -1,23 +1,32 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execution.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hwiemann <hwiemann@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/23 17:23:12 by hwiemann          #+#    #+#             */
+/*   Updated: 2024/05/23 18:03:14 by hwiemann         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../incl/minishell.h"
 
-// darf zb bei unset USER | env nur env ausfuehren USER bleibt bestehen...
-int		pipeline_exe(t_data *shell)
+int	pipeline_exe(t_data *shell)
 {
 	t_command	*toex;
 	int			i;
 
 	i = 0;
 	toex = shell->toex;
-
 	init_pipeline(shell);
-	while(toex)
+	while (toex)
 	{
-		if(valid_fd_in_out_check(shell, toex) == 1)
+		if (valid_fd_in_out_check(shell, toex) == 1)
 		{
-		//	printf("fd in or out not valid\n");
 			toex = toex->next;
 			i++;
-			continue ; // muss break sein sonst test 77 fehlerhaft cat < missing | cat
+			continue ;
 		}
 		if (!toex->cmd)
 		{
@@ -27,19 +36,16 @@ int		pipeline_exe(t_data *shell)
 		}
 		if (builtin_check(toex->cmd) == 1 && !toex->next)
 		{
-		//	printf("builtin check erfolgreich cmd\n checkt %s\n", toex->cmd);
 			if (which_builtin_parent(shell, toex->cmd, shell->toex->argv) != 0)
 			{
 				free_pipes(shell);
 				free (shell->pids);
 				shell->pids = NULL;
-			//	free (shell->fd);
 				return (1);
 			}
 		}
 		else
 		{
-		//	printf("letzter cmd\n checkt %s\n", toex->cmd);
 			if (exe_env(shell, shell->pids, i, toex) != 0)
 			{
 				perror("exe error\n");
@@ -50,23 +56,33 @@ int		pipeline_exe(t_data *shell)
 		toex = toex->next;
 		i++;
 	}
-	wait_for_children(shell); //hier wird g_estatus ueberschrieben ob prozess erfolgreich oder nciht
+	wait_for_children(shell);
 	free_pipes(shell);
 	free (shell->pids);
 	shell->pids = NULL;
-//	free (shell->fd); //problematic double free if its null noch protecten
-	return(0);
+	return (0);
 }
 
-int		valid_fd_in_out_check(t_data *shell, t_command *toex)
+void	env_execute(t_data *shell, char *toex)
 {
-	if(toex->fd_in == -1 || toex->fd_out == -1)
+	char	*path;
+
+	while (toex != NULL)
 	{
-		shell->bi_check = 1;
-		g_estatus = 1;
-		return (1);
+		path = path_finder(toex, shell);
+		if (!path)
+		{
+			free(toex);
+			perror("Error in Path\n");
+			exit(1);
+		}
+		if (execve(path, shell->toex->argv, shell->env) < 0)
+		{
+			perror("command couldnt be executed\n");
+			free(toex);
+			exit(1);
+		}
 	}
-	else
-		shell->bi_check = 0;
-	return (0);
+	free(toex);
+	free(path);
 }

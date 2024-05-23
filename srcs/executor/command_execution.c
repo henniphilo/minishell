@@ -1,12 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   command_execution.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hwiemann <hwiemann@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/23 17:24:17 by hwiemann          #+#    #+#             */
+/*   Updated: 2024/05/23 17:56:45 by hwiemann         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../incl/minishell.h"
 
-int		execute_command(t_data *shell, t_command *toex)
+int	execute_command(t_data *shell, t_command *toex)
 {
 	char		*path;
 	struct stat	statbuf;
 
 	path = path_finder(toex->cmd, shell);
-	if(!path)
+	if (!path)
 		return (command_err(toex->cmd, COMMAND_ERR, 127, NULL));
 	if (stat(path, &statbuf))
 	{
@@ -18,7 +30,8 @@ int		execute_command(t_data *shell, t_command *toex)
 		else
 			return (command_err(toex->cmd, COMMAND_ERR, 127, path));
 	}
-	if ((strncmp(toex->cmd, "/", 1) == 0 || strncmp(toex->cmd, "./", 2) == 0) && S_ISDIR(statbuf.st_mode))
+	if ((strncmp(toex->cmd, "/", 1) == 0 || strncmp(toex->cmd, "./", 2) == 0)
+		&& S_ISDIR(statbuf.st_mode))
 		return (command_err(toex->cmd, DIR_ERR, 126, path));
 	if (strncmp(toex->cmd, "./", 2) == 0)
 	{
@@ -44,7 +57,7 @@ void	execution(t_data *shell, t_command *toex)
 	{
 		e_code = execute_command(shell, toex);
 		if (e_code != 0)
-			exit(e_code); //sollten wir nicht statt exit returnen?
+			exit(e_code);
 	}
-	exit(EXIT_SUCCESS); //sollten wir nicht statt exit returnen?
+	exit(EXIT_SUCCESS);
 }
