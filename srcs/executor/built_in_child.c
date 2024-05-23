@@ -6,7 +6,7 @@
 /*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 15:23:48 by pbencze           #+#    #+#             */
-/*   Updated: 2024/05/22 15:26:15 by pbencze          ###   ########.fr       */
+/*   Updated: 2024/05/23 17:51:23 by pbencze          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,7 @@ int	which_builtin_child(t_data *shell, t_command *toex)
 		g_estatus = bi_echo(toex);
 		return (0);
 	}
-	else
-		g_estatus = 1;
-	return (g_estatus);
+	return (1);
 }
 
 int	print_env(t_environ *env_ptr)

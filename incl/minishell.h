@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hwiemann <hwiemann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 16:52:47 by pbencze           #+#    #+#             */
-/*   Updated: 2024/05/23 11:50:43 by hwiemann         ###   ########.fr       */
+/*   Updated: 2024/05/23 17:05:02 by pbencze          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ int			cd_error_int(char *s);
 void		handle_signals(void);
 void		here_sig_handler(int signum);
 void		handle_signals_children(void);
+void		ignore_signals(void);
 
 /*init*/
 void		*init_env(t_data *shell, char **envp);
