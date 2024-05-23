@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_env.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: hwiemann <hwiemann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 15:23:53 by pbencze           #+#    #+#             */
-/*   Updated: 2024/05/22 15:24:16 by pbencze          ###   ########.fr       */
+/*   Updated: 2024/05/23 15:14:52 by hwiemann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,12 @@ void	remove_node(t_environ *remove, t_environ *head,
 t_environ	*replace_value(t_environ *list_ptr, char *replace)
 {
 	if (list_ptr->value)
+	{
+		printf("test1 \n");
+		printf("name von list ptr %s \n", list_ptr->name);
 		free(list_ptr->value);
+	}
+	printf("test2 \n");
 	list_ptr->value = replace;
 	return (list_ptr);
 }

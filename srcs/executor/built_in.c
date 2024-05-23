@@ -46,21 +46,21 @@ int	bi_cd(t_data *shell)
 {
 	char	*home_path;
 
-	if (shell->toex->args == NULL)
+	if (shell->toex->args == NULL) //cd
 	{
 		if (var_check(shell, "HOME"))
 			return (cd_error_int("HOME"));
 		home_path = find_in_env("HOME");
 		chdir(home_path);
 		update_old_pwd(shell);
-		free(home_path);
+		//free(home_path);
 		return(0);
 	}
-	if (array_len(shell->toex->args) == 1)
+	if (shell->toex->argv[1])
 	{
-		if (shell->toex->args[0][0] == '\0' && shell->toex->args[0][0] == '\0')
+		if (shell->toex->args[0][0] == '\0' || ft_strcmp(".", shell->toex->args[0]) == 0) //cd ""
 			return(0);
-		if (chdir(shell->toex->args[0]) == 0)
+		if (chdir(shell->toex->args[0]) == 0) //cd etwas
 		{
 			update_old_pwd(shell);
 			return(0);
@@ -79,7 +79,7 @@ void		update_envlist(t_data *shell, char *to_up, char *new)
 
 	while (head != NULL)
 	{
-		if (ft_strncmp(to_up, head->name, 50) == 0)
+		if (ft_strcmp(to_up, head->name) == 0)
 		{
 			head = replace_value(head, new);
 			break ;
@@ -88,21 +88,28 @@ void		update_envlist(t_data *shell, char *to_up, char *new)
 	}
 }
 
-void	update_old_pwd(t_data *shell)
+void	update_old_pwd(t_data *shell) // updaten im struct
 {
-	char	*new_path;
-	char	*old_path;
+	char	*new_pwd;
+	char	*new_pwd2;
+	char	*old_pwd;
 	char	cwd[1024];
-	t_environ *old_path_ptr;
+	t_environ *old_pwd_ptr;
 
 	if(var_check(shell, "PWD") == 0)
 	{
-		old_path_ptr = find_name_in_envlist(shell, "PWD");
-		old_path = old_path_ptr->value;
+		old_pwd_ptr = find_name_in_envlist(shell, "PWD");
+		old_pwd = ft_strdup(old_pwd_ptr->value);
+		if (!old_pwd_ptr->value)
+			return ;
 		if(var_check(shell, "OLDPWD") == 0)
-			update_envlist(shell, "OLDPWD", old_path);
-		new_path = getcwd(cwd, sizeof(cwd));
-		update_envlist(shell, "PWD", new_path);
+			update_envlist(shell, "OLDPWD", old_pwd);
+		else
+			free(old_pwd);
+		new_pwd = getcwd(cwd, sizeof(cwd));
+		new_pwd2 = ft_strdup(new_pwd);
+		//printf("new pwd %s\n", new_pwd);
+		update_envlist(shell, "PWD", new_pwd2);
 	}
 }
 
