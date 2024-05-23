@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: hwiemann <hwiemann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 16:56:15 by pbencze           #+#    #+#             */
-/*   Updated: 2024/05/22 10:07:14 by pbencze          ###   ########.fr       */
+/*   Updated: 2024/05/23 16:11:51 by hwiemann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ typedef struct s_environ {
 typedef struct s_data {
 	char		*buf;
 	char		*home;
+	char		*pwd;
 	char		**env;
 	t_environ	*env_list;
 	t_environ	*export_list;
