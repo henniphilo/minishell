@@ -58,19 +58,6 @@ static void	init_fd(t_data *shell)
 	shell->fd = NULL;
 }
 
-// static void		print_fd(t_data *shell)
-// {
-// 	int		j;
-
-// 	j = 0;
-// 	while(shell->fd && (j < (shell->cmd_count) - 1))
-// 	{
-// 		printf("shell fd %d\n", shell->fd[j][RDEND]);
-// 		printf("shell fd %d\n", shell->fd[j][WREND]);
-// 		j++;
-// 	}
-// }
-
 void	init_pipeline(t_data *shell)
 {
 	shell->pids = (pid_t*) ft_calloc(shell->cmd_count, sizeof(pid_t));
@@ -82,5 +69,4 @@ void	init_pipeline(t_data *shell)
 	init_fd(shell);
 	if(shell->cmd_count > 1)
 		shell->fd = creating_pipes(shell);
-//	print_fd(shell);
 }

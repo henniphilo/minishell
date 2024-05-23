@@ -1,8 +1,5 @@
 #include "../../incl/minishell.h"
 
-// > hallo fueht in libft folder reon
-// muss noch klaeren relativen und absoluten path
-
 
 int	builtin_check(char *arg)
 {

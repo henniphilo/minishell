@@ -18,12 +18,12 @@ int		pipeline_exe(t_data *shell)
 	//		printf("\n%i\n", g_estatus);
 			break ; // muss break sein sonst test 77 fehlerhaft cat < missing | cat
 		}
-		if (!toex->cmd) //added by petra
-		{ //added by petra
-			toex = toex->next; //added by petra
-			i++; //added by petra
-			continue ; //added by petra
-		} //added by petra
+		if (!toex->cmd) 
+		{
+			toex = toex->next;
+			i++;
+			continue ;
+		}
 		if (builtin_check(toex->cmd) == 1 && !toex->next)
 		{
 			if (which_builtin_parent(shell, toex->cmd, shell->toex->argv) != 0)
