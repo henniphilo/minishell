@@ -39,6 +39,7 @@ void	execution(t_data *shell, t_command *toex)
 	int	e_code;
 
 	e_code = 0;
+	redirect_pipes(toex);
 	if (which_builtin_child(shell, toex) != 0)
 	{
 		e_code = execute_command(shell, toex);

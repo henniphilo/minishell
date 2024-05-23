@@ -35,10 +35,7 @@ void	wait_for_children(t_data *shell)
 	estatus = 0;
 	while(i < shell->cmd_count)
 	{
-	//	printf("in wait i %d und cmd count %d \n", i, shell->cmd_count);
 		waitpid(shell->pids[i], &estatus, 0);
-		// ft_putstr_fd("\ng_estatus in wait davor\n", 2);
-		// ft_putnbr_fd(g_estatus, 2);
 		if (WIFEXITED(estatus))
 		{
 			if(shell->bi_check == 1)
@@ -48,11 +45,8 @@ void	wait_for_children(t_data *shell)
 		}
 		else
 			g_estatus = 1;
-		// ft_putstr_fd("\ng_estatus in wait danach\n", 2);
-		// ft_putnbr_fd(g_estatus, 2);
 		i++;
 	}
-//	printf("\n%i\n", g_estatus);
 }
 
 void	child_process(t_data *shell, int i, t_command *toex)
@@ -80,6 +74,6 @@ void	child_process(t_data *shell, int i, t_command *toex)
 			}
 			close_pipes(shell);
 		}
-		redirect_pipes(shell->toex);
+	//	redirect_pipes(shell->toex);
 		execution(shell, toex);
 }
