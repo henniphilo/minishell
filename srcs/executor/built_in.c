@@ -33,7 +33,6 @@ int		which_builtin_parent(t_data *shell, char *arg, char **argv)
 	else if(ft_strcmp((const char *)arg, "exit") == 0)
 	{
 		g_estatus = bi_exit(shell, argv);
-		ft_putendl_fd("exit", 2);
 		free_data(shell);
 		exit(g_estatus);
 	}
@@ -109,7 +108,7 @@ void	update_old_pwd(t_data *shell) // updaten im struct
 		shell->pwd = ft_strdup(new_pwd);
 		//printf("new pwd %s\n", new_pwd);
 		update_envlist(shell, "PWD", shell->pwd);
-	//	free(shell->pwd);
+		free(shell->pwd); //gerade geaendert
 	}
 }
 
@@ -165,31 +164,34 @@ int		bi_exit(t_data *shell, char **argv)
 
 int		bi_pwd(t_data *shell)
 {
-	char		*current_path;
+	//char		*current_path;
 	char		cwd[1024];
-	t_environ	*head;
+	// t_environ	*head;
 
-	head = shell->env_list;
-	while (head != NULL)
-	{
-		if(var_check(shell, "PWD") == 0)
-		{
-			if (ft_strncmp(head->name, "PWD", 4) == 0)
-			{
-			//	printf("PWD existiert in env liste    ");
-				current_path = head->value;
-				printf("%s\n", current_path);
-				break ;
-			}
-			head = head->next;
-		}
+	// head = shell->env_list;
+	// while (head != NULL)
+
+		// if(var_check(shell, "PWD") == 0)
+		// {
+		// 	if (ft_strncmp(head->name, "PWD", 4) == 0)
+		// 	{
+		// 		current_path = head->value;
+		// 		printf("%s\n", current_path);
+		// 		break ;
+		// 	}
+		// 	head = head->next;
+		// }
+		// else
+		// {
+
+		shell->pwd = ft_strdup(getcwd(cwd, sizeof(cwd)));
+		if (!shell->pwd)
+			return (1);
 		else
 		{
-			//printf("PWD existiert nicht in env liste    ");
-			shell->pwd = ft_strdup(getcwd(cwd, sizeof(cwd)));
 			printf("%s\n", shell->pwd);
+			free(shell->pwd);
+			shell->pwd = NULL;
 			return (0);
 		}
-	}
-	return (0);
 }

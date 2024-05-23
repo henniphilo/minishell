@@ -6,7 +6,7 @@
 /*   By: hwiemann <hwiemann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 10:05:26 by pbencze           #+#    #+#             */
-/*   Updated: 2024/05/23 16:42:23 by hwiemann         ###   ########.fr       */
+/*   Updated: 2024/05/23 17:11:49 by hwiemann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ static void	free_location(t_data *shell)
 	{
 		printf("pwd existiert und wird gefreet\n");
 		free(shell->pwd);
+		shell->pwd = NULL;
 	}
 }
 
