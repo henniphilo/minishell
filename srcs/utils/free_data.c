@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: hwiemann <hwiemann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 10:05:26 by pbencze           #+#    #+#             */
-/*   Updated: 2024/05/22 10:44:42 by pbencze          ###   ########.fr       */
+/*   Updated: 2024/05/23 16:42:23 by hwiemann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,20 @@ void	clear_data(t_data *shell)
 	free_commands(&(shell->toex));
 }
 
+static void	free_location(t_data *shell)
+{
+	printf("here test \n");
+	if (shell->home)
+		free(shell->home);
+	if (shell->pids)
+		free(shell->pids);
+	if (shell->pwd)
+	{
+		printf("pwd existiert und wird gefreet\n");
+		free(shell->pwd);
+	}
+}
+
 /*frees every element of the t_data *shell struct*/
 void	*free_data(t_data *shell)
 {
@@ -49,10 +63,7 @@ void	*free_data(t_data *shell)
 	if (shell)
 	{
 		clear_data(shell);
-		if (shell->home)
-			free(shell->home);
-		if (shell->pids)
-			free(shell->pids);
+		free_location(shell);
 		free_env_list(&(shell->env_list));
 		free_env_list(&(shell->export_list));
 		free_env(shell->env);
@@ -69,3 +80,5 @@ void	*free_data(t_data *shell)
 	}
 	return (NULL);
 }
+
+

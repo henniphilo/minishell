@@ -91,7 +91,6 @@ void		update_envlist(t_data *shell, char *to_up, char *new)
 void	update_old_pwd(t_data *shell) // updaten im struct
 {
 	char	*new_pwd;
-	char	*new_pwd2;
 	char	*old_pwd;
 	char	cwd[1024];
 	t_environ *old_pwd_ptr;
@@ -107,9 +106,10 @@ void	update_old_pwd(t_data *shell) // updaten im struct
 		else
 			free(old_pwd);
 		new_pwd = getcwd(cwd, sizeof(cwd));
-		new_pwd2 = ft_strdup(new_pwd);
+		shell->pwd = ft_strdup(new_pwd);
 		//printf("new pwd %s\n", new_pwd);
-		update_envlist(shell, "PWD", new_pwd2);
+		update_envlist(shell, "PWD", shell->pwd);
+	//	free(shell->pwd);
 	}
 }
 
@@ -166,6 +166,7 @@ int		bi_exit(t_data *shell, char **argv)
 int		bi_pwd(t_data *shell)
 {
 	char		*current_path;
+	char		cwd[1024];
 	t_environ	*head;
 
 	head = shell->env_list;
@@ -175,6 +176,7 @@ int		bi_pwd(t_data *shell)
 		{
 			if (ft_strncmp(head->name, "PWD", 4) == 0)
 			{
+			//	printf("PWD existiert in env liste    ");
 				current_path = head->value;
 				printf("%s\n", current_path);
 				break ;
@@ -183,8 +185,10 @@ int		bi_pwd(t_data *shell)
 		}
 		else
 		{
-			ft_putstr_fd("Error var doesn't exist\n", 2);
-			return (1);
+			//printf("PWD existiert nicht in env liste    ");
+			shell->pwd = ft_strdup(getcwd(cwd, sizeof(cwd)));
+			printf("%s\n", shell->pwd);
+			return (0);
 		}
 	}
 	return (0);
