@@ -31,7 +31,7 @@ int		pipeline_exe(t_data *shell)
 			if (which_builtin_parent(shell, toex->cmd, shell->toex->argv) != 0)
 			{
 				free_pipes(shell);
-				free (shell->pids);
+				free(shell->pids);
 				shell->pids = NULL;
 			//	free (shell->fd);
 				return (1);

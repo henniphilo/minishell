@@ -100,15 +100,16 @@ void	update_old_pwd(t_data *shell) // updaten im struct
 		old_pwd = ft_strdup(old_pwd_ptr->value);
 		if (!old_pwd_ptr->value)
 			return ;
-		if(var_check(shell, "OLDPWD") == 0)
+		if (var_check(shell, "OLDPWD") == 0)
 			update_envlist(shell, "OLDPWD", old_pwd);
 		else
 			free(old_pwd);
 		new_pwd = getcwd(cwd, sizeof(cwd));
+		if (shell->pwd)
+			free(shell->pwd);
 		shell->pwd = ft_strdup(new_pwd);
-		//printf("new pwd %s\n", new_pwd);
 		update_envlist(shell, "PWD", shell->pwd);
-		free(shell->pwd); //gerade geaendert
+		//free(shell->pwd);
 	}
 }
 

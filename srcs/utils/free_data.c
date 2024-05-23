@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hwiemann <hwiemann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 10:05:26 by pbencze           #+#    #+#             */
-/*   Updated: 2024/05/23 17:11:49 by hwiemann         ###   ########.fr       */
+/*   Updated: 2024/05/23 17:58:12 by pbencze          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,12 @@ void	clear_data(t_data *shell)
 
 static void	free_location(t_data *shell)
 {
-	printf("here test \n");
 	if (shell->home)
 		free(shell->home);
 	if (shell->pids)
 		free(shell->pids);
 	if (shell->pwd)
 	{
-		printf("pwd existiert und wird gefreet\n");
 		free(shell->pwd);
 		shell->pwd = NULL;
 	}

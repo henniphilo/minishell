@@ -6,7 +6,7 @@
 /*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 15:24:31 by pbencze           #+#    #+#             */
-/*   Updated: 2024/05/22 15:27:10 by pbencze          ###   ########.fr       */
+/*   Updated: 2024/05/23 18:11:25 by pbencze          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,17 +174,13 @@ int		to_export_list(t_data *shell, char *arg)
 
 	name = ft_strdup(arg);
 	value = ft_strdup("");
+	if (!name || !value)
+		return (free_strs(name, value));
 	new_node = new_env_node(name, value);
-	if (!name || name[0] < 65 || !value || !new_node)
+	if (!new_node)
 	{
 		ft_putstr_fd("no new node in export list\n", 2);
-		if (name)
-			free(name);
-		if (value)
-			free(value);
-		if (new_node)
-			free(new_node);
-		return (1);
+		return (free_strs(name, value));
 	}
 	add_env_back(&shell->export_list, new_node);
 	return (0);

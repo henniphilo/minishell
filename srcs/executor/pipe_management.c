@@ -6,15 +6,15 @@ int		**creating_pipes(t_data *shell)
 	int		i;
 
 	i = 0;
-	piped_fd = (int**) ft_calloc(shell->cmd_count, sizeof(int *));
+	piped_fd = (int**)ft_calloc(shell->cmd_count, sizeof(int *));
 	if(!piped_fd)
 	{
 		perror("could not create pipe\n");
 		return (NULL);
 	}
-	while(i < shell->cmd_count - 1)
+	while (i < shell->cmd_count - 1)
 	{
-		piped_fd[i] = (int *) ft_calloc(2, sizeof(int));
+		piped_fd[i] = (int *)ft_calloc(2, sizeof(int));
 		if (pipe(piped_fd[i]) == -1)
 		{
 			perror("pipe error");
@@ -33,7 +33,7 @@ void	free_pipes(t_data *shell)
 	int		i;
 
 	i = 0;
-	while(i + 1 < shell->cmd_count)
+	while(i - 1 < shell->cmd_count)
 	{
 		free(shell->fd[i]);
 		i++;
