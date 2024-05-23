@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: hwiemann <hwiemann@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 16:52:47 by pbencze           #+#    #+#             */
-/*   Updated: 2024/05/22 14:37:07 by pbencze          ###   ########.fr       */
+/*   Updated: 2024/05/23 11:50:43 by hwiemann         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void		free_pipes(t_data *shell);
 void		child_process(t_data *shell, int i, t_command *toex);
 void		free_split(char **split_components);
 void		redirect_pipes(t_command *toex);
-int			valid_fd_in_out_check(t_command *toex);
+int			valid_fd_in_out_check(t_data *shell, t_command *toex);
 
 /*built-ins*/
 int			which_builtin_child(t_data *shell, t_command *toex);

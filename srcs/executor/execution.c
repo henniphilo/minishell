@@ -12,7 +12,7 @@ int		pipeline_exe(t_data *shell)
 	init_pipeline(shell);
 	while(toex)
 	{
-		if(valid_fd_in_out_check(toex) == 1)
+		if(valid_fd_in_out_check(shell, toex) == 1)
 		{
 		//	printf("fd in or out not valid\n");
 			toex = toex->next;
@@ -58,12 +58,15 @@ int		pipeline_exe(t_data *shell)
 	return(0);
 }
 
-int		valid_fd_in_out_check(t_command *toex)
+int		valid_fd_in_out_check(t_data *shell, t_command *toex)
 {
 	if(toex->fd_in == -1 || toex->fd_out == -1)
 	{
+		shell->bi_check = 1;
 		g_estatus = 1;
 		return (1);
 	}
+	else
+		shell->bi_check = 0;
 	return (0);
 }
