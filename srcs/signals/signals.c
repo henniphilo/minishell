@@ -6,7 +6,7 @@
 /*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 17:19:55 by pbencze           #+#    #+#             */
-/*   Updated: 2024/05/22 14:51:46 by pbencze          ###   ########.fr       */
+/*   Updated: 2024/05/23 17:50:44 by pbencze          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,24 @@ void	handle_signals(void)
 	}
 }
 
+static void	sig_handler_children(int signum)
+{
+	if (signum == SIGINT)
+	{
+		g_estatus = 130;
+		ft_putstr_fd("\n", 1);
+	}
+	if (signum == SIGQUIT)
+	{
+		g_estatus = 131;
+		ft_putstr_fd("Core dumped\n", 1);
+	}
+}
+
 void	handle_signals_children(void)
 {
-	signal(SIGQUIT, SIG_DFL);
-	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, sig_handler_children);
+	signal(SIGINT, sig_handler_children);
 }
 
 void	here_sig_handler(int signum)

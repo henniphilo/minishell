@@ -41,10 +41,8 @@ void	wait_for_children(t_data *shell)
 			if(shell->bi_check == 1)
 				g_estatus = 1;
 			else
-				g_estatus =  WEXITSTATUS(estatus); // hier wird es mit ergebnis der letzten pipe ueberschrieben
+				g_estatus =  WEXITSTATUS(estatus);
 		}
-		else
-			g_estatus = 1;
 		i++;
 	}
 }
