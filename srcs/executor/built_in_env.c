@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_env.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hwiemann <hwiemann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 15:23:53 by pbencze           #+#    #+#             */
-/*   Updated: 2024/05/23 16:57:02 by hwiemann         ###   ########.fr       */
+/*   Updated: 2024/05/23 18:04:56 by pbencze          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ t_environ	*replace_value(t_environ *list_ptr, char *replace)
 	{
 		printf("name von list ptr %s replace \n", list_ptr->name);
 		free(list_ptr->value);
+		list_ptr->value = NULL;
 	}
 	list_ptr->value = replace;
 	return (list_ptr);

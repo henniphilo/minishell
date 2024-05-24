@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_management.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hwiemann <hwiemann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:24:27 by hwiemann          #+#    #+#             */
-/*   Updated: 2024/05/23 18:01:59 by hwiemann         ###   ########.fr       */
+/*   Updated: 2024/05/24 11:05:33 by pbencze          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,15 @@ int	**creating_pipes(t_data *shell)
 	int		i;
 
 	i = 0;
-	piped_fd = (int **)ft_calloc(shell->cmd_count, sizeof(int *));
-	if (!piped_fd)
+	piped_fd = (int**)ft_calloc(shell->cmd_count, sizeof(int *));
+	if(!piped_fd)
 	{
 		perror("could not create pipe\n");
 		return (NULL);
 	}
 	while (i < shell->cmd_count - 1)
 	{
-		piped_fd[i] = (int *) ft_calloc(2, sizeof(int));
+		piped_fd[i] = (int *)ft_calloc(2, sizeof(int));
 		if (pipe(piped_fd[i]) == -1)
 		{
 			perror("pipe error");
