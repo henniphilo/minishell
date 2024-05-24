@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_management.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hwiemann <hwiemann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:24:33 by hwiemann          #+#    #+#             */
-/*   Updated: 2024/05/23 18:17:58 by hwiemann         ###   ########.fr       */
+/*   Updated: 2024/05/24 12:01:59 by pbencze          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	wait_for_children(t_data *shell)
 			if (shell->bi_check == 1)
 				g_estatus = 1;
 			else
-				g_estatus =  WEXITSTATUS(estatus);
+				g_estatus = WEXITSTATUS(estatus);
 		}
 		i++;
 	}

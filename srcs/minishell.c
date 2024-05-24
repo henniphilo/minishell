@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/24 11:57:53 by pbencze           #+#    #+#             */
+/*   Updated: 2024/05/24 12:13:17 by pbencze          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../incl/minishell.h"
 
 int	g_estatus = 0;
@@ -22,8 +34,8 @@ int	main(int ac, char **av, char **envp)
 			clear_data(shell);
 			continue ;
 		}
-//		test(shell);
-		if ((pipeline_exe(shell) != 0))
+		init_pipeline(shell);
+		if ((pipeline_exe(shell, shell->toex) != 0))
 			error_int(EXEC_ERR);
 		clear_data(shell);
 	}

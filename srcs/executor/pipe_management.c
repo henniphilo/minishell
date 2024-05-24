@@ -6,7 +6,7 @@
 /*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:24:27 by hwiemann          #+#    #+#             */
-/*   Updated: 2024/05/24 11:35:36 by pbencze          ###   ########.fr       */
+/*   Updated: 2024/05/24 12:17:28 by pbencze          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int	**creating_pipes(t_data *shell)
 	int		i;
 
 	i = 0;
-	piped_fd = (int**)ft_calloc(shell->cmd_count, sizeof(int *));
-	if(!piped_fd)
+	piped_fd = (int **)ft_calloc(shell->cmd_count, sizeof(int *));
+	if (!piped_fd)
 	{
 		perror("could not create pipe\n");
 		return (NULL);
@@ -70,10 +70,7 @@ void	init_pipeline(t_data *shell)
 {
 	shell->pids = (pid_t *)ft_calloc(shell->cmd_count, sizeof(pid_t));
 	if (!shell->pids)
-	{
-		perror("Error pid init\n");
-		exit(EXIT_FAILURE);
-	}
+		panic("error creating pipeline", NULL, 1);
 	shell->fd = NULL;
 	if (shell->cmd_count > 1)
 		shell->fd = creating_pipes(shell);

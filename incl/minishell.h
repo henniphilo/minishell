@@ -6,7 +6,7 @@
 /*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 16:52:47 by pbencze           #+#    #+#             */
-/*   Updated: 2024/05/23 17:05:02 by pbencze          ###   ########.fr       */
+/*   Updated: 2024/05/24 12:42:16 by pbencze          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 extern int	g_estatus;
 
 /*execution*/
-char		*path_finder(char *cmd, t_data *shell);
+char		*path_finder(char *cmd, t_data *shell, int i);
 char		**get_path_components(t_data *shell);
 int			var_check(t_data *shell, char *to_check);
 void		env_execute(t_data *shell, char *arg);
@@ -48,7 +48,7 @@ int			count_commands(t_lexer *tokens);
 void		print_path(char *path);
 int			**creating_pipes(t_data *shell);
 int			exe_env(t_data *shell, pid_t *pids, int i, t_command *toex);
-int			pipeline_exe(t_data *shell);
+int			pipeline_exe(t_data *shell, t_command *toex);
 void		close_pipes(t_data *shell);
 void		init_pipeline(t_data *shell);
 void		execution(t_data *shell, t_command *toex);
@@ -79,7 +79,8 @@ int			to_export_list(t_data *shell, char *arg);
 void		echo_env(t_data *shell, char *str);
 void		update_envlist(t_data *shell, char *to_up, char *new);
 void		update_old_pwd(t_data *shell);
-void		remove_node(t_environ *remove, t_environ *head, t_environ **list, t_environ *prev);
+void		remove_node(t_environ *remove, t_environ *head,
+				t_environ **list, t_environ *prev);
 void		print_export_list(t_data *shell);
 void		init_export_list(t_data *shell);
 void		sort_export_list(t_data *shell);

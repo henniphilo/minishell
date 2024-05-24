@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hwiemann <hwiemann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:33:46 by hwiemann          #+#    #+#             */
-/*   Updated: 2024/05/23 18:11:10 by hwiemann         ###   ########.fr       */
+/*   Updated: 2024/05/24 12:44:17 by pbencze          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,34 +35,41 @@ char	**get_path_components(t_data *shell)
 	return (path_components);
 }
 
-//memory leak wenn program nicht ausfuehrbar bei ""
-char	*path_finder(char *cmd, t_data *shell)
+static void	*free_free(char **split, char *to_free)
+{
+	if (split)
+		free_split(split);
+	if (to_free)
+		free(to_free);
+	return (NULL);
+}
+
+static char	*get_full_path(char **path_cmps, int i, char **fp, char *cmd)
+{
+	char	*current_path;
+
+	current_path = ft_strjoin(path_cmps[i], "/");
+	if (current_path == NULL)
+		return (free_free(path_cmps, current_path));
+	*fp = ft_strjoin(current_path, cmd);
+	free(current_path);
+	if (*fp == NULL)
+		return (free_free(path_cmps, NULL));
+	return ((*fp));
+}
+
+char	*path_finder(char *cmd, t_data *shell, int i)
 {
 	char	**path_components;
-	char	*current_path;
 	char	*full_path;
-	int		i;
 
-	i = 0;
 	path_components = get_path_components(shell);
 	if (path_components == NULL)
 		return (NULL);
 	while (path_components[i] != NULL)
 	{
-		current_path = ft_strjoin(path_components[i], "/");
-		if (current_path == NULL)
-		{
-			free_split(path_components);
-			free(current_path);
+		if (get_full_path(path_components, i, &full_path, cmd) == NULL)
 			return (NULL);
-		}
-		full_path = ft_strjoin(current_path, cmd);
-		free(current_path);
-		if (full_path == NULL)
-		{
-			free_split(path_components);
-			return (NULL);
-		}
 		if (access(full_path, F_OK) == 0)
 		{
 			if (access(full_path, X_OK) == 0)
@@ -71,11 +78,7 @@ char	*path_finder(char *cmd, t_data *shell)
 				return (full_path);
 			}
 			else
-			{
-				free(full_path);
-				free_split(path_components);
-				return (NULL);
-			}
+				return (free_free(path_components, full_path));
 		}
 		free (full_path);
 		i++;

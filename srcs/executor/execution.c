@@ -3,64 +3,50 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hwiemann <hwiemann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:23:12 by hwiemann          #+#    #+#             */
-/*   Updated: 2024/05/23 18:03:14 by hwiemann         ###   ########.fr       */
+/*   Updated: 2024/05/24 12:42:24 by pbencze          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
 
-int	pipeline_exe(t_data *shell)
+static int	free_pipes_return(t_data *shell, int ret)
 {
-	t_command	*toex;
-	int			i;
+	free_pipes(shell);
+	free (shell->pids);
+	shell->pids = NULL;
+	return (ret);
+}
 
-	i = 0;
-	toex = shell->toex;
-	init_pipeline(shell);
+int	pipeline_exe(t_data *shell, t_command *toex)
+{
+	int	i;
+
+	i = -1;
 	while (toex)
 	{
-		if (valid_fd_in_out_check(shell, toex) == 1)
+		i++;
+		if (valid_fd_in_out_check(shell, toex) == 1 || !toex->cmd)
 		{
 			toex = toex->next;
-			i++;
-			continue ;
-		}
-		if (!toex->cmd)
-		{
-			toex = toex->next;
-			i++;
 			continue ;
 		}
 		if (builtin_check(toex->cmd) == 1 && !toex->next)
 		{
 			if (which_builtin_parent(shell, toex->cmd, shell->toex->argv) != 0)
-			{
-				free_pipes(shell);
-				free(shell->pids);
-				shell->pids = NULL;
-				return (1);
-			}
+				return (free_pipes_return(shell, 1));
 		}
-		else
+		else if (exe_env(shell, shell->pids, i, toex) != 0)
 		{
-			if (exe_env(shell, shell->pids, i, toex) != 0)
-			{
-				perror("exe error\n");
-				g_estatus = 1;
-				return (1);
-			}
+			g_estatus = 1;
+			return (error_int(EXEC_ERR));
 		}
 		toex = toex->next;
-		i++;
 	}
 	wait_for_children(shell);
-	free_pipes(shell);
-	free (shell->pids);
-	shell->pids = NULL;
-	return (0);
+	return (free_pipes_return(shell, 0));
 }
 
 void	env_execute(t_data *shell, char *toex)
@@ -69,7 +55,7 @@ void	env_execute(t_data *shell, char *toex)
 
 	while (toex != NULL)
 	{
-		path = path_finder(toex, shell);
+		path = path_finder(toex, shell, 0);
 		if (!path)
 		{
 			free(toex);

@@ -6,7 +6,7 @@
 /*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 15:24:31 by pbencze           #+#    #+#             */
-/*   Updated: 2024/05/24 11:04:48 by pbencze          ###   ########.fr       */
+/*   Updated: 2024/05/24 12:25:29 by pbencze          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,7 @@ int	export_env(t_data *shell, char *arg)
 	{
 		new_node = new_env_node(name, value);
 		if (!new_node)
-		{
-			error_int(ALLOC_ERR);
 			return (free_strs(name, value));
-		}
 		add_env_back(&shell->env_list, new_node);
 	}
 	else
@@ -97,15 +94,14 @@ int	to_export_list(t_data *shell, char *arg)
 
 int	bi_export(t_data *shell)
 {
-	int		i;
+	int	i;
 
 	i = -1;
 	if (shell->toex->args == NULL)
 		only_export(shell);
 	else
 	{
-		while (shell->toex->args[++i] != NULL
-			&& !check_doubles(shell->toex->args, i))
+		while (shell->toex->args[++i] && !check_doubles(shell->toex->args, i))
 		{
 			if (identifier_check(shell->toex->args[i]) == 1)
 				return (ident_error_int(shell->toex->args[i]));

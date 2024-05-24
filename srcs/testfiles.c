@@ -1,17 +1,31 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   testfiles.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/24 11:59:08 by pbencze           #+#    #+#             */
+/*   Updated: 2024/05/24 11:59:50 by pbencze          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../incl/minishell.h"
 
-static void	print_tokens(t_lexer *tokens)
+/* static void	print_tokens(t_lexer *tokens)
 {
 	while (tokens)
 	{
-		printf("string: %s\ntype: %i\nquote: %i\nambig_redir: %s\n\n", tokens->str, tokens->type, tokens->quote, tokens->ambig_redir);
+		printf("string: %s\ntype: %i\nquote:
+		 %i\nambig_redir: %s\n\n", tokens->str,
+		 tokens->type, tokens->quote, tokens->ambig_redir);
 		tokens = tokens->next;
 	}
 }
 static void	print_cmds(t_command *cmds)
 {
-	int i;
-	t_redir *redirs;
+	int		i;
+	t_redir	*redirs;
 
 	while (cmds)
 	{
@@ -45,16 +59,9 @@ static void	print_cmds(t_command *cmds)
 			(printf("argv: %p\n", cmds->argv));
 		printf("redirs: \n");
 		redirs = cmds->redirs;
-/* 		while (redirs)
-		{
-			printf("filename: %s\n", redirs->file);
-			printf("type: %d\n", redirs->type);
-			printf("ambig_redir: %s\n", redirs->ambig_redir);
-			redirs = redirs->next;
-		} */
 		cmds = cmds->next;
 	}
-}
+} */
 
 void	test(t_data *shell)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hwiemann <hwiemann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:23:29 by hwiemann          #+#    #+#             */
-/*   Updated: 2024/05/23 18:13:50 by hwiemann         ###   ########.fr       */
+/*   Updated: 2024/05/24 12:02:31 by pbencze          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int	which_builtin_parent(t_data *shell, char *arg, char **argv)
 		g_estatus = 1;
 	return (g_estatus);
 }
-
 
 int	bi_exit(t_data *shell, char **argv)
 {
