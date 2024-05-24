@@ -6,7 +6,7 @@
 /*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:24:27 by hwiemann          #+#    #+#             */
-/*   Updated: 2024/05/24 11:05:33 by pbencze          ###   ########.fr       */
+/*   Updated: 2024/05/24 11:35:36 by pbencze          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	**creating_pipes(t_data *shell)
 		perror("could not create pipe\n");
 		return (NULL);
 	}
-	while (i < shell->cmd_count - 1)
+	while (i + 1 < shell->cmd_count)
 	{
 		piped_fd[i] = (int *)ft_calloc(2, sizeof(int));
 		if (pipe(piped_fd[i]) == -1)
@@ -50,6 +50,7 @@ void	free_pipes(t_data *shell)
 		free(shell->fd[i]);
 		i++;
 	}
+	free(shell->fd);
 }
 
 void	close_pipes(t_data *shell)
@@ -65,11 +66,6 @@ void	close_pipes(t_data *shell)
 	}
 }
 
-static void	init_fd(t_data *shell)
-{
-	shell->fd = NULL;
-}
-
 void	init_pipeline(t_data *shell)
 {
 	shell->pids = (pid_t *)ft_calloc(shell->cmd_count, sizeof(pid_t));
@@ -78,7 +74,7 @@ void	init_pipeline(t_data *shell)
 		perror("Error pid init\n");
 		exit(EXIT_FAILURE);
 	}
-	init_fd(shell);
+	shell->fd = NULL;
 	if (shell->cmd_count > 1)
 		shell->fd = creating_pipes(shell);
 }

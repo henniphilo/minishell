@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_cd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hwiemann <hwiemann@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 18:13:07 by hwiemann          #+#    #+#             */
-/*   Updated: 2024/05/23 18:13:51 by hwiemann         ###   ########.fr       */
+/*   Updated: 2024/05/24 11:29:25 by pbencze          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	bi_cd(t_data *shell)
 		update_old_pwd(shell);
 		return (0);
 	}
-	if (shell->toex->argv[1])
+	if (shell->toex->argv[1] && !shell->toex->argv[2])
 	{
 		if (shell->toex->args[0][0] == '\0'
 			|| ft_strcmp(".", shell->toex->args[0]) == 0)
@@ -77,7 +77,6 @@ void	update_old_pwd(t_data *shell)
 		new_pwd = getcwd(cwd, sizeof(cwd));
 		shell->pwd = ft_strdup(new_pwd);
 		update_envlist(shell, "PWD", shell->pwd);
-		free(shell->pwd);
 	}
 }
 

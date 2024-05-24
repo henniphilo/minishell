@@ -6,7 +6,7 @@
 /*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 15:23:53 by pbencze           #+#    #+#             */
-/*   Updated: 2024/05/23 18:04:56 by pbencze          ###   ########.fr       */
+/*   Updated: 2024/05/24 11:20:52 by pbencze          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ t_environ	*replace_value(t_environ *list_ptr, char *replace)
 {
 	if (list_ptr->value)
 	{
-		printf("name von list ptr %s replace \n", list_ptr->name);
 		free(list_ptr->value);
 		list_ptr->value = NULL;
 	}
