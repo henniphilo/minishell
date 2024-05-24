@@ -6,7 +6,7 @@
 /*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 18:13:07 by hwiemann          #+#    #+#             */
-/*   Updated: 2024/05/24 11:29:25 by pbencze          ###   ########.fr       */
+/*   Updated: 2024/05/24 16:21:28 by pbencze          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,11 @@ void	update_old_pwd(t_data *shell)
 			update_envlist(shell, "OLDPWD", old_pwd);
 		else
 			free(old_pwd);
-		new_pwd = getcwd(cwd, sizeof(cwd));
+		new_pwd = ft_strdup(getcwd(cwd, sizeof(cwd)));
+		if (!new_pwd)
+			return ;
 		shell->pwd = ft_strdup(new_pwd);
-		update_envlist(shell, "PWD", shell->pwd);
+		update_envlist(shell, "PWD", new_pwd);
 	}
 }
 

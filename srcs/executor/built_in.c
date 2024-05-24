@@ -6,7 +6,7 @@
 /*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:23:29 by hwiemann          #+#    #+#             */
-/*   Updated: 2024/05/24 12:02:31 by pbencze          ###   ########.fr       */
+/*   Updated: 2024/05/24 16:19:18 by pbencze          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,9 @@ int	bi_pwd(t_data *shell)
 {
 	char		cwd[1024];
 
+	if (shell->pwd)
+		free(shell->pwd);
+	shell->pwd = NULL;
 	shell->pwd = ft_strdup(getcwd(cwd, sizeof(cwd)));
 	if (!shell->pwd)
 		return (1);

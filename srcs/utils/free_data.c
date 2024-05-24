@@ -6,7 +6,7 @@
 /*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 10:05:26 by pbencze           #+#    #+#             */
-/*   Updated: 2024/05/24 11:06:02 by pbencze          ###   ########.fr       */
+/*   Updated: 2024/05/24 16:06:40 by pbencze          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,15 @@ void	clear_data(t_data *shell)
 static void	free_location(t_data *shell)
 {
 	if (shell->home)
+	{
 		free(shell->home);
+		shell->home = NULL;
+	}
 	if (shell->pids)
+	{
 		free(shell->pids);
+		shell->pids = NULL;
+	}
 	if (shell->pwd)
 	{
 		free(shell->pwd);
