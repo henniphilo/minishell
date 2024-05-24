@@ -6,7 +6,7 @@
 /*   By: pbencze <pbencze@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 10:04:27 by pbencze           #+#    #+#             */
-/*   Updated: 2024/05/22 12:02:17 by pbencze          ###   ########.fr       */
+/*   Updated: 2024/05/24 16:25:21 by pbencze          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,10 @@ void	delone_env_list(t_environ *env)
 	{
 		if (env->value)
 			free(env->value);
+		env->value = NULL;
 		if (env->name)
 			free(env->name);
+		env->name = NULL;
 		free(env);
 		env = NULL;
 	}
