@@ -6,10 +6,9 @@ Minishell is a project focused on creating a simple, custom shell similar to bas
 It aims to provide a foundational understanding of processes, file descriptors, 
 and basic shell functionalities. It is the first group project of the common core.
 
-During this compact yet comprehensive project, I @pebencze was grateful to work 
-together with Henni @henniphilo. We agreed on a main structure initially and split 
-the project into two parts. Henni was working on the execution and the built-in commands
-and I was responsible for the lexing, parsing and signal handling.
+Collab of [@henniphilo](https://github.com/henniphilo) and [@pebencze](https://github.com/pebencze): <br/>
+@pebencze: lexing, parsing and signal handling <br/>
+@henniphilo: execution and the built-in commands <br/>
 
 # Features
 ## Core Features
@@ -52,4 +51,4 @@ tcgetattr, tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs
 ## Build and Run
 
  - Makefile: Includes rules for all, clean, fclean, re, and bonus.
- - Compilation: Ensure the code compiles without errors using the flags -Wall, -Wextra, and -Werror.
+ - Compilation: uses flags -Wall, -Wextra, and -Werror.
